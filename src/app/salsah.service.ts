@@ -1,7 +1,10 @@
 import { Injectable }     from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable }     from 'rxjs';
+
+import { Observable } from 'rxjs';
+
 import {Monument} from "./resources/monument";
+import {UserData} from "./user-data";
 
 @Injectable()
 export class SalsahService {
@@ -21,10 +24,13 @@ export class SalsahService {
 
     private saveMonument(response: Response) {
 
+
         let json: any = response.json();
 
         let monument = new Monument();
         monument.bibliography = json["props"]["limc:bibliography"]["values"][0];
+
+        //let monument = <Monument> json.props;
 
         return monument;
     }

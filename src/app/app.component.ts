@@ -1,14 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {SalsahService} from './salsah.service';
 
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/toPromise';
+import 'rxjs';
+
 import {Monument} from "./resources/monument";
+import {UserData} from "./user-data";
+import {JsonConvert} from "./json-convert";
 
 @Component({
     selector: 'app-root',
@@ -29,9 +26,33 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        let jsonData = '{ "blub": "bub", "blab": "bab", "blob": "bob" }';
+
+        let obj = JsonConvert.deserializeObject<UserData>(UserData, JSON.parse(jsonData));
+
+
+        /*new UserData();
+
+
+        //console.log(json.userdata);
+
+        console.log("Starting Logging");
+        let data = new UserData();
+        Object.keys(data).forEach((key) => {
+
+            console.log(key);
+        });
+
+        console.log(Object.prototype);*/
+
+
+
+        /*
         this.salsahService.getResourceById(2126046).subscribe(
-            monument => { this.monument = monument; },
-            error => {console.log('error'); this.error = <any>error }
-        );
+            (monument: Monument) => { this.monument = monument; },
+            (error: any) => { console.log('error'); this.error = <any>error },
+            () => { }
+        );*/
     }
 }

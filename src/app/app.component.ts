@@ -27,11 +27,13 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
 
-        let jsonData = '{ "blub": "bub", "blab": "bab", "blob": "bob" }';
+        let jsonData = '{ "blub": ["bub","buub"], "blab": "bab", "blob": "bob", "user": { "name": "Andreas" } }';
 
-        let obj = JsonConvert.deserializeObject<UserData>(UserData, JSON.parse(jsonData));
-
-
+        //try {
+            let obj = JsonConvert.deserializeObject<UserData>(UserData, JSON.parse(jsonData));
+        //} catch (e) {
+            //console.log((<Error>e));//conversion to Error type
+        //}
         /*new UserData();
 
 

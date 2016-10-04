@@ -1,7 +1,15 @@
-export function JsonProperty(jsonKey: string): any {
+export function JsonProperty(jsonKey: string, type?: string): any {
+
     return function(target: any, key: string) {
-        if (typeof target.mapping === "undefined") target["mapping"] = [];
-        target["mapping"][key] = jsonKey;
+
+        if (typeof(target.mapping) === "undefined") target["mapping"] = [];
+        if (typeof(type) === "undefined") type = "undefined";
+
+        target["mapping"][key] = {
+            "jsonKey": jsonKey,
+            "type": type
+        };
+
     }
 }
 
@@ -14,11 +22,10 @@ export class UserData implements JsonFeed {
 
     public mapping: string[];
 
-    @JsonProperty("blob")
-    public blub: string = "heys";
+    @JsonProperty("blub", "[]")
+    public blub: string[] = ["heya", "heyb"];
 
-
-    @JsonProperty("blob")
+    @JsonProperty("blab", "string")
     private _blab: string = undefined;
     public get blab(): string {
         return this._blab;
@@ -27,11 +34,17 @@ export class UserData implements JsonFeed {
         this._blab = value;
     }
 
+    @JsonProperty("user", "[]")
+    public user: any = undefined;
 
-    constructor() {
-        console.log("-----");
-        console.log("Constructor UserData");
-        console.log("-----");
-    }
+    constructor() {}
+
+}
+
+export class User implements JsonFeed {
+
+    public mapping: string[];
+
+    public name: string = undefined;
 
 }

@@ -1,50 +1,48 @@
-export function JsonProperty(jsonKey: string, type?: string): any {
+import {JsonObject, JsonProperty} from "./json-convert";
+import {User} from "./user";
 
-    return function(target: any, key: string) {
+//@JsonObject
+export class UserData {
 
-        if (typeof(target.mapping) === "undefined") target["mapping"] = [];
-        if (typeof(type) === "undefined") type = "undefined";
+    public a: string = "";
 
-        target["mapping"][key] = {
-            "jsonKey": jsonKey,
-            "type": type
-        };
+    @JsonProperty("a", String)
+    public a_primitive1: string = undefined;
 
-    }
-}
+    @JsonProperty("a", String)
+    public a_primitive2: boolean = undefined;
 
-export interface JsonFeed {
-    mapping: string[];
-}
+    @JsonProperty("a", String)
+    public a_primitive3: number = undefined;
 
 
-export class UserData implements JsonFeed {
+    public b: string[] = undefined;
 
-    public mapping: string[];
+    @JsonProperty("b", [])
+    public b_array1: string[] = undefined;
 
-    @JsonProperty("blub", "[]")
-    public blub: string[] = ["heya", "heyb"];
+    @JsonProperty("b", [String])
+    public b_array2: string[] = undefined;
 
-    @JsonProperty("blab", "string")
-    private _blab: string = undefined;
-    public get blab(): string {
-        return this._blab;
-    }
-    public set blab(value: string) {
-        this._blab = value;
-    }
+    @JsonProperty("b", [String, String])
+    public b_array3: string[] = undefined;
 
-    @JsonProperty("user", "[]")
-    public user: any = undefined;
 
-    constructor() {}
+    public c: User[] = undefined;
 
-}
+    @JsonProperty("c", User)
+    public c_object1: User = undefined;
 
-export class User implements JsonFeed {
 
-    public mapping: string[];
+    public d: User[] = undefined;
 
-    public name: string = undefined;
+    @JsonProperty("d", [])
+    public d_array1: User[] = undefined;
+
+    @JsonProperty("d", [User])
+    public d_array2: User[] = undefined;
+
+    @JsonProperty("d", [User, User])
+    public d_array3: User[] = undefined;
 
 }

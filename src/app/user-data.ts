@@ -1,19 +1,19 @@
 import {JsonObject, JsonProperty} from "./json-convert";
-import {User} from "./user";
+import { User } from "./user";
 
-//@JsonObject
+@JsonObject
 export class UserData {
 
     public a: string = "";
 
-    @JsonProperty("a", String)
+    @JsonProperty("al", String)
     public a_primitive1: string = undefined;
 
     @JsonProperty("a", String)
-    public a_primitive2: boolean = undefined;
+    public a_primitive2: string = undefined;
 
     @JsonProperty("a", String)
-    public a_primitive3: number = undefined;
+    public a_primitive3: string = undefined;
 
 
     public b: string[] = undefined;
@@ -21,10 +21,10 @@ export class UserData {
     @JsonProperty("b", [])
     public b_array1: string[] = undefined;
 
-    @JsonProperty("b", [String])
+    @JsonProperty("b", [[String]])
     public b_array2: string[] = undefined;
 
-    @JsonProperty("b", [String, String])
+    @JsonProperty("b", [[String, String], [String]])
     public b_array3: string[] = undefined;
 
 
@@ -36,13 +36,13 @@ export class UserData {
 
     public d: User[] = undefined;
 
-    @JsonProperty("d", [])
+    @JsonProperty("d", undefined)
     public d_array1: User[] = undefined;
 
-    @JsonProperty("d", [User])
+    @JsonProperty("d", [[User], undefined, User])
     public d_array2: User[] = undefined;
 
-    @JsonProperty("d", [User, User])
+    @JsonProperty("d", [[undefined], User, User])
     public d_array3: User[] = undefined;
 
 }

@@ -56,12 +56,14 @@ return;
 
 
         //return;
-        let jsonData = '{ "a": "a_val", "b": ["b_val1", "b_val2"], "c": {"prop": "c_val1"}, "d": [{"prop": "d_val1"}, {"prop": "d_val2"}, {"prop": "d_val3"}] }';
+        let jsonData = '{ "a": null, "b": [["b_val11", "b_val12"], ["b_val21"]], "c": {"prop": "c_val1"}, "d": [[{"prop": "d_val11"}, {"prop": "d_val12"}], {"prop": "d_val2"}, {"prop": "d_val3"}], "e": [2.5, false, "Hello World", "1"] }';
 
         //try {
             JsonConvert.debug = true;
-            let userData: UserData = JsonConvert.deserializeObject(JSON.parse(jsonData), UserData);
-            console.log(userData.d_array3[0].greeting());
+            JsonConvert.ignorePrimitiveChecks = true;
+            JsonConvert.allowPrimitiveNull = true;
+            let userData: UserData = JsonConvert.deserializeObject(jsonData, UserData);
+            //console.log(userData.d_array3[2].greeting());
             //console.log(userData.d_array1[0].greeting());
         //} catch (e) {
             //console.log((<Error>e));//conversion to Error type

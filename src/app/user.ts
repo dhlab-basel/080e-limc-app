@@ -1,6 +1,6 @@
 import {JsonObject, JsonProperty} from "./json-convert";
 
-//@JsonObject
+@JsonObject
 export class User {
 
     @JsonProperty("prop", String)

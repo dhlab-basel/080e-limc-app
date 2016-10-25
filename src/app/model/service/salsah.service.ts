@@ -3,8 +3,10 @@ import { Http, Headers, Response } from '@angular/http';
 
 import { Observable } from 'rxjs';
 
-import {Monument} from "./resources/monument";
-import {UserData} from "./user-data";
+import { JsonConvert } from "json2typescript"
+
+import {Monument} from "../resources/monument";
+import { Search } from "../apiresult/search";
 
 @Injectable()
 export class SalsahService {
@@ -12,6 +14,29 @@ export class SalsahService {
     constructor(private http: Http) {
 
     }
+
+    searchString(searchString: string, nRows: number, startIndex: number): Observable<Search> {
+
+        let headers = new Headers();
+        headers.append("Authorization", "Basic " + btoa("limc:limc-import"));
+
+        return this.http
+            .get("http://www.salsah.org/api/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex, {headers: headers})
+            .map((response: Response) => {
+                return JsonConvert.deserializeObject(response.json(), Search);
+            })
+            .catch((error: any) => {
+                console.log(error);
+                return Observable.throw("yo");
+            });
+
+    }
+
+
+
+
+
+
 
     getResourceById(id: number): Observable<Monument> {
         let headers = new Headers();
@@ -21,6 +46,7 @@ export class SalsahService {
             .map(this.saveMonument)
             .catch(this.test3);
     }
+
 
     private saveMonument(response: Response) {
 

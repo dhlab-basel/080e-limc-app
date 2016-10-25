@@ -1,0 +1,20 @@
+import { Component, OnInit } from '@angular/core';
+import { Input } from "@angular/core/src/metadata/directives";
+import { Search } from "../../model/apiresult/search";
+
+@Component({
+    selector: 'app-search-result',
+    templateUrl: './search-result.component.html',
+    styleUrls: ['./search-result.component.css']
+})
+export class SearchResultComponent implements OnInit {
+
+    @Input() search: Search;
+
+    constructor() {
+    }
+
+    ngOnInit() {
+    }
+
+}

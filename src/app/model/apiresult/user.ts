@@ -6,14 +6,14 @@ export class User {
     @JsonProperty("lang", String)
     public lang: string = undefined;
 
-    @JsonProperty("language_id", Number)
-    public language_id: number = undefined;
+    @JsonProperty("language_id", String)
+    public language_id: string = undefined;
 
-    @JsonProperty("PHPSESSION", Boolean)
-    public phpsession: boolean = undefined;
+    //@JsonProperty("PHPSESSION", Boolean)
+    //public phpsession: boolean = undefined;
 
-    @JsonProperty("id", Number)
-    public id: number = undefined;
+    @JsonProperty("user_id", String)
+    public id: string = undefined;
 
     @JsonProperty("username", String)
     public username: string = undefined;

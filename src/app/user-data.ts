@@ -1,5 +1,5 @@
 import { JsonObject, JsonProperty } from "json2typescript"
-import { User } from "./apiresult/user";
+import { User } from "./model/apiresult/user";
 
 @JsonObject
 export class UserData {

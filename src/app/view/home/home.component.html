@@ -2,6 +2,8 @@ Home
 
 length = {{search?.subjects.length}}
 
-<app-search [(search)]="search"></app-search>
+<app-search [search]="search" (onSearched)="onSearched($event)"></app-search>
 
-<app-search-results [(search)]="search">></app-search-results>
+<hr />
+
+<app-search-results [search]="search">></app-search-results>

@@ -16,4 +16,8 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
     }
 
+    onSearched(search: Search) {
+        this.search = search;
+    }
+
 }

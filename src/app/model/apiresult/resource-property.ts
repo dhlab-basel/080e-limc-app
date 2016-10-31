@@ -1,7 +1,7 @@
 import { JsonObject, JsonProperty } from "json2typescript"
 
 @JsonObject
-export class Property {
+export class ResourceProperty {
 
     @JsonProperty("pid", String)
     public pid: string = undefined;

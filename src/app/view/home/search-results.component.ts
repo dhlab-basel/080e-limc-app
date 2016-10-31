@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from "@angular/core/src/metadata/directives";
 import { Search } from "../../model/apiresult/search";
+import { SalsahService } from "../../model/service/salsah.service";
 
 @Component({
     selector: 'app-search-results',
@@ -11,7 +12,7 @@ export class SearchResultsComponent implements OnInit {
 
     @Input() search: Search;
 
-    constructor() {
+    constructor(private salsahService: SalsahService) {
     }
 
     ngOnInit() {

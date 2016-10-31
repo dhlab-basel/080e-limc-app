@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 
 import { JsonConvert } from "json2typescript"
 
-import {Monument} from "../resources/monument";
 import { Search } from "../apiresult/search";
+import { Resource } from "../apiresult/resource";
 
 @Injectable()
 export class SalsahService {
@@ -27,15 +27,34 @@ export class SalsahService {
             })
             .catch((error: any) => {
                 console.log(error);
-                return Observable.throw("yo");
+                return Observable.throw("");
             });
+
+    }
+
+
+    getResourceById(id: string): Observable<Resource> {
+
+        let headers = new Headers();
+        headers.append("Authorization", "Basic " + btoa("limc:limc-import"));
+
+        return this.http
+            .get("http://www.salsah.org/api/resources/" + id, {headers: headers})
+            .map((response: Response) => {
+                return JsonConvert.deserializeObject(response.json(), Resource);
+            })
+            .catch((error: any) => {
+                console.log(error);
+                return Observable.throw("");
+            });
+
 
     }
 
 
 
 
-
+/*
 
 
     getResourceById(id: number): Observable<Monument> {
@@ -85,6 +104,6 @@ export class SalsahService {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
         return Observable.throw(errMsg);
-    }
+    }*/
 
 }

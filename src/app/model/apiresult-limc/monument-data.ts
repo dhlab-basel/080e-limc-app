@@ -1,5 +1,5 @@
 import { JsonObject, JsonProperty } from "json2typescript"
-import { Property } from "../apiresult/property";
+import { Property } from "../apiresult/resource-property";
 
 @JsonObject
 export class MonumentData {

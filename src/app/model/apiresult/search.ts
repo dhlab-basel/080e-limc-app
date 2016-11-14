@@ -6,6 +6,7 @@ import { SearchThumbMax } from "./search-thumb-max";
 import { User } from "./user";
 import { Resource } from "./resource";
 import { SalsahService } from "../service/salsah.service";
+import { Monument } from "../resources/monument";
 
 @JsonObject
 export class Search {
@@ -28,7 +29,9 @@ export class Search {
     @JsonProperty("userdata", User)
     public user: User = undefined;
 
-    getResources(salsahService: SalsahService) {
+    public monument: Monument[] = [];
+
+    public getResources(salsahService: SalsahService) {
 
         for (let subject of this.subjects) {
 

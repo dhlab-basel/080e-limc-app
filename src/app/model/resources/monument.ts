@@ -1,6 +1,8 @@
 import { Inventory } from "./inventory";
 import { Scene } from "./scene";
 import { Dating } from "./dating";
+
+
 /**
  * Monument class.
  */
@@ -37,5 +39,17 @@ export class Monument {
     // METHODS //
     /////////////
 
+
+    public getDatings() {
+
+    }
+
+    public getScenes() {
+
+    }
+
+    public getInventories() {
+
+    }
 
 }

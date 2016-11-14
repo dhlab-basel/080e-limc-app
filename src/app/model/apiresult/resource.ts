@@ -10,24 +10,24 @@ import { ResourceProperty } from "./resource-property";
 export class Resource {
 
     @JsonProperty("resinfo", ResourceInfo)
-    public resinfo: ResourceInfo;
+    public resinfo: ResourceInfo = undefined;
 
     @JsonProperty("resdata", ResourceData)
-    public resdata: ResourceData;
+    public resdata: ResourceData = undefined;
 
     //@JsonProperty("props", [ResourceProperty])
-    //public props: any;
+    //public props: any = undefined;
 
     //@JsonProperty("incoming", User)
-    //public incoming: any[];
+    //public incoming: any[] = undefined;
 
     @JsonProperty("access", String)
-    public access: string;
+    public access: string = undefined;
 
     @JsonProperty("status", Number)
-    public status: number;
+    public status: number = undefined;
 
     @JsonProperty("user", User)
-    public user: User;
+    public user: User = undefined;
 
 }

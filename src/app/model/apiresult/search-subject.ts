@@ -1,5 +1,8 @@
 import { JsonObject, JsonProperty } from "json2typescript";
 
+import { SalsahService } from "../service/salsah.service";
+import { GraphData } from "./graph-data";
+
 @JsonObject
 export class SearchSubject {
 
@@ -26,5 +29,18 @@ export class SearchSubject {
 
     @JsonProperty("value", [String])
     public value: string = undefined;
+
+    public getGraph(salsahService: SalsahService) {
+
+        salsahService.getGraphDataById(this.obj_id)
+            .subscribe(
+            (graphData: GraphData) => {
+                console.log(graphData);
+            },
+            (error: any) => { console.log('error');/*this.error = <any>error*/ },
+            () => { }
+        );
+
+    }
 
 }

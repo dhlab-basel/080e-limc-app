@@ -7,6 +7,7 @@ import { JsonConvert } from "json2typescript"
 
 import { Search } from "../apiresult/search";
 import { Resource } from "../apiresult/resource";
+import { GraphData } from "../apiresult/graph-data";
 
 @Injectable()
 export class SalsahService {
@@ -15,7 +16,7 @@ export class SalsahService {
 
     }
 
-    searchString(searchString: string, nRows: number, startIndex: number): Observable<Search> {
+    public searchString(searchString: string, nRows: number, startIndex: number): Observable<Search> {
 
         let headers = new Headers();
         headers.append("Authorization", "Basic " + btoa("limc:limc-import"));
@@ -33,7 +34,7 @@ export class SalsahService {
     }
 
 
-    getResourceById(id: string): Observable<Resource> {
+    public getResourceById(id: string): Observable<Resource> {
 
         let headers = new Headers();
         headers.append("Authorization", "Basic " + btoa("limc:limc-import"));
@@ -48,6 +49,24 @@ export class SalsahService {
                 return Observable.throw("");
             });
 
+
+    }
+
+    public getGraphDataById(id: string): Observable<GraphData> {
+
+
+        let headers = new Headers();
+        headers.append("Authorization", "Basic " + btoa("limc:limc-import"));
+
+        return this.http
+            .get("http://salsah.org/api/graphdata/" + id, {headers: headers})
+            .map((response: Response) => {
+                return JsonConvert.deserializeObject(response.json(), GraphData);
+            })
+            .catch((error: any) => {
+                console.log(error);
+                return Observable.throw("");
+            });
 
     }
 

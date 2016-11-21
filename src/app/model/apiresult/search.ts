@@ -11,6 +11,10 @@ import { Monument } from "../resources/monument";
 @JsonObject
 export class Search {
 
+    public test = "Bla";
+
+    public monuments: Monument[] = [];
+
     @JsonProperty("subjects", [SearchSubject])
     public subjects: SearchSubject[] = undefined;
 
@@ -28,26 +32,5 @@ export class Search {
 
     @JsonProperty("userdata", User)
     public user: User = undefined;
-
-    public monument: Monument[] = [];
-
-    public getResources(salsahService: SalsahService) {
-
-        for (let subject of this.subjects) {
-
-            salsahService.getResourceById(subject.obj_id).subscribe(
-                (resource: Resource) => {
-                    console.log(resource);
-                },
-                (error: any) => {
-                    console.log('error');
-                },
-                () => {
-                }
-            );
-
-        }
-
-    }
 
 }

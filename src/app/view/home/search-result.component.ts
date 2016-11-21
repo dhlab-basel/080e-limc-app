@@ -10,9 +10,7 @@ import { Monument } from "../../model/resources/monument";
 })
 export class SearchResultComponent implements OnInit {
 
-    @Input() search: Search;
-
-    monument: Monument[];
+    @Input() monument: Monument;
 
     constructor() {
     }

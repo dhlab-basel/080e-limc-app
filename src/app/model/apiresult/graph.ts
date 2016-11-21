@@ -13,6 +13,4 @@ export class Graph {
     @JsonProperty("edges", [GraphEdge])
     public edges: [GraphEdge] = undefined;
 
-    public monument: Monument[] = [];
-
 }

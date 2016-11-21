@@ -1,6 +1,7 @@
 import { Inventory } from "./inventory";
 import { Scene } from "./scene";
 import { Dating } from "./dating";
+import { GraphNode } from "../apiresult/graph-node";
 
 
 /**
@@ -11,6 +12,9 @@ export class Monument {
     ////////////////
     // PROPERTIES //
     ////////////////
+
+
+    private graphNode: GraphNode;
 
 
     public id: number;
@@ -38,6 +42,39 @@ export class Monument {
     /////////////
     // METHODS //
     /////////////
+
+
+    /**
+     * Gets an instance of Monument from a GraphNode instance.
+     * @param node the graphnode
+     * @returns {Monument}
+     */
+    public static fromGraphNode(node: GraphNode): Monument {
+
+        let monument: Monument = new Monument();
+        monument.graphNode = node;
+        
+        monument.id = +node.getValues("limc:id")[0];
+        monument.discovery = node.getValues("limc:discovery")[0]
+        monument.discoveryDetail = node.getValues("limc:");
+        monument.object = node.getValues("limc:object")[0];
+        monument.material = node.getValues("limc:material")[0];
+        monument.origin = node.getValues("limc:origin")[0];
+        monument.country = node.getValues("limc:country")[0];
+        monument.artist = node.getValues("limc:artist");
+        monument.category = node.getValues("limc:category");
+        monument.technique = node.getValues("limc:technique");
+        monument.keyword = node.getValues("limc:keyword");
+        monument.scenename = node.getValues("limc:scenename");
+        monument.dimension = node.getValues("limc:dimension")[0];
+        monument.description = node.getValues("limc:description")[0];
+        monument.inscription = node.getValues("limc:inscription")[0];
+        monument.bibliography = node.getValues("limc:bibliography")[0];
+        monument.comment = node.getValues("limc:comment")[0];
+
+        return monument;
+
+    }
 
 
     public getDatings() {

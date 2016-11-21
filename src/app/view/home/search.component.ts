@@ -27,6 +27,8 @@ export class SearchComponent implements OnInit {
                 console.log(search);
                 this.search = search;
 
+                if (this.search.subjects === undefined) return;
+
                 for (let subject of this.search.subjects) {
                     subject.getGraph(this.salsahService);
                 }

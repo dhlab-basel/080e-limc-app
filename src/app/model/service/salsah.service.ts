@@ -14,6 +14,9 @@ export class SalsahService {
 
     constructor(private http: Http) {
 
+        JsonConvert.debugMode = false;
+        JsonConvert.valueCheckingMode = JsonConvert.ValueCheckingMode.ALLOW_NULL;
+
     }
 
     public searchString(searchString: string, nRows: number, startIndex: number): Observable<Search> {

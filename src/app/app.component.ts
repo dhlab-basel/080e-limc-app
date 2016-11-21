@@ -19,8 +19,6 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
 
-        JsonConvert.debugMode = false;
-        JsonConvert.valueCheckingMode = JsonConvert.ValueCheckingMode.ALLOW_NULL;
 
     }
 }

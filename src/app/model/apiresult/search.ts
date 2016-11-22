@@ -11,8 +11,6 @@ import { Monument } from "../resources/monument";
 @JsonObject
 export class Search {
 
-    public test = "Bla";
-
     public monuments: Monument[] = [];
 
     @JsonProperty("subjects", [SearchSubject])

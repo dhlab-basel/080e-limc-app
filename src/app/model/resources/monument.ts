@@ -16,7 +16,6 @@ export class Monument {
 
     private graphNode: GraphNode;
 
-
     public id: number;
     public discovery: string;
     public discoveryDetail: string[];
@@ -34,6 +33,7 @@ export class Monument {
     public inscription: string;
     public bibliography: string;
     public comment: string;
+
     public dating: Dating[];
     public scene: Scene[];
     public inventory: Inventory[];
@@ -73,19 +73,6 @@ export class Monument {
         monument.comment = node.getValues("limc:comment")[0];
 
         return monument;
-
-    }
-
-
-    public getDatings() {
-
-    }
-
-    public getScenes() {
-
-    }
-
-    public getInventories() {
 
     }
 

@@ -36,9 +36,7 @@ export class SearchComponent implements OnInit {
                         .subscribe(
                             (graphData: GraphData) => {
                                 console.log(graphData);
-                                console.log(this.search);
-                                if (this.search.monuments.length == 0) this.search.monuments = graphData.getMonuments();
-                                else this.search.monuments.concat(graphData.getMonuments());
+                                this.search.monuments = this.search.monuments.concat(graphData.getMonuments());
                             },
                             (error: any) => { console.log('error');/*this.error = <any>error*/ },
                             () => { }

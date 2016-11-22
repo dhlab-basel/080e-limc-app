@@ -27,8 +27,8 @@ export class SearchSubject {
     @JsonProperty("valuelabel", [String])
     public valuelabel: string = undefined;
 
-    @JsonProperty("value", [String])
-    public value: string = undefined;
+    @JsonProperty("value", [undefined])
+    public value: any = undefined;
 
     public getGraph(salsahService: SalsahService) {
 

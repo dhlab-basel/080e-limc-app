@@ -14,7 +14,6 @@ import { CatalogThesCraChapter } from "../resources/catalog-thes-crachapter";
 import { CatalogLimc } from "../resources/catalog-limc";
 import { Photo } from "../resources/photo";
 
-
 @JsonObject
 export class GraphData {
 
@@ -29,54 +28,86 @@ export class GraphData {
 
     public getMonuments(): Monument[] {
 
-        let monuments: Monument[] = [];
-        let scenes: Scene[] = [];
-        let inventories: Inventory[] = [];
-        let museums: Museum[] = [];
-        let epochs: Epoch[] = [];
-        let datings: Dating[] = [];
-        let catalogThesCras: CatalogThesCra[] = [];
-        let catalogThesCraChapters: CatalogThesCraChapter[] = [];
-        let catalogLimcs: CatalogLimc[] = [];
-        let photos: Photo[] = [];
+        // Save all instances
+        let resourcesById: any[] = [];
 
+        let monuments: Monument[] = [];
 
         for (let key in this.graph.nodes) {
 
             let node: GraphNode = this.graph.nodes[key];
+            node.obj_id = key;
 
             switch (node.resinfo.label) {
                 case "Monument":
-                    monuments.push(Monument.fromGraphNode(node));
+                    let monument = Monument.fromGraphNode(node);
+                    monuments.push(monument);
+                    resourcesById[key] = monument;
                     break;
-                case "Scene":
-                    scenes.push(Scene.fromGraphNode(node));
+                case "Szene":
+                    let scene = Scene.fromGraphNode(node);
+                    resourcesById[key] = scene;
                     break;
                 case "Inventar":
                     let inventory = Inventory.fromGraphNode(node);
-                    inventories.push(inventory);
-                    // monument.inventory.push(inventory);
+                    resourcesById[key] = inventory;
                     break;
                 case "Museum":
                     let museum = Museum.fromGraphNode(node);
-                    museums.push(museum);
-                    // inventory.museum = museum;
+                    resourcesById[key] = museum;
                     break;
                 case "Epoche":
+                    let epoch = Epoch.fromGraphNode(node);
+                    resourcesById[key] = epoch;
                     break;
                 case "Datierung":
+                    let dating = Dating.fromGraphNode(node);
+                    resourcesById[key] = dating;
                     break;
                 case "Catalog Thes CRA":
+                    let catalogThesCra = CatalogThesCra.fromGraphNode(node);
+                    resourcesById[key] = catalogThesCra;
                     break;
                 case "Catalog Thes CRA Kapitel":
+                    let catalogThesCraChapter = CatalogThesCraChapter.fromGraphNode(node);
+                    resourcesById[key] = catalogThesCraChapter;
                     break;
                 case "Catalog LIMC":
+                    let catalogLimc = CatalogLimc.fromGraphNode(node);
+                    resourcesById[key] = catalogLimc;
                     break;
                 case "Foto":
+                    let photo = Photo.fromGraphNode(node);
+                    resourcesById[key] = photo;
+                    break;
+                default:
                     break;
             }
+
         }
 
+        // Make all connections
+        for (let key in this.graph.edges) {
+
+            let split = key.split(";");
+
+            if (split.length !== 2) continue;
+
+            let obj_id_from = split[0];
+            let obj_id_to = split[1];
+
+            if (typeof resourcesById[obj_id_from] !== "undefined" && typeof resourcesById[obj_id_from].addConnection === "function") {
+                resourcesById[obj_id_from].addConnection(resourcesById[obj_id_to]);
+            }
+            if (typeof resourcesById[obj_id_to] !== "undefined" && typeof resourcesById[obj_id_to].addConnection === "function") {
+                resourcesById[obj_id_to].addConnection(resourcesById[obj_id_from]);
+            }
+
+        }
+
+        console.log(monuments)
+
+        // Return it
         return monuments;
 
     }

@@ -23,10 +23,10 @@ export class Scene {
     public scenename: string[];
     public keyword: string[];
 
-    public photo: Photo[];
-    public dating: Dating[];
-    public catalogThesCRA: CatalogThesCra[];
-    public catalogLimc: CatalogLimc[];
+    public photo: Photo[] = [];
+    public dating: Dating[] = [];
+    public catalogThesCRA: CatalogThesCra[] = [];
+    public catalogLimc: CatalogLimc[] = [];
 
 
     /////////////
@@ -56,6 +56,17 @@ export class Scene {
 
         return scene;
 
+    }
+
+    /**
+     * Adds a connection if possible.
+     * @param connection
+     */
+    public addConnection(connection: any) {
+        if (connection instanceof Photo) this.photo.push(connection);
+        if (connection instanceof Dating) this.dating.push(connection);
+        if (connection instanceof CatalogThesCra) this.catalogThesCRA.push(connection);
+        if (connection instanceof CatalogLimc) this.catalogLimc.push(connection);
     }
 
 }

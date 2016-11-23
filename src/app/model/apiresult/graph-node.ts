@@ -7,6 +7,8 @@ import { GraphNodeProperty } from "./graph-node-property";
 @JsonObject
 export class GraphNode {
 
+    public obj_id: string = "";
+
     @JsonProperty("properties", [GraphNodeProperty])
     public properties: GraphNodeProperty[] = undefined;
 

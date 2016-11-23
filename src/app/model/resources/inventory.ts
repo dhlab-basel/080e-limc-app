@@ -38,4 +38,12 @@ export class Inventory {
 
     }
 
+    /**
+     * Adds a connection if possible.
+     * @param connection
+     */
+    public addConnection(connection: any) {
+        if (connection instanceof Museum) this.museum = connection;
+    }
+
 }

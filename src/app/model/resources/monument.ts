@@ -34,9 +34,9 @@ export class Monument {
     public bibliography: string;
     public comment: string;
 
-    public dating: Dating[];
-    public scene: Scene[];
-    public inventory: Inventory[];
+    public dating: Dating[] = [];
+    public scene: Scene[] = [];
+    public inventory: Inventory[] = [];
 
 
     /////////////
@@ -74,6 +74,16 @@ export class Monument {
 
         return monument;
 
+    }
+
+    /**
+     * Adds a connection if possible.
+     * @param connection
+     */
+    public addConnection(connection: any) {
+        if (connection instanceof Dating) this.dating.push(connection);
+        if (connection instanceof Scene) this.scene.push(connection);
+        if (connection instanceof Inventory) this.inventory.push(connection);
     }
 
 }

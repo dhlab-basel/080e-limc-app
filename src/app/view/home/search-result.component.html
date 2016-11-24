@@ -1,10 +1,25 @@
-<div>
-    <strong>Object:</strong> {{ monument.object }}<br />
-    <strong>Category:</strong> {{ monument.category }}<br />
-    <strong>Material:</strong> {{ monument.material }}<br />
-    <strong>Discovery:</strong> {{ monument.discovery }}<br />
-    <strong>DiscoveryDetail:</strong> {{ monument.discoveryDetail.length }}<br />
-    <strong>Dating:</strong> {{ monument.dating }}<br />
-    <strong>Inventory:</strong> {{ monument.inventory }}<br />
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+
+    <div class="card">
+        <h4 class="card-header">{{ monument.object }}</h4>
+        <div class="card-img-top">
+            <div class="card-img-top-limc" [ngStyle]="{'background-image': 'url(' + monument.getPhotos()[0].url + ')'}"></div>
+        </div>
+        <div class="list-group list-group-flush">
+            <div class="list-group-item">
+                <h5 class="card-title">Objekt</h5>
+                <div class="line"><strong>Kategorie:</strong> {{ monument.category }}</div>
+                <div class="line"><strong>Material:</strong> {{ monument.material }}</div>
+                <div class="line"><strong>Fundort:</strong> {{ monument.discovery }}{{ monument.discoveryDetail }}</div>
+                <div class="line"><strong>Datierung:</strong> {{ monument.dating[0]?.period }}</div>
+            </div>
+            <div class="list-group-item">
+                <h5 class="card-title">Museum</h5>
+                <div class="line"><strong>Stadt:</strong> {{ monument.inventory[0].museum.city }}</div>
+                <div class="line"><strong>Name:</strong> {{ monument.inventory[0].museum.name }}</div>
+                <div class="line"><strong>Inventar:</strong> {{ monument.inventory[0].specification }}, {{ monument.inventory[0].number }}</div>
+            </div>
+        </div>
+    </div>
+
 </div>
-<hr />

@@ -45,7 +45,9 @@ export class Dating {
      */
     public static getPeriodFromString(str: string): [string, string] {
 
-        let period: [string, string] = ["0", "0"];
+        if (typeof str === "undefined") return ["", ""];
+
+        let period: [string, string] = ["", ""];
 
         let split: string[] = str.split(" - ");
 

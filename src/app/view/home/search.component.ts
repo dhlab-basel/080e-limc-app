@@ -14,16 +14,18 @@ export class SearchComponent implements OnInit {
     @Input() search: Search;
     @Output() onSearched: EventEmitter<Search> = new EventEmitter<Search>();
 
+    private searchList = ["Roma", "Atikka", "Wandmalerei", "Basel", "Athens"];
+
     constructor(private salsahService: SalsahService) {
     }
 
     ngOnInit() {
-        this.doSearch("Attika");
+        this.doSearch(this.searchList[Math.floor(Math.random() * this.searchList.length)]);
     }
 
     public doSearch(searchString: string) {
         console.log(searchString);
-        this.salsahService.searchString(searchString, 9, 0).subscribe(
+        this.salsahService.searchString(searchString, 12, 0).subscribe(
             (search: Search) => {
                 console.log(search);
                 this.search = search;

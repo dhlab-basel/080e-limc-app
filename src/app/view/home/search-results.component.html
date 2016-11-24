@@ -1,7 +1,9 @@
-Search Results
+<div class="row">
+    <app-search-result *ngFor="let monument of search?.monuments" [monument]="monument"></app-search-result>
+</div>
 
-length = {{search?.subjects.length}}
-
-<hr />
-
-<app-search-result *ngFor="let monument of search?.monuments" [monument]="monument"></app-search-result>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <button class="btn btn-success">Mehr anzeigen</button>
+    </div>
+</div>

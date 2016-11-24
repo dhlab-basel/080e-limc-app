@@ -105,8 +105,6 @@ export class GraphData {
 
         }
 
-        console.log(monuments)
-
         // Return it
         return monuments;
 

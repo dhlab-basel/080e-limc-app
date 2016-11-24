@@ -2,6 +2,7 @@ import { Inventory } from "./inventory";
 import { Scene } from "./scene";
 import { Dating } from "./dating";
 import { GraphNode } from "../apiresult/graph-node";
+import { Photo } from "./photo";
 
 
 /**
@@ -84,6 +85,26 @@ export class Monument {
         if (connection instanceof Dating) this.dating.push(connection);
         if (connection instanceof Scene) this.scene.push(connection);
         if (connection instanceof Inventory) this.inventory.push(connection);
+    }
+
+    public getPhotos() {
+
+        let photos: Photo[] = [];
+
+        for (let scene of this.scene) {
+            for (let photo of scene.photo) {
+                photos.push(photo);
+            }
+        }
+
+        if (photos.length == 0) {
+            let p = new Photo();
+            p.url = "https://avatars3.githubusercontent.com/u/16879914?v=3&s=280";
+            photos.push(p);
+        }
+
+        return photos;
+
     }
 
 }

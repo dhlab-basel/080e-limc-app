@@ -6,8 +6,8 @@ import { DetailsComponent } from "./view/details/details.component";
 
 
 const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent },
+    { path: '', redirectTo: 'search', pathMatch: 'full' },
+    { path: 'search', component: HomeComponent },
     { path: 'detail/:id', component: DetailsComponent }
 ];
 

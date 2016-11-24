@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppComponent } from './app.component';
 import { SearchComponent } from './view/home/search.component';
 import { SearchResultComponent } from './view/home/search-result.component';
@@ -27,7 +29,8 @@ import { SalsahService } from "./model/service/salsah.service";
         BrowserModule,
         FormsModule,
         HttpModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NgbModule.forRoot()
     ],
     providers: [SalsahService],
     bootstrap: [AppComponent]

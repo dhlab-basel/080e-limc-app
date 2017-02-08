@@ -1,1 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
+/* Import global styles */
+@import "assets/css/bootstrap.min.css";
+@import "assets/simple-line-icons/css/simple-line-icons.css";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600');
+
+/***********************/
+/* BOOTSTRAP OVERRIDES */
+/***********************/
+
+
+/* Form element styles */
+.input-group-addon, input, .btn, select, option, textarea {
+    border-radius: 0!important;
+}
+input, button, select, textarea, option {
+    font-family: inherit;
+    font-weight: inherit;
+}
+select {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0!important;
+}
+
+/* Placeholder style */
+.form-control::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.2);
+}
+.form-control::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.2);
+}
+.form-control:-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.2);
+}
+.form-control::placeholder {
+    color: rgba(0, 0, 0, 0.2);
+}
+
+
+/*****************/
+/* GLOBAL STYLES */
+/*****************/
+
+
+/* Body styles */
+body {
+    background-color: rgb(240, 240, 240)!important;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 300;
+    font-family: "Open Sans", sans-serif;
+}
+
+/* Text */
+.text-bold {
+    font-weight: 400;
+}
+.text-bolder {
+    font-weight: 600;
+}
+
+/* Cursor */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Font color */
+.fc-primary {
+    color: rgba(0, 0, 0, 0.87);
+}
+.fc-secondary {
+    color: rgba(0, 0, 0, 0.54);
+}
+.fc-hint {
+    color: rgba(0, 0, 0, 0.38);
+}

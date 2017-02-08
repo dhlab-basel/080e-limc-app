@@ -8,7 +8,9 @@ import { DetailsComponent } from "./view/details/details.component";
 const routes: Routes = [
     { path: '', redirectTo: 'search', pathMatch: 'full' },
     { path: 'search', component: HomeComponent },
-    { path: 'detail/:id', component: DetailsComponent }
+    { path: 'search/:search', component: HomeComponent },
+    { path: 'monument/:id', component: DetailsComponent },
+    { path: '**', redirectTo: 'search' }
 ];
 
 @NgModule({

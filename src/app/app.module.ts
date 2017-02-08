@@ -5,25 +5,28 @@ import { HttpModule } from '@angular/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { AppRoutingModule } from "./app-routing.module";
+
+import { SearchService } from "./model/service/search.service";
+
 import { AppComponent } from './app.component';
-import { SearchComponent } from './view/home/search.component';
 import { SearchResultComponent } from './view/home/search-result.component';
 import { SearchResultsComponent } from './view/home/search-results.component';
 import { DetailsComponent } from './view/details/details.component';
 import { HomeComponent } from './view/home/home.component';
-
-import { AppRoutingModule } from "./app-routing.module";
-
+import { HeaderComponent } from './view/header.component';
+import { FooterComponent } from './view/footer.component';
 import { SalsahService } from "./model/service/salsah.service";
 
 @NgModule({
     declarations: [
         AppComponent,
-        SearchComponent,
         SearchResultComponent,
         SearchResultsComponent,
         DetailsComponent,
-        HomeComponent
+        HomeComponent,
+        HeaderComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
@@ -32,7 +35,7 @@ import { SalsahService } from "./model/service/salsah.service";
         AppRoutingModule,
         NgbModule.forRoot()
     ],
-    providers: [SalsahService],
+    providers: [SalsahService, SearchService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -7,7 +7,8 @@ import { GraphData } from "../../model/apiresult/graph-data";
 @Component({
     selector: 'app-search',
     templateUrl: './search.component.html',
-    styleUrls: ['./search.component.css']
+    styleUrls: ['./search.component.css'],
+    providers: [SalsahService]
 })
 export class SearchComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 <div class="row">
-    <app-search-result *ngFor="let monument of search?.monuments" [monument]="monument"></app-search-result>
+    <app-search-result *ngFor="let monument of searchService.search?.monuments" [monument]="monument"></app-search-result>
 </div>
 
 <div class="row">

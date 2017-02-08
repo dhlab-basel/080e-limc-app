@@ -1,0 +1,13 @@
+header {
+    height: 5rem;
+    background-color: #FFF;
+}
+
+header .title {
+    padding: 1rem;
+    font-size: 2rem;
+}
+
+header .search {
+    padding: 1.25rem;
+}

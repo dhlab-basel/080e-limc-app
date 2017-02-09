@@ -1,0 +1,44 @@
+.image {
+    position: relative;
+}
+
+.image img {
+    width: 100%;
+    height: auto;
+}
+
+.left {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15%;
+    height: 100%;
+    color: #FFF;
+    opacity: 0.5;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.left:hover {
+    opacity: 1;
+}
+
+.right {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15%;
+    height: 100%;
+    color: #FFF;
+    opacity: 0.5;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.right:hover {
+    opacity: 1;
+}

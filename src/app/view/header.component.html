@@ -1,13 +1,13 @@
 <header>
     <div class="container">
         <div class="row">
-            <div class="col-6 title">
-                <span class="cursor-pointer" (click)="resetSearch()">Digital LIMC</span>
+            <div class="col-4 col-md-6 title">
+                <span class="cursor-pointer" (click)="openHome()"><span class="hidden-sm-down-plus">Digital</span> LIMC</span>
             </div>
-            <div class="col-6 search">
+            <div class="col-8 col-md-6 search">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Suchen" [(ngModel)]="searchString" (keyup.enter)="search()">
-                    <div class="input-group-addon cursor-pointer" (click)="search()">Suchen</div>
+                    <div class="input-group-addon cursor-pointer" (click)="search(0)">Suchen</div>
                 </div>
             </div>
         </div>

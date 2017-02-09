@@ -1,12 +1,9 @@
 import { Injectable }     from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
 
-import { Observable } from 'rxjs';
+import { SalsahService } from "./salsah.service";
 
-import { JsonConvert } from "json2typescript"
-
+import { Monument } from "../resources/monument";
 import { Search } from "../apiresult/search";
-import { Resource } from "../apiresult/resource";
 import { GraphData } from "../apiresult/graph-data";
 
 @Injectable()
@@ -23,7 +20,22 @@ export class SearchService {
     /**
      * The current search result
      */
-    search: Search = null;
+    monuments: Monument[] = [];
+
+    /**
+     * The last search
+     */
+    lastSearch: Search = null;
+
+    /**
+     * The last search string
+     */
+    lastSearchString: string = "";
+
+    /**
+     * the start index for the next search
+     */
+    nextSearchStartIndex: number = 0;
 
 
     /////////////
@@ -31,7 +43,55 @@ export class SearchService {
     /////////////
 
 
-    constructor() {
+    constructor(private salsahService: SalsahService) {}
+
+
+    reset() {
+        this.monuments = [];
+        this.lastSearch = null;
+        this.lastSearchString = "";
+    }
+
+    search(searchString: string, searchLimit: number, startIndex: number) {
+
+        // Reset last search if necessary
+        if (startIndex === 0) {
+            this.reset();
+        }
+
+        this.lastSearchString = searchString;
+        this.nextSearchStartIndex = startIndex + searchLimit;
+
+        this.salsahService.searchString(searchString, searchLimit, startIndex).subscribe(
+            (search: Search) => {
+
+                // Save the resulting data
+                this.lastSearch = search;
+
+                if (this.lastSearch.subjects === undefined) return;
+
+                for (let subject of this.lastSearch.subjects) {
+
+                    this.salsahService.getGraphDataById(subject.obj_id)
+                        .subscribe(
+                            (graphData: GraphData) => {
+                                let monuments: Monument[] = graphData.getMonuments();
+                                this.monuments = this.monuments.concat(monuments);
+                            },
+                            (error: any) => {
+                            }
+                        );
+
+                }
+            },
+            (error: any) => {
+            }
+        );
+
+    }
+
+    searchMore(searchLimit: number) {
+        this.search(this.lastSearchString, searchLimit, this.nextSearchStartIndex);
     }
 
 }

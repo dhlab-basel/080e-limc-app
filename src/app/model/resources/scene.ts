@@ -52,7 +52,9 @@ export class Scene {
         scene.comment = node.getValues("limc:comment")[0];
         scene.sequence = parseInt(node.getValues("limc:sequence")[0]);
         scene.scenename = node.getValues("limc:scenename");
+        if (scene.scenename && scene.scenename.length > 0) scene.scenename.sort();
         scene.keyword = node.getValues("limc:keyword");
+        if (scene.keyword && scene.keyword.length > 0) scene.keyword.sort();
 
         return scene;
 

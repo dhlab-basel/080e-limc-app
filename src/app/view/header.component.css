@@ -1,6 +1,7 @@
 header {
     height: 5rem;
     background-color: #FFF;
+    margin-bottom: 2rem;
 }
 
 header .title {

@@ -34,6 +34,7 @@ export class CatalogLimc {
         catalogLimc.article = node.getValues("limc:article")[0];
         catalogLimc.volume = node.getValues("limc:volume")[0];
         catalogLimc.catalogNumber = parseInt(node.getValues("limc:catalogNumber")[0]);
+        if (isNaN(catalogLimc.catalogNumber)) catalogLimc.catalogNumber = undefined;
         catalogLimc.asterix = node.getValues("limc:asterix")[0] === "1";
         catalogLimc.dot = node.getValues("limc:dot")[0] === "1";
 

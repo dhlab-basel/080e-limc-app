@@ -1,1 +1,43 @@
-<app-search-results></app-search-results>
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-3" *ngFor="let monument of searchService.monuments">
+
+            <div class="card" (click)="openMonument(monument)">
+                <h4 class="card-header text-ellipsis">{{ monument.object ? monument.object : "?????" }}</h4>
+                <div class="card-img-top">
+                    <div class="card-img-top-limc" [ngStyle]="{'background-image': 'url(' + monument.getPhoto().url + ')'}"></div>
+                </div>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <div class="title">Objekt</div>
+                        <div class="line"><strong>ID:</strong> {{ monument.id }}</div>
+                        <div class="line"><strong>Herkunft:</strong> {{ monument.origin }}</div>
+                        <div class="line"><strong>Kategorie:</strong> {{ monument.category }}</div>
+                        <div class="line"><strong>Material:</strong> {{ monument.material }}</div>
+                        <div class="line">
+                            <strong>Fundort:</strong> {{ monument.discovery }}{{ monument.discoveryDetail }}
+                        </div>
+                        <div class="line"><strong>Datierung:</strong> {{ monument.dating[0]?.period }}</div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="title">Museum</div>
+                        <div class="line"><strong>Stadt:</strong> {{ monument.inventory[0].museum.city }}</div>
+                        <div class="line"><strong>Name:</strong> {{ monument.inventory[0].museum.name }}</div>
+                        <div class="line">
+                            <strong>Inventar:</strong> {{ monument.inventory[0].specification }}, {{ monument.inventory[0].number }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-outline-secondary" (click)="searchMore()">Mehr suchen</button>
+        </div>
+    </div>
+
+</div>

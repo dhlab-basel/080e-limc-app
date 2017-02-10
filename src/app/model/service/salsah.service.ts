@@ -19,11 +19,8 @@ export class SalsahService {
 
     public searchString(searchString: string, nRows: number, startIndex: number): Observable<Search> {
 
-        let headers = new Headers();
-        headers.append("Authorization", "Basic " + btoa("limc:limc-import"));
-
         return this.http
-            .get("http://www.salsah.org/api/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex, {headers: headers})
+            .get("http://www.salsah.org/api/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex)
             .map((response: Response) => {
                 return JsonConvert.deserializeObject(response.json(), Search);
             })
@@ -37,11 +34,8 @@ export class SalsahService {
 
     public getResourceById(id: string): Observable<Resource> {
 
-        let headers = new Headers();
-        headers.append("Authorization", "Basic " + btoa("limc:limc-import"));
-
         return this.http
-            .get("http://www.salsah.org/api/resources/" + id, {headers: headers})
+            .get("http://www.salsah.org/api/resources/" + id)
             .map((response: Response) => {
                 return JsonConvert.deserializeObject(response.json(), Resource);
             })
@@ -55,11 +49,8 @@ export class SalsahService {
 
     public getGraphDataById(id: string): Observable<GraphData> {
 
-        let headers = new Headers();
-        headers.append("Authorization", "Basic " + btoa("limc:limc-import"));
-
         return this.http
-            .get("http://salsah.org/api/graphdata/" + id, {headers: headers})
+            .get("http://salsah.org/api/graphdata/" + id)
             .map((response: Response) => {
                 return JsonConvert.deserializeObject(response.json(), GraphData);
             })

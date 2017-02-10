@@ -26,7 +26,7 @@ export class Search {
     @JsonProperty("thumb_max", SearchThumbMax)
     public thumb_max: SearchThumbMax = undefined;
 
-    @JsonProperty("userdata", User)
+    @JsonProperty("userdata", User, true)
     public user: User = undefined;
 
 }

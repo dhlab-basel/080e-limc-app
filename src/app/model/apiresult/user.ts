@@ -12,16 +12,16 @@ export class User {
     //@JsonProperty("PHPSESSION", Boolean)
     //public phpsession: boolean = undefined;
 
-    @JsonProperty("user_id", String)
+    @JsonProperty("user_id", String, true)
     public id: string = undefined;
 
-    @JsonProperty("username", String)
+    @JsonProperty("username", String, true)
     public username: string = undefined;
 
-    @JsonProperty("firstname", String)
+    @JsonProperty("firstname", String, true)
     public firstname: string = undefined;
 
-    @JsonProperty("lastname", String)
+    @JsonProperty("lastname", String, true)
     public lastname: string = undefined;
 
 }

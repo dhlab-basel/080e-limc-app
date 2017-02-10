@@ -114,28 +114,14 @@
                 <h4 class="card-header text-ellipsis">Museum</h4>
                 <div class="list-group list-group-flush">
                     <div class="list-group-item">
+                        <div class="title">Anschrift</div>
+                        <div class="line">{{ monument.inventory[0].museum.name }}</div>
+                        <div class="line">{{ monument.inventory[0].museum.city }}</div>
+                    </div>
+                    <div class="list-group-item">
                         <div class="title">Inventar</div>
                         <div class="line">{{ monument.inventory[0].number }}</div>
                         <div class="line">{{ monument.inventory[0].specification }}</div>
-                    </div>
-                    <div class="list-group-item">
-                        <div class="title">Anschrift</div>
-                        <div class="line">{{ monument.inventory[0].museum.name }}</div>
-                        <div class="line">{{ monument.inventory[0].museum.postBox }}</div>
-                        <div class="line">{{ monument.inventory[0].museum.address }}</div>
-                        <div class="line">{{ monument.inventory[0].museum.zip }} {{ monument.inventory[0].museum.city }}</div>
-                        <div class="line">{{ monument.inventory[0].museum.country }}</div>
-                    </div>
-                    <div class="list-group-item" *ngIf="monument.inventory[0].museum.director || monument.inventory[0].museum.email || monument.inventory[0].museum.fax">
-                        <div class="title">Kontakt</div>
-                        <div class="line">{{ monument.inventory[0].museum.director }}</div>
-                        <div class="line" *ngIf="monument.inventory[0].museum.email">E-Mail: {{ monument.inventory[0].museum.email }}</div>
-                        <div class="line" *ngIf="monument.inventory[0].museum.fax">Fax: {{ monument.inventory[0].museum.fax }}</div>
-                    </div>
-                    <div class="list-group-item" *ngIf="monument.inventory[0].museum.contactCenter || monument.inventory[0].museum.contactCenterCity">
-                        <div class="title">Kontaktzentrum</div>
-                        <div class="line">{{ monument.inventory[0].museum.contactCenter }}</div>
-                        <div class="line">{{ monument.inventory[0].museum.contactCenterCity }}</div>
                     </div>
                     <div class="list-group-item">
                         <div class="title">Fotorechte</div>

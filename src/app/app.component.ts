@@ -7,6 +7,9 @@ import 'rxjs';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
+/**
+ * The main component.
+ */
 export class AppComponent implements OnInit {
 
     constructor() {

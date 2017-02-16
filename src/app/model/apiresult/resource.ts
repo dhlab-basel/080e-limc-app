@@ -15,11 +15,11 @@ export class Resource {
     @JsonProperty("resdata", ResourceData)
     public resdata: ResourceData = undefined;
 
-    //@JsonProperty("props", [ResourceProperty])
-    //public props: any = undefined;
+    @JsonProperty("props", [ResourceProperty])
+    public props: any = undefined;
 
-    //@JsonProperty("incoming", User)
-    //public incoming: any[] = undefined;
+    @JsonProperty("incoming", [undefined])
+    public incoming: any[] = undefined;
 
     @JsonProperty("access", String)
     public access: string = undefined;
@@ -27,7 +27,7 @@ export class Resource {
     @JsonProperty("status", Number)
     public status: number = undefined;
 
-    @JsonProperty("user", User)
+    @JsonProperty("user", User, true)
     public user: User = undefined;
 
 }

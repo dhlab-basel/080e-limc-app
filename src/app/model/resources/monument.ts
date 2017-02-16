@@ -3,6 +3,7 @@ import { Scene } from "./scene";
 import { Dating } from "./dating";
 import { GraphNode } from "../apiresult/graph-node";
 import { Photo } from "./photo";
+import { Resource } from "../apiresult/resource";
 
 
 /**
@@ -77,6 +78,14 @@ export class Monument {
 
         return monument;
 
+    }
+
+    /**
+     * Gets the salsah id of the resource instance if possible.
+     * @returns {string}
+     */
+    public getSalsahId() {
+        return this.graphNode instanceof GraphNode ? this.graphNode.obj_id : "";
     }
 
     /**

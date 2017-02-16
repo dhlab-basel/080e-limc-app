@@ -24,12 +24,18 @@ export class ResourceProperty {
     @JsonProperty("attributes", String)
     public attributes: string = undefined;
 
-    //@JsonProperty("occurence", String)
-    public occurence: string = undefined;
+    @JsonProperty("occurrence", String)
+    public occurrence: string = undefined;
 
-    public values: number[];
-    public value_ids: number[];
-    public comments: string[];
+    @JsonProperty("values", [undefined], true)
+    public values: any[] = [];
+
+    @JsonProperty("value_ids", [String], true)
+    public value_ids: string[] = [];
+
+    @JsonProperty("comments", [String], true)
+    public comments: string[] = [];
+
     public value_rights: number[];
     public value_iconsrcs: string[];
     public value_restype: string[];

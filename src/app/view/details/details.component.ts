@@ -6,6 +6,8 @@ import { SearchService } from "../../model/service/search.service";
 import { Monument } from "../../model/resources/monument";
 import { PhotoModalComponent } from "./photo-modal.component";
 import { Photo } from "../../model/resources/photo";
+import { SalsahService } from "../../model/service/salsah.service";
+import { Resource } from "../../model/apiresult/resource";
 
 @Component({
     selector: 'app-details',
@@ -42,9 +44,10 @@ export class DetailsComponent implements OnInit {
      * Constructor.
      * @param router
      * @param activatedRoute
+     * @param salsahService
      * @param searchService
      */
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private searchService: SearchService) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute, private salsahService: SalsahService, private searchService: SearchService) {
     }
 
     /**
@@ -87,6 +90,21 @@ export class DetailsComponent implements OnInit {
 
         // Save the monument
         this.monument = monuments[0];
+/*
+        // Get detailed information now
+        this.salsahService.getResourceById(this.monument.getSalsahId()).subscribe(
+            (resource: Resource) => {
+                console.log(resource);
+                if (resource.props["limc:bibliography"] && resource.props["limc:bibliography"].values && resource.props["limc:bibliography"].values.length > 0)
+                    this.monument.bibliography = resource.props["limc:bibliography"].values[0];
+                if (resource.props["limc:description"] && resource.props["limc:description"].values && resource.props["limc:description"].values.length > 0)
+                    this.monument.description = resource.props["limc:description"].values[0];
+            },
+            (error: Error) => {
+                console.log(error);
+            }
+        );*/
+
         console.log(this.monument);
 
     }

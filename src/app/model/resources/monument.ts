@@ -122,8 +122,10 @@ export class Monument {
      */
     public getPhoto(): Photo {
 
-        let photos: Photo[] = this.getPhotos();
-        if (photos.length > 0) return photos[0];
+        if (this.inventory[0].museum.hasPhotoRight) {
+            let photos: Photo[] = this.getPhotos();
+            if (photos.length > 0) return photos[0];
+        }
 
         let p = new Photo();
         p.url = "assets/img/default.jpg";

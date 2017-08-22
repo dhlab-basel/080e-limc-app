@@ -3,7 +3,7 @@ import { Http, Headers, Response } from '@angular/http';
 
 import { Observable } from 'rxjs';
 
-import { JsonConvert } from "json2typescript"
+import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript"
 
 import { Search } from "../apiresult/search";
 import { Resource } from "../apiresult/resource";
@@ -16,12 +16,18 @@ import { GraphData } from "../apiresult/graph-data";
 export class SalsahService {
 
     /**
-     *
+     * JsonConvert instance
+     * @type {JsonConvert}
+     */
+    jsonConvert: JsonConvert = new JsonConvert();
+
+    /**
+     * Constructor.
      * @param http
      */
     constructor(private http: Http) {
-        JsonConvert.debugMode = false;
-        JsonConvert.valueCheckingMode = JsonConvert.ValueCheckingMode.ALLOW_NULL;
+        this.jsonConvert.operationMode = OperationMode.ENABLE;
+        this.jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL;
     }
 
     /**
@@ -36,7 +42,7 @@ export class SalsahService {
         return this.http
             .get("http://www.salsah.org/api/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex)
             .map((response: Response) => {
-                return JsonConvert.deserializeObject(response.json(), Search);
+                return this.jsonConvert.deserializeObject(response.json(), Search);
             })
             .catch((error: any) => {
                 console.log(error);
@@ -56,7 +62,7 @@ export class SalsahService {
             .get("http://www.salsah.org/api/resources/" + id)
             .map((response: Response) => {
                 try {
-                    return JsonConvert.deserializeObject(response.json(), Resource);
+                    return this.jsonConvert.deserializeObject(response.json(), Resource);
                 } catch (e) {
                     console.log(e);
                     return null;
@@ -80,7 +86,7 @@ export class SalsahService {
         return this.http
             .get("http://salsah.org/api/graphdata/" + id + "?full=1")
             .map((response: Response) => {
-                return JsonConvert.deserializeObject(response.json(), GraphData);
+                return this.jsonConvert.deserializeObject(response.json(), GraphData);
             })
             .catch((error: any) => {
                 console.log(error);

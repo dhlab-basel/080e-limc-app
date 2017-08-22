@@ -1,14 +1,14 @@
 <div class="container">
 
     <!-- Images -->
-    <div class="carousel-container" *ngIf="monument.getPhotos().length > 0">
+    <div class="carousel-container" *ngIf="monument.inventory[0].museum.hasPhotoRight && monument.getPhotos().length > 0">
         <ngb-carousel>
-            <template ngFor let-photo [ngForOf]="monument.getPhotos()" let-i="index">
-                <template ngbSlide>
+            <ng-template ngFor let-photo [ngForOf]="monument.getPhotos()" let-i="index">
+                <ng-template ngbSlide>
                     <div class="slide cursor-pointer" (click)="openGallery(i)" [ngStyle]="{'background-image': 'url(\'' + photo.url + '\')'}">
                     </div>
-                </template>
-            </template>
+                </ng-template>
+            </ng-template>
         </ngb-carousel>
     </div>
 
@@ -121,7 +121,7 @@
                     <div class="list-group-item">
                         <div class="title">Inventar</div>
                         <div class="line">{{ monument.inventory[0].number }}</div>
-                        <div class="line">{{ monument.inventory[0].specification }}</div>
+                        <!--<div class="line">{{ monument.inventory[0].specification }}</div>-->
                     </div>
                     <div class="list-group-item">
                         <div class="title">Fotorechte</div>

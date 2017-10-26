@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { SearchService } from "../model/service/search.service";
 
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router, UrlSegment } from "@angular/router";
 
 @Component({
     selector: 'app-header',
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     /**
      * The amount of entries to load per search
      */
-    searchLimit: number = 6;
+    searchLimit: number = 12;
 
 
     /////////////
@@ -36,12 +36,13 @@ export class HeaderComponent implements OnInit {
     /////////////
 
 
-    constructor(private router: Router, private searchService: SearchService) {
+    constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService) {
     }
 
     ngOnInit() {
         //this.searchString = this.searchList[Math.floor(Math.random() * this.searchList.length)];
-        this.search();
+
+        //this.search();
     }
 
     openHome() {

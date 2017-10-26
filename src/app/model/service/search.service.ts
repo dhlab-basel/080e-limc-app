@@ -1,10 +1,12 @@
-import { Injectable }     from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 import { SalsahService } from "./salsah.service";
 
 import { Monument } from "../resources/monument";
 import { Search } from "../apiresult/search";
 import { GraphData } from "../apiresult/graph-data";
+import { Observable } from "rxjs/Observable";
+import { baseEjectCommandOptions } from "@angular/cli/commands/eject";
 
 @Injectable()
 /**
@@ -16,6 +18,12 @@ export class SearchService {
     // PROPERTIES //
     ////////////////
 
+
+    /**
+     * Event that fires when a search finishes
+     * @type {EventEmitter<boolean>}
+     */
+    searchFinished: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
      * The current search result
@@ -43,7 +51,8 @@ export class SearchService {
     /////////////
 
 
-    constructor(private salsahService: SalsahService) {}
+    constructor(private salsahService: SalsahService) {
+    }
 
 
     reset() {
@@ -61,12 +70,15 @@ export class SearchService {
 
         this.lastSearchString = searchString;
         this.nextSearchStartIndex = startIndex + searchLimit;
-
+        
         this.salsahService.searchString(searchString, searchLimit, startIndex).subscribe(
             (search: Search) => {
 
+                console.log(search);
+
                 // Save the resulting data
                 this.lastSearch = search;
+                console.log(search);
 
                 if (this.lastSearch.subjects === undefined) return;
 
@@ -77,6 +89,7 @@ export class SearchService {
                             (graphData: GraphData) => {
                                 let monuments: Monument[] = graphData.getMonuments();
                                 this.monuments = this.monuments.concat(monuments);
+                                this.searchFinished.emit(monuments.length > 0);
                             },
                             (error: any) => {
                             }

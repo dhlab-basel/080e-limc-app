@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     /**
      * The search string
      */
-    searchString: string = "London";
+    searchString: string = "";
 
     /**
      * The amount of entries to load per search
@@ -40,21 +40,19 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.router.url);
         //this.searchString = this.searchList[Math.floor(Math.random() * this.searchList.length)];
 
         //this.search();
     }
 
     openHome() {
-        this.router.navigate(["search"]);
+        this.router.navigate(["search", this.searchString]);
     }
 
     search() {
-
-        // Perform the search
         this.searchService.search(this.searchString, this.searchLimit, 0);
-        this.openHome();
-
+        this.router.navigate(["search", this.searchString]);
     }
 
 }

@@ -5,8 +5,6 @@ import { SalsahService } from "./salsah.service";
 import { Monument } from "../resources/monument";
 import { Search } from "../apiresult/search";
 import { GraphData } from "../apiresult/graph-data";
-import { Observable } from "rxjs/Observable";
-import { baseEjectCommandOptions } from "@angular/cli/commands/eject";
 
 @Injectable()
 /**
@@ -20,8 +18,18 @@ export class SearchService {
 
 
     /**
-     * Event that fires when a search finishes
+     * Event that fires when a search starts
      * @type {EventEmitter<boolean>}
+     */
+    searchStarted: EventEmitter<void> = new EventEmitter<void>();
+
+    /**
+     * Event that fires when we can announce progress
+     */
+    searchProgress: EventEmitter<number> = new EventEmitter<number>();
+
+    /**
+     * Event that fires when a search finishes
      */
     searchFinished: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -63,6 +71,8 @@ export class SearchService {
 
     search(searchString: string, searchLimit: number, startIndex: number) {
 
+        this.searchStarted.emit();
+
         // Reset last search if necessary
         if (startIndex === 0) {
             this.reset();
@@ -70,23 +80,26 @@ export class SearchService {
 
         this.lastSearchString = searchString;
         this.nextSearchStartIndex = startIndex + searchLimit;
-        
+
         this.salsahService.searchString(searchString, searchLimit, startIndex).subscribe(
             (search: Search) => {
 
-                console.log(search);
-
                 // Save the resulting data
                 this.lastSearch = search;
-                console.log(search);
 
                 if (this.lastSearch.subjects === undefined) return;
 
+                let i: number = 0;
+                //console.log(searchLimit);
+
                 for (let subject of this.lastSearch.subjects) {
+                    i++;
+                    //console.log(i);
 
                     this.salsahService.getGraphDataById(subject.obj_id)
                         .subscribe(
                             (graphData: GraphData) => {
+                                console.log(graphData);
                                 let monuments: Monument[] = graphData.getMonuments();
                                 this.monuments = this.monuments.concat(monuments);
                                 this.searchFinished.emit(monuments.length > 0);

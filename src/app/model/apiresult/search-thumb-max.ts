@@ -1,12 +1,12 @@
-import { JsonObject, JsonProperty } from "json2typescript";
+import { Any, JsonObject, JsonProperty } from "json2typescript";
 
 @JsonObject
 export class SearchThumbMax {
 
-    @JsonProperty("nx", Number)
+    @JsonProperty("nx", Any)
     public nx: number = undefined;
 
-    @JsonProperty("ny", Number)
+    @JsonProperty("ny", Any)
     public ny: number = undefined;
 
 }

@@ -22,6 +22,7 @@ export class Scene {
     public sequence: number;
     public scenename: string[];
     public keyword: string[];
+    public url: string[];
 
     public photo: Photo[] = [];
     public dating: Dating[] = [];
@@ -55,6 +56,8 @@ export class Scene {
         if (scene.scenename && scene.scenename.length > 0) scene.scenename.sort();
         scene.keyword = node.getValues("limc:keyword");
         if (scene.keyword && scene.keyword.length > 0) scene.keyword.sort();
+        scene.url = node.getValues("limc:url");
+        if (scene.url && scene.url.length > 0) scene.url.sort();
 
         return scene;
 

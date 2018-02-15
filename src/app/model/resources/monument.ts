@@ -35,6 +35,7 @@ export class Monument {
     public inscription: string;
     public bibliography: string;
     public comment: string;
+    public url: string[];
 
     public dating: Dating[] = [];
     public scene: Scene[] = [];
@@ -75,6 +76,8 @@ export class Monument {
         monument.inscription = node.getValues("limc:inscription")[0];
         monument.bibliography = node.getValues("limc:bibliography")[0];
         monument.comment = node.getValues("limc:comment")[0];
+        monument.url = node.getValues("limc:url");
+        if (monument.url && monument.url.length > 0) monument.url.sort();
 
         return monument;
 
@@ -108,6 +111,7 @@ export class Monument {
 
         for (let scene of this.scene) {
             for (let photo of scene.photo) {
+                // TODO CHECK IF PHOTORIGHT GIVEN
                 photos.push(photo);
             }
         }

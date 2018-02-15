@@ -1,8 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { catchError, map } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { Observable } from "rxjs";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { Observable } from "rxjs/Observable";
 
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript"
 
@@ -40,13 +41,14 @@ export class SalsahService {
      */
     public searchString(searchString: string, nRows: number, startIndex: number): Observable<Search> {
 
-        return this.http
-            .get("http://www.salsah.org/api/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex)
-            .pipe(
-                map((response: Response) => {
-                    return this.jsonConvert.deserializeObject(response, Search);
-                })
-            );
+        return this.http.get("http://www.salsah.org/api/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex)
+            .map((response: Response) => {
+                return this.jsonConvert.deserializeObject(response, Search);
+            })
+            .catch((error: any) => {
+                console.error(error);
+                return Observable.throw("");
+            });
 
     }
 
@@ -59,11 +61,19 @@ export class SalsahService {
 
         return this.http
             .get("http://www.salsah.org/api/resources/" + id)
-            .pipe(
-                map((response: Response) => {
+            .map((response: Response) => {
+                try {
                     return this.jsonConvert.deserializeObject(response, Resource);
-                })
-            );
+                } catch (e) {
+                    console.log(e);
+                    return null;
+                }
+            })
+            .catch((error: any) => {
+                console.error(error);
+                return Observable.throw("");
+            });
+
 
     }
 
@@ -75,12 +85,14 @@ export class SalsahService {
     public getGraphDataById(id: string): Observable<GraphData> {
 
         return this.http
-            .get("http://salsah.org/api/graphdata/" + id + "?full=1&levels=0")
-            .pipe(
-                map((response: Response) => {
-                    return this.jsonConvert.deserializeObject(response, GraphData);
-                })
-            );
+            .get("http://salsah.org/api/graphdata/" + id + "?full=1")
+            .map((response: Response) => {
+                return this.jsonConvert.deserializeObject(response, GraphData);
+            })
+            .catch((error: any) => {
+                console.error(error);
+                return Observable.throw("");
+            });
 
     }
 

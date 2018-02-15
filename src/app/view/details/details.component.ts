@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 
 import { SearchService } from "../../model/service/search.service";
@@ -8,6 +8,9 @@ import { PhotoModalComponent } from "./photo-modal.component";
 import { Photo } from "../../model/resources/photo";
 import { SalsahService } from "../../model/service/salsah.service";
 import { Resource } from "../../model/apiresult/resource";
+import { GraphData } from "../../model/apiresult/graph-data";
+import { Search } from "../../model/apiresult/search";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
     selector: 'app-details',
@@ -17,7 +20,7 @@ import { Resource } from "../../model/apiresult/resource";
 /**
  * Detail page for a monument.
  */
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
 
     ////////////////
     // PROPERTIES //
@@ -33,6 +36,12 @@ export class DetailsComponent implements OnInit {
      * The current monument.
      */
     monument: Monument = null;
+
+    /**
+     * Subscriptions
+     * @type {Array}
+     */
+    subscriptions: Subscription[] = [];
 
 
     /////////////
@@ -56,9 +65,19 @@ export class DetailsComponent implements OnInit {
     ngOnInit() {
 
         // Make sure we scroll to the top
+        /*
         this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
             document.body.scrollTop = 0;
-        });
+        });*/
+
+
+        // Subscribe to changes in the search value
+        this.subscriptions[0] = this.searchService.searchFinished.subscribe(
+            (success: boolean) => {
+                if (this.searchService.monuments[0])
+                    this.monument = this.searchService.monuments[0];
+            }
+        );
 
         // Get the document data
         this.activatedRoute.params.subscribe(params => {
@@ -73,39 +92,47 @@ export class DetailsComponent implements OnInit {
     }
 
     /**
+     * NgOnDestroy.
+     */
+    ngOnDestroy() {
+        for (let subscription of this.subscriptions) subscription.unsubscribe();
+    }
+
+    /**
      * Gets the monument.
      * @param id
      */
     getMonument(id: number) {
 
         // Get the monument from the list of the search if possible
-        let monuments: Monument[] = this.searchService.monuments.filter((monument: Monument) => {
+        this.monument = this.searchService.monuments.find((monument: Monument) => {
             return monument.id === id;
         });
 
-        if (monuments.length === 0) {
-            this.router.navigate(['search']);
-            return;
-        }
+        // Get the monument from the server if necessary
+        if (this.monument instanceof Monument) return;
 
-        // Save the monument
-        this.monument = monuments[0];
-/*
-        // Get detailed information now
-        this.salsahService.getResourceById(this.monument.getSalsahId()).subscribe(
-            (resource: Resource) => {
-                console.log(resource);
-                if (resource.props["limc:bibliography"] && resource.props["limc:bibliography"].values && resource.props["limc:bibliography"].values.length > 0)
-                    this.monument.bibliography = resource.props["limc:bibliography"].values[0];
-                if (resource.props["limc:description"] && resource.props["limc:description"].values && resource.props["limc:description"].values.length > 0)
-                    this.monument.description = resource.props["limc:description"].values[0];
-            },
-            (error: Error) => {
-                console.log(error);
-            }
-        );*/
+        // No data is available, so we have to search
+        this.searchService.search(id+"", 100, 0);
 
-        console.log(this.monument);
+
+
+
+        /*
+                // Get detailed information now
+                this.salsahService.getResourceById(this.monument.getSalsahId()).subscribe(
+                    (resource: Resource) => {
+                        console.log(resource);
+                        if (resource.props["limc:bibliography"] && resource.props["limc:bibliography"].values && resource.props["limc:bibliography"].values.length > 0)
+                            this.monument.bibliography = resource.props["limc:bibliography"].values[0];
+                        if (resource.props["limc:description"] && resource.props["limc:description"].values && resource.props["limc:description"].values.length > 0)
+                            this.monument.description = resource.props["limc:description"].values[0];
+                    },
+                    (error: Error) => {
+                        console.log(error);
+                    }
+                );*/
+
 
     }
 

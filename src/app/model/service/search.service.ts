@@ -1,4 +1,4 @@
-import { Injectable }     from '@angular/core';
+import { Injectable }     from "@angular/core";
 
 import { SalsahService } from "./salsah.service";
 
@@ -65,26 +65,30 @@ export class SearchService {
         this.salsahService.searchString(searchString, searchLimit, startIndex).subscribe(
             (search: Search) => {
 
+                console.log(search);
+
                 // Save the resulting data
                 this.lastSearch = search;
 
                 if (this.lastSearch.subjects === undefined) return;
 
-                for (let subject of this.lastSearch.subjects) {
+                for (const subject of this.lastSearch.subjects) {
 
                     this.salsahService.getGraphDataById(subject.obj_id)
                         .subscribe(
                             (graphData: GraphData) => {
-                                let monuments: Monument[] = graphData.getMonuments();
+                                const monuments: Monument[] = graphData.getMonuments();
                                 this.monuments = this.monuments.concat(monuments);
                             },
                             (error: any) => {
+                                console.error(error);
                             }
                         );
 
                 }
             },
             (error: any) => {
+                console.error(error);
             }
         );
 

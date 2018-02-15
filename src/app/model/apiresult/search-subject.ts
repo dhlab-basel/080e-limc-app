@@ -1,4 +1,4 @@
-import { JsonObject, JsonProperty } from "json2typescript";
+import { Any, JsonObject, JsonProperty } from "json2typescript";
 
 import { SalsahService } from "../service/salsah.service";
 import { GraphData } from "./graph-data";
@@ -27,7 +27,7 @@ export class SearchSubject {
     @JsonProperty("valuelabel", [String])
     public valuelabel: string = undefined;
 
-    @JsonProperty("value", [undefined])
+    @JsonProperty("value", [Any])
     public value: any = undefined;
 
     public getGraph(salsahService: SalsahService) {

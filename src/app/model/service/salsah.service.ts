@@ -1,7 +1,8 @@
-import { Injectable }     from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { catchError, map } from "rxjs/operators";
 
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript"
 
@@ -25,7 +26,7 @@ export class SalsahService {
      * Constructor.
      * @param http
      */
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
         this.jsonConvert.operationMode = OperationMode.ENABLE;
         this.jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL;
     }
@@ -41,13 +42,11 @@ export class SalsahService {
 
         return this.http
             .get("http://www.salsah.org/api/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex)
-            .map((response: Response) => {
-                return this.jsonConvert.deserializeObject(response.json(), Search);
-            })
-            .catch((error: any) => {
-                console.log(error);
-                return Observable.throw("");
-            });
+            .pipe(
+                map((response: Response) => {
+                    return this.jsonConvert.deserializeObject(response, Search);
+                })
+            );
 
     }
 
@@ -60,19 +59,11 @@ export class SalsahService {
 
         return this.http
             .get("http://www.salsah.org/api/resources/" + id)
-            .map((response: Response) => {
-                try {
-                    return this.jsonConvert.deserializeObject(response.json(), Resource);
-                } catch (e) {
-                    console.log(e);
-                    return null;
-                }
-            })
-            .catch((error: any) => {
-                console.log(error);
-                return Observable.throw("");
-            });
-
+            .pipe(
+                map((response: Response) => {
+                    return this.jsonConvert.deserializeObject(response, Resource);
+                })
+            );
 
     }
 
@@ -84,14 +75,12 @@ export class SalsahService {
     public getGraphDataById(id: string): Observable<GraphData> {
 
         return this.http
-            .get("http://salsah.org/api/graphdata/" + id + "?full=1")
-            .map((response: Response) => {
-                return this.jsonConvert.deserializeObject(response.json(), GraphData);
-            })
-            .catch((error: any) => {
-                console.log(error);
-                return Observable.throw("");
-            });
+            .get("http://salsah.org/api/graphdata/" + id + "?full=1&levels=0")
+            .pipe(
+                map((response: Response) => {
+                    return this.jsonConvert.deserializeObject(response, GraphData);
+                })
+            );
 
     }
 

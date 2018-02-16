@@ -8,7 +8,7 @@ import { GraphNodeProperty } from "./graph-node-property";
 export class GraphEdge {
 
     @JsonProperty("cnt", Number)
-    public cnt: Number = undefined;
+    public count: Number = undefined;
 
     @JsonProperty("label", String)
     public label: String = undefined;

@@ -3,6 +3,8 @@
 @import "assets/simple-line-icons/css/simple-line-icons.css";
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600');
 
+@import "~variables.scss";
+
 /***********************/
 /* BOOTSTRAP OVERRIDES */
 /***********************/
@@ -62,6 +64,10 @@ body {
     }
 }
 
+/* Page */
+.page {
+    min-height: 25rem;
+}
 
 /* Text */
 .text-bold {
@@ -83,11 +89,11 @@ body {
 
 /* Font color */
 .fc-primary {
-    color: rgba(0, 0, 0, 0.87);
+    color: $font-color-primary;
 }
 .fc-secondary {
-    color: rgba(0, 0, 0, 0.54);
+    color: $font-color-secondary
 }
 .fc-hint {
-    color: rgba(0, 0, 0, 0.38);
+    color: $font-color-muted;
 }

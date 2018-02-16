@@ -10,10 +10,10 @@ export class GraphNodeProperty {
     public label: string = undefined;
 
     @JsonProperty("pid", String)
-    public pid: string = undefined;
+    public pId: string = undefined;
 
     @JsonProperty("value_ids", [String])
-    public value_ids: string[] = undefined;
+    public valueIds: string[] = undefined;
 
     @JsonProperty("values", [String])
     public values: string[] = undefined;

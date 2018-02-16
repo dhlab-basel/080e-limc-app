@@ -31,16 +31,16 @@ export class SearchSubject {
     public value: any = undefined;
 
     public getGraph(salsahService: SalsahService) {
-
+/*
         salsahService.getGraphDataById(this.obj_id)
             .subscribe(
             (graphData: GraphData) => {
                 console.log(graphData);
             },
-            (error: any) => { console.log('error');/*this.error = <any>error*/ },
+            (error: any) => { console.log('error');/*this.error = <any>error* },
             () => { }
         );
-
+*/
     }
 
 }

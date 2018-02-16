@@ -4,7 +4,7 @@ import { NgbModal, NgbModalRef, NgbModalOptions } from "@ng-bootstrap/ng-bootstr
 @Component({
     selector: 'app-photo-modal',
     templateUrl: './photo-modal.component.html',
-    styleUrls: ['./photo-modal.component.css']
+    styleUrls: ['./photo-modal.component.scss']
 })
 /**
  * Gui for a general modal (alert).

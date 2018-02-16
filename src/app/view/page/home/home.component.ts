@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from "@angular/router";
 
-import { SearchService } from "../../model/service/search.service";
+import { SearchService } from "../../../model/service/search.service";
 
-import { Monument } from "../../model/resources/monument";
+import { Monument } from "../../../model/resources/monument";
 import { NgbProgressbarConfig } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css'],
+    styleUrls: ['./home.component.scss'],
 })
 /**
- * The home gui.
+ * The page gui.
  */
 export class HomeComponent implements OnInit {
 
@@ -90,14 +90,14 @@ export class HomeComponent implements OnInit {
      * Performs a basic search
      */
     search() {
-        this.searchService.search(this.searchString, this.searchLimit, 0);
+        //this.searchService.search(this.searchString, this.searchLimit, 0);
     }
 
     /**
      * Searches for more monuments.
      */
     searchMore() {
-        this.searchService.searchMore(this.searchLimit);
+        //this.searchService.searchMore(this.searchLimit);
     }
 
 }

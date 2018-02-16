@@ -41,7 +41,7 @@ export class SearchService {
     /////////////
     // METHODS //
     /////////////
-
+/*
 
     constructor(private salsahService: SalsahService) {}
 
@@ -96,6 +96,6 @@ export class SearchService {
 
     searchMore(searchLimit: number) {
         this.search(this.lastSearchString, searchLimit, this.nextSearchStartIndex);
-    }
+    }*/
 
 }

@@ -54,7 +54,7 @@ export class Monument {
      */
     public static fromGraphNode(node: GraphNode): Monument {
 
-        let monument: Monument = new Monument();
+        const monument: Monument = new Monument();
         monument.graphNode = node;
 
         monument.id = +node.getValues("limc:id")[0];
@@ -84,14 +84,6 @@ export class Monument {
     }
 
     /**
-     * Gets the salsah id of the resource instance if possible.
-     * @returns {string}
-     */
-    public getSalsahId() {
-        return this.graphNode instanceof GraphNode ? this.graphNode.obj_id : "";
-    }
-
-    /**
      * Adds a connection if possible.
      * @param connection
      */
@@ -107,12 +99,15 @@ export class Monument {
      */
     public getPhotos() {
 
-        let photos: Photo[] = [];
+        const photos: Photo[] = [];
 
-        for (let scene of this.scene) {
-            for (let photo of scene.photo) {
+        // this.inventory[0].museum.hasPhotoRight
+
+        for (const scene of this.scene) {
+            for (const photo of scene.photo) {
                 // TODO CHECK IF PHOTORIGHT GIVEN
                 photos.push(photo);
+                console.log(photo.url);
             }
         }
 
@@ -127,7 +122,7 @@ export class Monument {
     public getPhoto(): Photo {
 
         if (this.inventory[0].museum.hasPhotoRight) {
-            let photos: Photo[] = this.getPhotos();
+            const photos: Photo[] = this.getPhotos();
             if (photos.length > 0) return photos[0];
         }
 

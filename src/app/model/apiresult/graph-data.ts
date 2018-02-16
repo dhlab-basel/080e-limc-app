@@ -29,55 +29,55 @@ export class GraphData {
     public getMonuments(): Monument[] {
 
         // Save all instances
-        let resourcesById: any[] = [];
+        const resourcesById: any[] = [];
 
-        let monuments: Monument[] = [];
+        const monuments: Monument[] = [];
 
-        for (let key in this.graph.nodes) {
+        for (const key in this.graph.nodes) {
 
-            let node: GraphNode = this.graph.nodes[key];
-            node.obj_id = key;
+            const node: GraphNode = this.graph.nodes[key];
+            //node.obj_id = key;
 
-            switch (node.resinfo.label) {
+            switch (node.resInfo.label) {
                 case "Monument":
-                    let monument = Monument.fromGraphNode(node);
+                    const monument = Monument.fromGraphNode(node);
                     monuments.push(monument);
                     resourcesById[key] = monument;
                     break;
                 case "Szene":
-                    let scene = Scene.fromGraphNode(node);
+                    const scene = Scene.fromGraphNode(node);
                     resourcesById[key] = scene;
                     break;
                 case "Inventar":
-                    let inventory = Inventory.fromGraphNode(node);
+                    const inventory = Inventory.fromGraphNode(node);
                     resourcesById[key] = inventory;
                     break;
                 case "Museum":
-                    let museum = Museum.fromGraphNode(node);
+                    const museum = Museum.fromGraphNode(node);
                     resourcesById[key] = museum;
                     break;
                 case "Epoche":
-                    let epoch = Epoch.fromGraphNode(node);
+                    const epoch = Epoch.fromGraphNode(node);
                     resourcesById[key] = epoch;
                     break;
                 case "Datierung":
-                    let dating = Dating.fromGraphNode(node);
+                    const dating = Dating.fromGraphNode(node);
                     resourcesById[key] = dating;
                     break;
                 case "Catalog Thes CRA":
-                    let catalogThesCra = CatalogThesCra.fromGraphNode(node);
+                    const catalogThesCra = CatalogThesCra.fromGraphNode(node);
                     resourcesById[key] = catalogThesCra;
                     break;
                 case "Catalog Thes CRA Kapitel":
-                    let catalogThesCraChapter = CatalogThesCraChapter.fromGraphNode(node);
+                    const catalogThesCraChapter = CatalogThesCraChapter.fromGraphNode(node);
                     resourcesById[key] = catalogThesCraChapter;
                     break;
                 case "Catalog LIMC":
-                    let catalogLimc = CatalogLimc.fromGraphNode(node);
+                    const catalogLimc = CatalogLimc.fromGraphNode(node);
                     resourcesById[key] = catalogLimc;
                     break;
                 case "Foto":
-                    let photo = Photo.fromGraphNode(node);
+                    const photo = Photo.fromGraphNode(node);
                     resourcesById[key] = photo;
                     break;
                 default:
@@ -87,14 +87,14 @@ export class GraphData {
         }
 
         // Make all connections
-        for (let key in this.graph.edges) {
+        for (const key in this.graph.edges) {
 
-            let split = key.split(";");
+            const split = key.split(";");
 
             if (split.length !== 2) continue;
 
-            let obj_id_from = split[0];
-            let obj_id_to = split[1];
+            const obj_id_from = split[0];
+            const obj_id_to = split[1];
 
             if (typeof resourcesById[obj_id_from] !== "undefined" && typeof resourcesById[obj_id_from].addConnection === "function") {
                 resourcesById[obj_id_from].addConnection(resourcesById[obj_id_to]);

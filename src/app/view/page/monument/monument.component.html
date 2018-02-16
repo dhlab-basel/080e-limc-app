@@ -1,7 +1,7 @@
 <div class="container">
 
     <!-- Images -->
-    <div class="carousel-container" *ngIf="monument?.inventory[0].museum.hasPhotoRight && monument?.getPhotos().length > 0">
+    <div class="carousel-container" *ngIf="monument?.getPhotos().length > 0">
         <ngb-carousel>
             <ng-template ngFor let-photo [ngForOf]="monument?.getPhotos()" let-i="index">
                 <ng-template ngbSlide>

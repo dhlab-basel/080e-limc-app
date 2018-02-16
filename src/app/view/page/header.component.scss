@@ -1,6 +1,8 @@
+@import "~variables.scss";
+
 header {
     height: 5rem;
-    background-color: #FFF;
+    background-color: $bg-color-white;
     margin-bottom: 2rem;
 }
 

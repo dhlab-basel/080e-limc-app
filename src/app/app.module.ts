@@ -1,30 +1,33 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppRoutingModule } from "./app-routing.module";
 
-import { SearchService } from "./model/service/search.service";
-
-import { AppComponent } from './app.component';
-import { DetailsComponent } from './view/details/details.component';
-import { HomeComponent } from './view/home/home.component';
-import { HeaderComponent } from './view/header.component';
-import { FooterComponent } from './view/footer.component';
 import { SalsahService } from "./model/service/salsah.service";
-import { PhotoModalComponent } from './view/details/photo-modal.component';
+import { SearchService } from "./model/service/search.service";
+import { LimcService } from "./model/service/limc.service";
+
+import { AppComponent } from "./app.component";
+import { MonumentComponent } from "./view/page/monument/monument.component";
+import { HomeComponent } from "./view/page/home/home.component";
+import { HeaderComponent } from "./view/page/header.component";
+import { FooterComponent } from "./view/page/footer.component";
+import { PhotoModalComponent } from "./view/page/monument/modals/photo-modal.component";
+import { WelcomeComponent } from "./view/welcome/welcome.component";
 
 @NgModule({
     declarations: [
         AppComponent,
-        DetailsComponent,
+        MonumentComponent,
         HomeComponent,
         HeaderComponent,
         FooterComponent,
-        PhotoModalComponent
+        PhotoModalComponent,
+        WelcomeComponent
     ],
     imports: [
         BrowserModule,
@@ -33,7 +36,7 @@ import { PhotoModalComponent } from './view/details/photo-modal.component';
         AppRoutingModule,
         NgbModule.forRoot()
     ],
-    providers: [SalsahService, SearchService],
+    providers: [SalsahService, SearchService, LimcService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

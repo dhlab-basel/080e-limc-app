@@ -7,9 +7,10 @@ import { SalsahService } from "./salsah.service";
 
 import { Monument } from "../resources/monument";
 import { Resource } from "../apiresult/resource";
-import { Graph } from "../apiresult/graph";
 import { GraphData } from "../apiresult/graph-data";
 import { ErrorObservable } from "rxjs/observable/ErrorObservable";
+import { GoogleService } from "./google.service";
+import { Museum } from "../resources/museum";
 
 @Injectable()
 /**
@@ -34,8 +35,9 @@ export class LimcService {
     /**
      * Constructor.
      * @param salsahService
+     * @param googleService
      */
-    constructor(private salsahService: SalsahService) {
+    constructor(private salsahService: SalsahService, private googleService: GoogleService) {
     }
 
 
@@ -67,8 +69,14 @@ export class LimcService {
                 const monuments: Monument[] = graphData.getMonuments();
 
                 if (monuments.length !== 1) {
-                    console.error("");
-                    throw new ErrorObservable("");
+                    throw new ErrorObservable("More or less than 1 monument found.");
+                }
+
+                // Get the museum coordinates
+                if (monuments[0].inventory) {
+                    for (const inventory of monuments[0].inventory) {
+                        this.fetchMuseumCoords(inventory.museum);
+                    }
                 }
 
                 return monuments[0];
@@ -79,10 +87,37 @@ export class LimcService {
 
     }
 
+    /**
+     * Gets the coordinates of the museum.
+     * @param {Museum} museum
+     */
+    private fetchMuseumCoords(museum: Museum) {
+
+        this.googleService.getLatLon(museum.getAddress()).subscribe(
+            (latlon: [number, number]) => {
+                museum.latitude = latlon[0];
+                museum.longitude = latlon[1];
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );
+
+    }
+
     findMonumentsByKeyword(keyword: string): Observable<Monument[]> {
 
+        // First
 
 
     }
+
+    private getResourcesFromKeyword(keyword: string): Observable<Resource> {
+
+    }
+
+
+
+
 
 }

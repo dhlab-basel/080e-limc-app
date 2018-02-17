@@ -25,6 +25,9 @@ export class Museum {
     public comment: string;
     public hasPhotoRight: boolean;
 
+    public latitude: number;
+    public longitude: number;
+
 
     /////////////
     // METHODS //
@@ -59,6 +62,14 @@ export class Museum {
 
         return museum;
 
+    }
+
+    /**
+     * Gets the address as one line string.
+     * @returns {string}
+     */
+    public getAddress() {
+        return this.city + "," + this.country;
     }
 
 }

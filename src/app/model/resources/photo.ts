@@ -1,4 +1,5 @@
 import { GraphNode } from "../apiresult/graph-node";
+import { Museum } from "./museum";
 
 export class Photo {
 
@@ -10,6 +11,8 @@ export class Photo {
     private graphNode: GraphNode;
 
     public url: string;
+    public photoCredit: string;
+    public hasPhotoRight: boolean;
 
 
     /////////////
@@ -24,13 +27,32 @@ export class Photo {
      */
     public static fromGraphNode(node: GraphNode): Photo {
 
-        let photo: Photo = new Photo();
+        const photo: Photo = new Photo();
         photo.graphNode = node;
 
-        photo.url = node.getValues("limc:url")[0];
+        photo.url = node.getValues("limc:monumentUrl")[0]; // TODO
+        photo.photoCredit = node.getValues("limc:photoCredit")[0];
+
+        if (node.getValues("limc:hasPhotoRight")[0] === "1") {
+            photo.hasPhotoRight = true;
+        } else if (node.getValues("limc:hasPhotoRight")[0] === "0") {
+            photo.hasPhotoRight = false;
+        }
+
+        console.log(photo.hasPhotoRight);
 
         return photo;
 
+    }
+
+    /**
+     * Checks whether the photo should be displayed to the user or not.
+     * @param museum
+     * @returns {boolean}
+     */
+    public shouldDisplay(museum: Museum): boolean {
+        if (this.hasPhotoRight === undefined && museum instanceof Museum) return museum.hasPhotoRight;
+        return this.hasPhotoRight;
     }
 
 }

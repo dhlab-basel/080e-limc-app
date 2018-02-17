@@ -62,7 +62,7 @@ export class SalsahService {
             headers: {},
             observe: "response"
         }).pipe(
-            map((response: HttpResponse<Resource>) => {
+            map((response: HttpResponse<any>) => {
                 return this.jsonConvert.deserializeObject(response.body, Resource);
             }),
             catchError((error: any) => {
@@ -84,7 +84,7 @@ export class SalsahService {
             headers: {},
             observe: "response"
         }).pipe(
-            map((response: HttpResponse<GraphData>) => {
+            map((response: HttpResponse<any>) => {
                 return this.jsonConvert.deserializeObject(response.body, GraphData);
             }),
             catchError((error: any) => {
@@ -108,7 +108,7 @@ export class SalsahService {
             headers: {},
             observe: "response"
         }).pipe(
-            map((response: HttpResponse<GraphData>) => {
+            map((response: HttpResponse<any>) => {
                 return this.jsonConvert.deserializeObject(response.body, Search);
             }),
             catchError((error: any) => {

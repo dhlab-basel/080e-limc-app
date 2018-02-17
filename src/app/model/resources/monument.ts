@@ -4,6 +4,7 @@ import { Dating } from "./dating";
 import { GraphNode } from "../apiresult/graph-node";
 import { Photo } from "./photo";
 import { Resource } from "../apiresult/resource";
+import { Museum } from "./museum";
 
 
 /**
@@ -35,7 +36,9 @@ export class Monument {
     public inscription: string;
     public bibliography: string;
     public comment: string;
-    public url: string[];
+    public monumentUrl: string[];
+    public inscriptionUrl: string[];
+    public museumUrl: string[];
 
     public dating: Dating[] = [];
     public scene: Scene[] = [];
@@ -76,8 +79,9 @@ export class Monument {
         monument.inscription = node.getValues("limc:inscription")[0];
         monument.bibliography = node.getValues("limc:bibliography")[0];
         monument.comment = node.getValues("limc:comment")[0];
-        monument.url = node.getValues("limc:url");
-        if (monument.url && monument.url.length > 0) monument.url.sort();
+        monument.monumentUrl = node.getValues("limc:monumentUrl");
+        monument.inscriptionUrl = node.getValues("limc:inscriptionUrl");
+        monument.museumUrl = node.getValues("limc:museumUrl");
 
         return monument;
 
@@ -99,15 +103,13 @@ export class Monument {
      */
     public getPhotos() {
 
-        const photos: Photo[] = [];
+        const museum: Museum = this.inventory && this.inventory[0] && this.inventory[0].museum ? this.inventory[0].museum : null;
 
-        // this.inventory[0].museum.hasPhotoRight
+        const photos: Photo[] = [];
 
         for (const scene of this.scene) {
             for (const photo of scene.photo) {
-                // TODO CHECK IF PHOTORIGHT GIVEN
-                photos.push(photo);
-                console.log(photo.url);
+                if (photo.shouldDisplay(museum)) photos.push(photo);
             }
         }
 

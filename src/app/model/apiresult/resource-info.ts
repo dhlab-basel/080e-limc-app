@@ -1,6 +1,7 @@
 import { JsonObject, JsonProperty } from "json2typescript";
 
 import { StringToNumberConverter } from "../converters/string-to-number-converter";
+import { ResourceInfoImage } from "./resource-info-image";
 
 @JsonObject
 export class ResourceInfo {
@@ -28,5 +29,11 @@ export class ResourceInfo {
 
     @JsonProperty("restype_iconsrc", String)
     public resTypeIconSrc: string = undefined;
+
+    @JsonProperty("locations", [ResourceInfoImage])
+    public thumbnailImages: ResourceInfoImage[] = undefined;
+
+    @JsonProperty("locdata", ResourceInfoImage)
+    public fullImage: ResourceInfoImage = undefined;
 
 }

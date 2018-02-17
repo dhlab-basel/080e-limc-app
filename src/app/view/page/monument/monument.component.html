@@ -5,8 +5,8 @@
         <ngb-carousel>
             <ng-template ngFor let-photo [ngForOf]="monument?.getPhotos()" let-i="index">
                 <ng-template ngbSlide>
-                    <div class="slide cursor-pointer" (click)="openGallery(i)" [ngStyle]="{'background-image': 'url(\'' + photo.url + '\')'}">
-                    </div>
+                    <div class="slide cursor-pointer" (click)="openGallery(i)"
+                        [ngStyle]="{'background-image': 'url(\'' + photo.url + '\')'}"></div>
                 </ng-template>
             </ng-template>
         </ngb-carousel>
@@ -22,7 +22,8 @@
             <div class="card mb-3">
                 <h4 class="card-header text-ellipsis">Daten</h4>
                 <div class="card-img-top">
-                    <div class="card-img-top-limc" [ngStyle]="{'background-image': 'url(' + monument?.getPhoto().url + ')'}"></div>
+                    <div class="card-img-top-limc"
+                        [ngStyle]="{'background-image': 'url(' + monument?.getPhoto().url + ')'}"></div>
                 </div>
                 <div class="list-group list-group-flush">
                     <div class="list-group-item">
@@ -50,6 +51,14 @@
                         <div class="list-group-item">
                             <div class="title">Inschriften</div>
                             <div class="line">{{ monument?.inscription }}</div>
+                        </div>
+                    </div>
+                    <div class="list-group list-group-flush" *ngIf="monument?.inscriptionUrl.length > 0">
+                        <div class="list-group-item">
+                            <div class="title">Links</div>
+                            <div class="line text-ellipsis" *ngFor="let url of monument?.inscriptionUrl">
+                                <a href="{{ url }}" target="_blank">{{ url }}</a>
+                            </div>
                         </div>
                     </div>
                     <div class="list-group list-group-flush" *ngIf="monument?.bibliography">
@@ -95,10 +104,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="list-group list-group-flush" *ngIf="monument?.url.length > 0">
+                    <div class="list-group list-group-flush" *ngIf="monument?.monumentUrl.length > 0">
                         <div class="list-group-item">
                             <div class="title">Links</div>
-                            <div class="line" *ngFor="let url of monument?.url">
+                            <div class="line text-ellipsis" *ngFor="let url of monument?.monumentUrl">
                                 <a href="{{ url }}" target="_blank">{{ url }}</a>
                             </div>
                         </div>
@@ -116,7 +125,17 @@
         </div>
 
         <!-- Museum -->
-        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" *ngIf="monument?.inventory.length > 0 && monument?.inventory[0].museum">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+            *ngIf="monument?.inventory.length > 0 && monument?.inventory[0].museum">
+
+            <div class="card mb-3" *ngIf="monument?.inventory[0].museum.latitude">
+                <h4 class="card-header text-ellipsis">Standort</h4>
+                <agm-map [latitude]="monument?.inventory[0].museum.latitude"
+                    [longitude]="monument?.inventory[0].museum.longitude">
+                    <agm-marker [latitude]="monument?.inventory[0].museum.latitude"
+                        [longitude]="monument?.inventory[0].museum.longitude"></agm-marker>
+                </agm-map>
+            </div>
 
             <div class="card">
                 <h4 class="card-header text-ellipsis">Museum</h4>
@@ -133,12 +152,22 @@
                     </div>
                     <div class="list-group-item">
                         <div class="title">Fotorechte</div>
-                        <div class="line">{{ monument?.inventory[0].museum.hasPhotoRight ? "Vorhanden" : "Nicht vorhanden" }}</div>
-                        <div class="line" *ngIf="monument?.inventory[0].museum.photoCredit">Credit: {{ monument?.inventory[0].museum.photoCredit }}</div>
+                        <div
+                            class="line">{{ monument?.inventory[0].museum.hasPhotoRight ? "Vorhanden" : "Nicht vorhanden" }}
+                        </div>
+                        <div class="line"
+                            *ngIf="monument?.inventory[0].museum.photoCredit">Credit: {{ monument?.inventory[0].museum.photoCredit }}
+                        </div>
                     </div>
                     <div class="list-group-item" *ngIf="monument?.inventory[0].museum.comment">
                         <div class="title">Kommentar</div>
                         <div class="line">{{ monument?.inventory[0].museum.comment }}</div>
+                    </div>
+                    <div class="list-group-item" *ngIf="monument?.museumUrl.length > 0">
+                        <div class="title">Links</div>
+                        <div class="line text-ellipsis" *ngFor="let url of monument?.museumUrl">
+                            <a href="{{ url }}" target="_blank">{{ url }}</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -212,7 +241,7 @@
                 <div class="list-group list-group-flush" *ngIf="scene.url.length > 0">
                     <div class="list-group-item">
                         <div class="title">Links</div>
-                        <div class="line" *ngFor="let url of scene.url">
+                        <div class="line text-ellipsis" *ngFor="let url of scene.url">
                             <a href="{{ url }}" target="_blank">{{ url }}</a>
                         </div>
                     </div>
@@ -228,7 +257,8 @@
         </div>
 
         <!-- Catalogs -->
-        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" *ngIf="scene.catalogLimc?.length > 0 || scene.catalogThesCRA?.length > 0">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+            *ngIf="scene.catalogLimc?.length > 0 || scene.catalogThesCRA?.length > 0">
 
             <!-- LIMC -->
             <div class="card mb-3" *ngIf="scene.catalogLimc.length > 0">

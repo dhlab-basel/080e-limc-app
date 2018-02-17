@@ -11,7 +11,7 @@ const routes: Routes = [
     { path: "page", component: HomeComponent },
     { path: "page/:search", component: HomeComponent },
     { path: "monument/:id", component: MonumentComponent },
-    { path: "**", redirectTo: "welcome" }
+    { path: "**", redirectTo: "page" }
 ];
 
 @NgModule({

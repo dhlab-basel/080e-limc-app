@@ -3,13 +3,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
 
 import { SearchService } from "../../../model/service/search.service";
-import { SalsahService } from "../../../model/service/salsah.service";
+import { LimcService } from "../../../model/service/limc.service";
 
 import { Monument } from "../../../model/resources/monument";
 import { PhotoModalComponent } from "./modals/photo-modal.component";
-import { Photo } from "../../../model/resources/photo";
-import { LimcService } from "../../../model/service/limc.service";
-import { Resource } from "../../../model/apiresult/resource";
 
 @Component({
     selector: "app-details",
@@ -40,7 +37,7 @@ export class MonumentComponent implements OnInit, OnDestroy {
      * Subscriptions
      * @type {Array}
      */
-    subscriptions: Subscription[] = [];
+    //subscriptions: Subscription[] = [];
 
 
     /////////////
@@ -52,10 +49,10 @@ export class MonumentComponent implements OnInit, OnDestroy {
      * Constructor.
      * @param router
      * @param activatedRoute
-     * @param salsahService
+     * @param limcService
      * @param searchService
      */
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private limcService: LimcService, private salsahService: SalsahService, private searchService: SearchService) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute, private limcService: LimcService, private searchService: SearchService) {
     }
 
     /**
@@ -63,39 +60,29 @@ export class MonumentComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
 
-        this.limcService.getMonumentByResourceId(2071666).subscribe(
-            (monument: Monument) => {
-                this.monument = monument;
-            }    ,
-            (error: any) => {
-                console.error(error);
+        // Get the document data
+        this.activatedRoute.params.subscribe(params => {
+            if (params["id"]) {
+                const resourceId: number = parseInt(params["id"], 10);
+                this.getMonument(resourceId);
+            } else {
+                this.router.navigate(["page"]);
             }
-        );
-
-        // Make sure we scroll to the top
-        /*
-         this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
-         document.body.scrollTop = 0;
-         });*
-
+        })
 
         // Subscribe to changes in the search value
+        /*
+         // Make sure we scroll to the top
+         this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
+         document.body.scrollTop = 0;
+         });
+
         this.subscriptions[0] = this.searchService.searchFinished.subscribe(
             (success: boolean) => {
                 if (this.searchService.monuments[0])
                     this.monument = this.searchService.monuments[0];
             }
-        );
-
-        // Get the document data
-        this.activatedRoute.params.subscribe(params => {
-            if (params["id"]) {
-                let id = parseInt(params["id"]);
-                this.getMonument(id);
-            } else {
-                this.router.navigate(["search"]);
-            }
-        });*/
+        );*/
 
     }
 
@@ -103,14 +90,26 @@ export class MonumentComponent implements OnInit, OnDestroy {
      * NgOnDestroy.
      */
     ngOnDestroy() {
-        //for (let subscription of this.subscriptions) subscription.unsubscribe();
+        // for (let subscription of this.subscriptions) subscription.unsubscribe();
     }
 
     /**
      * Gets the monument.
-     * @param id
+     * @param resourceId
      */
-    getMonument(id: number) {
+    getMonument(resourceId: number) {
+
+        this.limcService.getMonumentByResourceId(resourceId).subscribe(
+            (monument: Monument) => {
+                this.monument = monument;
+            },
+            (error: any) => {
+                console.error(error);
+                this.router.navigate(["page"]);
+            }
+        );
+
+
 /*
         // Get the monument from the list of the search if possible
         this.monument = this.searchService.monuments.find((monument: Monument) => {

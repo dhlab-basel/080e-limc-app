@@ -4,12 +4,14 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { AgmCoreModule } from "@agm/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 
 import { SalsahService } from "./model/service/salsah.service";
 import { SearchService } from "./model/service/search.service";
 import { LimcService } from "./model/service/limc.service";
+import { GoogleService } from "./model/service/google.service";
 
 import { AppComponent } from "./app.component";
 import { MonumentComponent } from "./view/page/monument/monument.component";
@@ -34,9 +36,12 @@ import { WelcomeComponent } from "./view/welcome/welcome.component";
         FormsModule,
         HttpClientModule,
         AppRoutingModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        AgmCoreModule.forRoot({
+            apiKey: "AIzaSyCmedK-uMWOPLLYSpegtc-Lz3QjjjGUrLY"
+        })
     ],
-    providers: [SalsahService, SearchService, LimcService],
+    providers: [SalsahService, SearchService, LimcService, GoogleService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

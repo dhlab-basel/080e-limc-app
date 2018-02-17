@@ -11,6 +11,11 @@ import { GraphData } from "../apiresult/graph-data";
 import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 import { GoogleService } from "./google.service";
 import { Museum } from "../resources/museum";
+import { ProgressBar } from "../other/progress-bar";
+import { timer } from "rxjs/observable/timer";
+import { TimerObservable } from "rxjs/observable/TimerObservable";
+import { of } from "rxjs/observable/of";
+import { interval } from "rxjs/observable/interval";
 
 @Injectable()
 /**
@@ -18,14 +23,31 @@ import { Museum } from "../resources/museum";
  */
 export class LimcService {
 
+    ///////////////
+    // CONSTANTS //
+    ///////////////
+
+
+    /**
+     * The types
+     * @type {{MONUMENT: string}}
+     */
+    private static readonly resTypes: any = {
+        MONUMENT: "limc:monument"
+    }
+
+
     ////////////////
     // PROPERTIES //
     ////////////////
 
 
-    private static readonly resTypes: any = {
-        MONUMENT: "limc:monument"
-    }
+    /**
+     * The progress bar
+     * @type {ProgressBar}
+     */
+    progressBar: ProgressBar = new ProgressBar();
+
 
     //////////////////
     // CONSTRUCTORS //
@@ -63,12 +85,17 @@ export class LimcService {
             })
         );*/
 
+        this.progressBar.setProgress(10);
+
         return this.salsahService.getGraphData(resourceId).pipe(
             map((graphData: GraphData) => {
+
+                this.progressBar.setProgress(50);
 
                 const monuments: Monument[] = graphData.getMonuments();
 
                 if (monuments.length !== 1) {
+                    this.progressBar.reset();
                     throw new ErrorObservable("More or less than 1 monument found.");
                 }
 
@@ -78,6 +105,8 @@ export class LimcService {
                         this.fetchMuseumCoords(inventory.museum);
                     }
                 }
+
+                this.progressBar.setProgress(100);
 
                 return monuments[0];
 

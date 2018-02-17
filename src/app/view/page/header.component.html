@@ -1,4 +1,6 @@
 <header>
+    <ngb-progressbar *ngIf="limcService.progressBar.isActive" type="primary" [value]="limcService.progressBar.percent" [height]="'1px'"></ngb-progressbar>
+    <div class="spacer" *ngIf="limcService.progressBar.isActive === false"></div>
     <div class="container">
         <div class="row">
             <div class="col-4 col-md-6 title">

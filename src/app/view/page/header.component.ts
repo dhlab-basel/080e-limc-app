@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { SearchService } from "../../model/service/search.service";
 
 import { ActivatedRoute, Router } from "@angular/router";
+import { LimcService } from "../../model/service/limc.service";
 
 @Component({
     selector: "app-header",
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit {
     /////////////
 
 
-    constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService) {
+    constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService, public limcService: LimcService) {
     }
 
     ngOnInit() {}

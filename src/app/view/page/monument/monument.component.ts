@@ -33,12 +33,6 @@ export class MonumentComponent implements OnInit, OnDestroy {
      */
     monument: Monument = null;
 
-    /**
-     * Subscriptions
-     * @type {Array}
-     */
-    //subscriptions: Subscription[] = [];
-
 
     /////////////
     // METHODS //

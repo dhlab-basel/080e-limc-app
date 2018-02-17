@@ -20,6 +20,7 @@ import { HeaderComponent } from "./view/page/header.component";
 import { FooterComponent } from "./view/page/footer.component";
 import { PhotoModalComponent } from "./view/page/monument/modals/photo-modal.component";
 import { WelcomeComponent } from "./view/welcome/welcome.component";
+import { PageComponent } from './view/page/page.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { WelcomeComponent } from "./view/welcome/welcome.component";
         HeaderComponent,
         FooterComponent,
         PhotoModalComponent,
-        WelcomeComponent
+        WelcomeComponent,
+        PageComponent
     ],
     imports: [
         BrowserModule,

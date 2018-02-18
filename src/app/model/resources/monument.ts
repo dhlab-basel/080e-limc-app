@@ -26,6 +26,7 @@ export class Monument {
 
 
     public resourceId: number;
+    public handleId: string;
 
     public id: number;
     public discovery: string;
@@ -78,6 +79,7 @@ export class Monument {
                 case "Monument":
                     const monument = Monument.fromGraphNode(node);
                     monument.resourceId = +key;
+                    monument.handleId = node.resInfo.handleId;
                     monuments.push(monument);
                     resourcesById[key] = monument;
                     break;

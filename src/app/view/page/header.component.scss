@@ -1,8 +1,14 @@
 @import "~variables.scss";
 
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: auto;
+    z-index: 1000;
     background-color: $bg-color-white;
+    border-bottom: $border-dark;
     margin-bottom: 2rem;
 
     .spacer {
@@ -13,6 +19,16 @@ header {
     .title {
         padding: 1rem;
         font-size: 2rem;
+    }
+
+    .language {
+        padding: 1.25rem;
+        white-space: nowrap;
+
+        button {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 
     .search {

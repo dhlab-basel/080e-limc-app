@@ -14,7 +14,7 @@
                 <i class="icon-arrow-left"></i></button>
         </div>
         <div class="col-4 text-center pt-2">
-            Bild {{ activeIndex + 1 }} von {{ imageUrls.length }}
+            <span translate [translateParams]="{ i: activeIndex + 1, n: imageUrls.length  }">Image i of n</span>
         </div>
         <div class="col-4 text-right">
             <button type="button" class="btn btn-outline-secondary" (click)="next()">

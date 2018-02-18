@@ -3,15 +3,21 @@
     <div class="spacer" *ngIf="limcService.progressBar.isActive === false"></div>
     <div class="container">
         <div class="row">
-            <div class="col-4 col-md-6 title">
+            <div class="col-4 col-md-4 title">
                 <span class="cursor-pointer" (click)="openHome()"><span class="hidden-sm-down-plus">Digital</span> LIMC</span>
+            </div>
+            <div class="d-none d-md-block col-md-2 language">
+                <button class="btn btn-link" (click)="changeLanguage('de')">DE</button>|
+                <button class="btn btn-link" (click)="changeLanguage('en')">EN</button>
             </div>
             <div class="col-8 col-md-6 search" *ngIf="showSearch">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Suchen" [(ngModel)]="keyword"
-                        (keyup.enter)="search()">
+                        (keyup.enter)="search(true)">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary cursor-pointer" (click)="search()">Suchen</button>
+                        <button class="btn btn-outline-secondary cursor-pointer" (click)="search(true)">
+                            <span translate>Search</span>
+                        </button>
                     </div>
                 </div>
             </div>

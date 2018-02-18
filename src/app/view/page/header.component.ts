@@ -2,9 +2,11 @@ import { Component, Input, OnInit } from "@angular/core";
 
 import { SearchService } from "../../model/service/search.service";
 
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { LimcService } from "../../model/service/limc.service";
 import { Monument } from "../../model/resources/monument";
+import { TranslateService } from "@ngx-translate/core";
+import { LocalStorageService } from "../../model/service/local-storage.service";
 
 @Component({
     selector: "app-header",
@@ -39,32 +41,61 @@ export class HeaderComponent implements OnInit {
     /////////////
 
 
-    constructor(private router: Router, private route: ActivatedRoute, public limcService: LimcService) {
+    constructor(private router: Router, private translateService: TranslateService, private localStorageService: LocalStorageService, public limcService: LimcService) {
     }
 
+    /**
+     * NgOnInit.
+     */
     ngOnInit() {
-        this.keyword = "Zeus";
-        this.search();
 
-/*
-        this.limcService.findMonumentsByKeyword("Attika").subscribe(
-            (monuments: Monument[]) => {
-                console.log(monuments);
-            },
-            (error: any) => {
-                console.error(error);
-            }
-        );*/
+        const keyword: string = (
+            this.router.url.startsWith("/page/search") ?
+            this.router.url.replace("/page/search", "").replace("/", "") :
+            ""
+        );
+
+        if (this.keyword !== keyword) {
+            this.keyword = keyword;
+            this.search(false);
+        }
 
     }
 
+    /**
+     * Opens the search page.
+     */
     openHome() {
-        this.router.navigate(["page", this.keyword]);
+        this.router.navigate(["page", "search", this.keyword]);
     }
 
-    search() {
+    /**
+     * Performs a new search.
+     * @param {boolean} navigate
+     */
+    search(navigate?: boolean) {
+
         this.limcService.searchMonuments(this.keyword, 0);
-        this.router.navigate(["page", this.keyword]);
+
+        if (navigate) {
+            this.router.navigate(["page", "search", this.keyword]);
+        }
+
+    }
+
+    /**
+     * Changes the user language.
+     * @param {string} languageString
+     */
+    changeLanguage(languageString: string) {
+
+        // Change and save language
+        this.translateService.use(languageString);
+        this.localStorageService.write("lang", languageString);
+
+        // Perform new search
+        this.search(true);
+
     }
 
 }

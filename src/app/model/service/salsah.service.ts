@@ -10,6 +10,7 @@ import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript"
 import { Search } from "../apiresult/search";
 import { Resource } from "../apiresult/resource";
 import { GraphData } from "../apiresult/graph-data";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 /**
@@ -39,8 +40,9 @@ export class SalsahService {
     /**
      * Constructor.
      * @param http
+     * @param translate
      */
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private translate: TranslateService) {
         this.jsonConvert.operationMode = OperationMode.ENABLE;
         this.jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL;
     }
@@ -58,7 +60,7 @@ export class SalsahService {
      */
     getResource(resourceId: number): Observable<Resource> {
 
-        return this.http.get(SalsahService.apiUrl + "/resources/" + resourceId, {
+        return this.http.get(SalsahService.apiUrl + "/resources/" + resourceId + "?lang=" + this.translate.currentLang, {
             headers: {},
             observe: "response"
         }).pipe(
@@ -80,7 +82,7 @@ export class SalsahService {
      */
     public getGraphData(resourceId: number): Observable<GraphData> {
 
-        return this.http.get(SalsahService.apiUrl + "/graphdata/" + resourceId + "?full=1", {
+        return this.http.get(SalsahService.apiUrl + "/graphdata/" + resourceId + "?full=1" + "&lang=" + this.translate.currentLang, {
             headers: {},
             observe: "response"
         }).pipe(
@@ -104,7 +106,7 @@ export class SalsahService {
      */
     public getSearch(searchString: string, nRows: number, startIndex: number): Observable<Search> {
 
-        return this.http.get(SalsahService.apiUrl + "/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex, {
+        return this.http.get(SalsahService.apiUrl + "/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex + "&lang=" + this.translate.currentLang, {
             headers: {},
             observe: "response"
         }).pipe(

@@ -1,18 +1,14 @@
 footer {
     margin: 5rem auto;
     font-size: 0.8rem;
-}
 
-footer.thanks {
-    padding: 5rem 0;
-    background-color: #FFF;
-}
-
-footer.copyright {
-
-}
-
-footer img {
-    width: 20rem;
-    height: auto;
+    &.thanks {
+        padding: 5rem 0;
+        background-color: #FFF;
+    }
+    img {
+        width: 100%;
+        max-width: 20rem;
+        height: auto;
+    }
 }

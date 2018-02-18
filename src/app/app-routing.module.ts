@@ -11,12 +11,13 @@ const routes: Routes = [
     { path: "", component: WelcomeComponent },
     { path: "page", component: PageComponent, children:
             [
-                { path: "", component: HomeComponent },
-                { path: ":search", component: HomeComponent },
+                { path: "search", component: HomeComponent },
+                { path: "search/:search", component: HomeComponent },
                 { path: "monument/:resourceId", component: MonumentComponent },
-                { path: "**", redirectTo: "" }
+                { path: "**", redirectTo: "search" }
             ]
     },
+    { path: "monument/:resourceId", redirectTo: "page/monument/:resourceId" },
     { path: "**", redirectTo: "page" }
 ];
 

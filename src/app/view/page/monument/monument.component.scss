@@ -3,6 +3,7 @@
 .carousel-container {
     width: 100%;
     border: 1px solid #CCC;
+    margin-top: 2rem;
 
     .slide {
         width: 100%;
@@ -39,6 +40,6 @@ agm-map {
 
 .loading {
     text-align: center;
-    margin: 5rem;
+    margin: 10rem;
     font-size: $font-size-200;
 }

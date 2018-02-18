@@ -6,6 +6,8 @@ import { SearchService } from "../../../model/service/search.service";
 import { Monument } from "../../../model/resources/monument";
 import { NgbProgressbarConfig } from "@ng-bootstrap/ng-bootstrap";
 import { LimcService } from "../../../model/service/limc.service";
+import { Search } from "../../../model/apiresult/search";
+import { LimcSearch } from "../../../model/other/limc-search";
 
 @Component({
     selector: 'app-home',
@@ -49,6 +51,7 @@ export class HomeComponent implements OnInit {
      * NgOnInit.
      */
     ngOnInit() {
+        this.limcService.search.selectedMonument = null;
 
         /*
         if (this.searchService.monuments.length > 0) return;
@@ -78,7 +81,8 @@ export class HomeComponent implements OnInit {
      * @param monument
      */
     openMonument(monument: Monument) {
-        this.router.navigate(["monument", monument.id]);
+        this.limcService.search.selectedMonument = monument;
+        this.router.navigate(["page", "monument", monument.resourceId]);
     }
 
     /**
@@ -92,6 +96,22 @@ export class HomeComponent implements OnInit {
      * Searches for more monuments.
      */
     searchMore() {
+
+        const search: LimcSearch = this.limcService.search;
+
+        console.log(search);
+
+        if (search.result instanceof Search === false) return;
+
+        const nextStartIndex: number = search.result.getNextStartIndex();
+
+        console.log(nextStartIndex);
+
+        if (nextStartIndex < 0) return;
+
+        this.limcService.searchMonuments(search.keyword, nextStartIndex);
+
+        console.log("search more");
         //this.searchService.searchMore(this.searchLimit);
     }
 

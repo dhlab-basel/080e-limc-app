@@ -5,11 +5,11 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AgmCoreModule } from "@agm/core";
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 import { AppRoutingModule } from "./app-routing.module";
 
 import { SalsahService } from "./model/service/salsah.service";
-import { SearchService } from "./model/service/search.service";
 import { LimcService } from "./model/service/limc.service";
 import { GoogleService } from "./model/service/google.service";
 
@@ -20,7 +20,7 @@ import { HeaderComponent } from "./view/page/header.component";
 import { FooterComponent } from "./view/page/footer.component";
 import { PhotoModalComponent } from "./view/page/monument/modals/photo-modal.component";
 import { WelcomeComponent } from "./view/welcome/welcome.component";
-import { PageComponent } from './view/page/page.component';
+import { PageComponent } from "./view/page/page.component";
 
 @NgModule({
     declarations: [
@@ -41,9 +41,10 @@ import { PageComponent } from './view/page/page.component';
         NgbModule.forRoot(),
         AgmCoreModule.forRoot({
             apiKey: "AIzaSyCmedK-uMWOPLLYSpegtc-Lz3QjjjGUrLY"
-        })
+        }),
+        InfiniteScrollModule
     ],
-    providers: [SalsahService, SearchService, LimcService, GoogleService],
+    providers: [SalsahService, LimcService, GoogleService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

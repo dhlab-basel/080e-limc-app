@@ -59,14 +59,12 @@ export class HeaderComponent implements OnInit {
     }
 
     openHome() {
-        //this.router.navigate(["page", this.searchString]);
+        this.router.navigate(["page", this.keyword]);
     }
 
     search() {
-        this.limcService.searchMonuments(this.keyword);
-
-        //this.searchService.search(this.searchString, this.searchLimit, 0);
-        //this.router.navigate(["page", this.searchString]);
+        this.limcService.searchMonuments(this.keyword, 0);
+        this.router.navigate(["page", this.keyword]);
     }
 
 }

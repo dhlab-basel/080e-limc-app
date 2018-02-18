@@ -21,6 +21,7 @@ import { LimcSearch } from "../other/limc-search";
 import { Scene } from "../resources/scene";
 import { ResourceIncoming } from "../apiresult/resource-incoming";
 import { empty } from "rxjs/observable/empty";
+import { Subscription } from "rxjs/Subscription";
 
 @Injectable()
 /**
@@ -49,15 +50,18 @@ export class LimcService {
 
     /**
      * The progress bar
-     * @type {ProgressBar}
      */
     progressBar: ProgressBar = new ProgressBar();
 
     /**
      * the search result
-     * @type {LimcSearch}
      */
     search: LimcSearch = new LimcSearch();
+
+    /**
+     * List of all subscriptions
+     */
+    private subscriptions: Subscription[] = [];
 
 
     //////////////////
@@ -70,8 +74,7 @@ export class LimcService {
      * @param salsahService
      * @param googleService
      */
-    constructor(private salsahService: SalsahService, private googleService: GoogleService) {
-    }
+    constructor(private salsahService: SalsahService, private googleService: GoogleService) {}
 
 
     //////////////////
@@ -133,75 +136,68 @@ export class LimcService {
 
     }
 
-    searchMonuments(keyword: string) {
+    /**
+     * Tries to find monuments by a string.
+     * @param keyword
+     * @param startIndex
+     * @param amount
+     */
+    searchMonuments(keyword: string, startIndex: number, amount?: number) {
 
         this.progressBar.setProgress(0);
 
-        this.salsahService.getSearch(keyword, 10, 0).subscribe(
+        this.search.keyword = keyword;
+
+        // Reset the search if necessary
+        if (startIndex === 0) {
+            this.search.monuments = []
+            for (const sub of this.subscriptions) sub.unsubscribe();
+        }
+
+        if (amount === undefined) amount = 10;
+
+        const s: Subscription = this.salsahService.getSearch(keyword, amount, startIndex).subscribe(
             (search: Search) => {
 
-                this.search.monuments = [];
+                this.progressBar.setProgress(50);
+
+                this.search.result = search;
 
                 // Loop through the results and do an appropriate action
                 for (const subject of search.subjects) {
 
-                    switch (subject.iconLabel) {
-                        case "Monument":
-                            this.addMonumentByResourceId(subject.resourceId);
-                            break;
-                        case "Szene":
-                        case "Catalog LIMC":
-                            this.addMonumentsByResourceId(subject.resourceId);
-                            break;
-                        default:
-                            console.error(subject);
-                            break;
+                    if (subject.iconLabel === "Monument") {
+                        this.addMonumentByResourceId(subject.resourceId);
+                    } else {
+                        this.addMonumentsByResourceId(subject.resourceId);
                     }
 
                 }
 
+                this.progressBar.setProgress(100);
+
             },
             (error: any) => {
+                this.progressBar.reset();
                 console.error(error);
             }
         );
 
-        /*
-         this.salsahService.getSearch(keyword, 10, 0).pipe(
-         map(
-         (search: Search) => {
-
-         const monuments: Monument[] = [];
-
-         // Loop through the results and do an appropriate action
-         for (const subject of search.subjects) {
-
-         if (subject.iconLabel === "Monument") {
-         this.getMonumentByResourceId(subject.resourceId).subscribe(
-         (monument: Monument) => {
-         monuments.push(monument);
-         },
-         _ => {}
-         );
-         } else {
-         console.error(subject);
-         }
-
-         }
-
-         return monuments;
-
-         }
-         )
-         );*/
-
+        this.subscriptions.push(s);
 
     }
 
+    /**
+     * Adds one monument to the array by its resource id.
+     * This method makes sure the whole graph data is retreived, excluding the Google maps data.
+     * @param {number} resourceId
+     */
     private addMonumentByResourceId(resourceId: number) {
 
-        this.salsahService.getGraphData(resourceId).subscribe(
+        const s: Subscription = this.salsahService.getGraphData(resourceId).subscribe(
             (graphData: GraphData) => {
+
+                this.progressBar.percent++;
 
                 const newMonuments: Monument[] = Monument.fromGraph(graphData.graph);
 
@@ -217,33 +213,25 @@ export class LimcService {
 
             },
             (error: any) => {
+                this.progressBar.reset();
                 console.error(error);
             }
         );
 
+        this.subscriptions.push(s);
+
     }
 
-
-    /*
-     return this.salsahService.getResource(resourceId).pipe(
-     map((resource: Resource) => {
-     if (resource.resinfo.resTypeName === LimcService.resTypes.MONUMENT) {
-     return new Monument();
-     } else {
-     throw new TypeError();
-     }
-     })
-     );*/
-
-
+    /**
+     * Adds all monuments that are linked to a given resource id.
+     * @param {number} resourceId
+     */
     private addMonumentsByResourceId(resourceId: number) {
 
-
-        this.findMonumentResourceIds(resourceId).subscribe(
-            (resourceIds: number[]) => {
-
-                for (const r of resourceIds) {
-                    this.addMonumentByResourceId(r);
+        const s: Subscription = this.findMonumentResourceId(resourceId).subscribe(
+            (monumentResourceId: number) => {
+                if (monumentResourceId !== null) {
+                    this.addMonumentByResourceId(monumentResourceId);
                 }
             },
             (error: any) => {
@@ -251,31 +239,45 @@ export class LimcService {
             }
         )
 
+        this.subscriptions.push(s);
+
     }
 
-
-    private findMonumentResourceIds(resourceId: number): Observable<number[]> {
+    /**
+     * Finds monument resource ids from a given resource id.
+     * This method works recursively and will always finish the search.
+     * It works as follows when subscribed to:
+     * - First it does the HTTP request (with salsahService.getResource)
+     * - It enters the map() method and after that the expand() method
+     * - The map method returns a resource id or null (in case a non-Monument resource was found)
+     * - The expand method breaks the recursion when returning empty(), otherwise it continues
+     * @param resourceId
+     * @returns {Observable<number>}
+     */
+    private findMonumentResourceId(resourceId: number): Observable<number> {
 
         return this.salsahService.getResource(resourceId).pipe(
-            expand((resource: Resource): Observable<number[]> => {
+            expand((resource: any): Observable<number> => {
 
-                console.log(resource);
-
-                if (resource.incoming.length > 0) {
-
-                    for (const incoming of resource.incoming) {
-                        return this.findMonumentResourceIds(incoming.extResId.id);
-                    }
-
-                } else {
-                    return of([resource.resdata.resId]);
+                if (resource instanceof Resource === false || resource.incoming.length === 0) {
+                    return empty();
                 }
+
+                for (const incoming of resource.incoming) {
+                    return this.findMonumentResourceId(incoming.extResId.id);
+                }
+
             }),
-            map((resources: any): number[] => {
-                console.log(resources);
-                return resources;
-                //return [resource.resdata.resId];
-                //return resources.map(r => r.resdata.resId);
+            map((resource: any): number => {
+
+                if (resource instanceof Resource === false) {
+                    return resource;
+                } else if (resource.resdata.resTypeName === LimcService.resTypes.MONUMENT) {
+                    return resource.resdata.resId;
+                } else {
+                    return null;
+                }
+
             })
         );
 

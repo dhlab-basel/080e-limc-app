@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 
 import { Observable } from "rxjs/Observable";
 import { combineLatest } from "rxjs/observable/combineLatest";
@@ -9,6 +9,7 @@ import { LimcService } from "../../../model/service/limc.service";
 
 import { Monument } from "../../../model/resources/monument";
 import { PhotoModalComponent } from "./modals/photo-modal.component";
+import { Photo } from "../../../model/resources/photo";
 
 @Component({
     selector: "app-details",
@@ -46,9 +47,8 @@ export class MonumentComponent implements OnInit, OnDestroy {
      * @param router
      * @param activatedRoute
      * @param limcService
-     * @param searchService
      */
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private limcService: LimcService, private searchService: SearchService) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute, private limcService: LimcService) {
     }
 
     /**
@@ -56,46 +56,21 @@ export class MonumentComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
 
-        // Get the necessary data
-        const observables: Observable<any>[] = [];
-        observables[0] = this.activatedRoute.params;
-        observables[1] = this.activatedRoute.queryParams;
+        this.monument = this.limcService.search.selectedMonument;
 
-        combineLatest(observables).subscribe(
-            (result: [any[], any[]]) => {
-
-                const params: any[] = result[0];
-                const queryParams: any[] = result[1];
+        this.activatedRoute.params.subscribe(
+            (params: Params) => {
 
                 const resourceId: number = params["resourceId"] ? parseInt(params["resourceId"], 10) : 0;
-                const monument: Monument = queryParams["monument"] ? queryParams["monument"] : null;
 
-                // Check whether monument or resource id is given
-                if (monument instanceof Monument) {
-                    this.monument = monument;
-                    this.getMonument(resourceId);
-                    return;
-                } else if (resourceId > 0) {
-                    this.getMonument(resourceId);
-                } else {
+                if (resourceId === 0) {
                     this.router.navigate(["page"]);
+                } else {
+                    this.getMonument(resourceId);
                 }
+
             }
         );
-
-        // Subscribe to changes in the search value
-        /*
-         // Make sure we scroll to the top
-         this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
-         document.body.scrollTop = 0;
-         });
-
-         this.subscriptions[0] = this.searchService.searchFinished.subscribe(
-         (success: boolean) => {
-         if (this.searchService.monuments[0])
-         this.monument = this.searchService.monuments[0];
-         }
-         );*/
 
     }
 
@@ -159,12 +134,12 @@ export class MonumentComponent implements OnInit, OnDestroy {
      * @param activeIndex
      */
     openGallery(activeIndex: number) {
-        /*
-         let imageUrls: string[] = this.monument.getPhotos().map((photo: Photo): string => {
-         return photo.url;
-         });
-         this.gallery.openWithImages(imageUrls, activeIndex);
-         */
+
+        const imageUrls: string[] = this.monument.getPhotos().map((photo: Photo): string => {
+            return photo.url;
+        });
+        this.gallery.openWithImages(imageUrls, activeIndex);
+
     }
 
 }

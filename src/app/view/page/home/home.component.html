@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container" *ngIf="limcService.search.monuments.length > 0">
 
-    <div class="row">
+    <div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="searchMore()">
         <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-3" *ngFor="let monument of limcService.search.monuments">
 
             <div class="card" (click)="openMonument(monument)">
@@ -22,8 +22,8 @@
                     </div>
                     <div class="list-group-item">
                         <div class="title">Museum</div>
-                        <div class="line"><strong>Stadt:</strong> {{ monument.inventory[0].museum.city }}</div>
-                        <div class="line"><strong>Name:</strong> {{ monument.inventory[0].museum.name }}</div>
+                        <div class="line"><strong>Stadt:</strong> {{ monument.inventory[0].museum?.city }}</div>
+                        <div class="line"><strong>Name:</strong> {{ monument.inventory[0].museum?.name }}</div>
                         <div class="line">
                             <strong>Inventar:</strong> <!--{{ monument.inventory[0].specification }}, -->{{ monument.inventory[0].number }}
                         </div>
@@ -34,10 +34,15 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 text-center mt-4">
-            <button class="btn btn-outline-secondary" (click)="searchMore()">Mehr suchen</button>
-        </div>
-    </div>
+</div>
 
+<div class="container" *ngIf="limcService.search.monuments.length === 0">
+    <div class="loading">
+        <ng-container *ngIf="limcService.progressBar.isActive">
+            <span translate>Lade Daten...</span>
+        </ng-container>
+        <ng-container *ngIf="limcService.progressBar.isActive === false">
+            <span translate>Keine Denkmäler gefunden.</span>
+        </ng-container>
+    </div>
 </div>

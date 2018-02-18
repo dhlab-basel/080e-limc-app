@@ -9,6 +9,11 @@ export class LimcSearch {
     monuments: Monument[] = [];
 
     /**
+     * The currently selected monument
+     */
+    selectedMonument: Monument = null;
+
+    /**
      * The search instance
      */
     result: Search = null;

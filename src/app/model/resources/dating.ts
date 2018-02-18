@@ -8,7 +8,7 @@ export class Dating {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public period: [string, string];
     public comment: string;
@@ -28,8 +28,7 @@ export class Dating {
      */
     public static fromGraphNode(node: GraphNode): Dating {
 
-        let dating: Dating = new Dating();
-        dating.graphNode = node;
+        const dating: Dating = new Dating();
 
         dating.comment = node.getValues("limc:comment")[0];
         dating.period = Epoch.getPeriodFromString(node.getValues("limc:period")[0]);

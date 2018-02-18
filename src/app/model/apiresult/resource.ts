@@ -4,6 +4,7 @@ import { User } from "./user";
 import { ResourceInfo } from "./resource-info";
 import { ResourceData } from "./resource-data";
 import { ResourceProperty } from "./resource-property";
+import { ResourceIncoming } from "./resource-incoming";
 
 
 @JsonObject
@@ -18,7 +19,7 @@ export class Resource {
     @JsonProperty("props", [ResourceProperty])
     public props: any[] = undefined;
 
-    @JsonProperty("incoming", [Any])
+    @JsonProperty("incoming", [ResourceIncoming])
     public incoming: any[] = undefined;
 
     @JsonProperty("access", String)

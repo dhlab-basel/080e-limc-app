@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-3" *ngFor="let monument of searchService.monuments">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-3" *ngFor="let monument of limcService.search.monuments">
 
             <div class="card" (click)="openMonument(monument)">
                 <h4 class="card-header text-ellipsis">{{ monument.object ? monument.object : "?????" }}</h4>

@@ -8,7 +8,7 @@ export class CatalogThesCra {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public indexnumber: number;
     public asterix: boolean;
@@ -29,10 +29,9 @@ export class CatalogThesCra {
      */
     public static fromGraphNode(node: GraphNode): CatalogThesCra {
 
-        let catalogThesCra: CatalogThesCra = new CatalogThesCra();
-        catalogThesCra.graphNode = node;
+        const catalogThesCra: CatalogThesCra = new CatalogThesCra();
 
-        catalogThesCra.indexnumber = parseInt(node.getValues("limc:indexnumber")[0]);
+        catalogThesCra.indexnumber = parseInt(node.getValues("limc:indexnumber")[0], 10);
         catalogThesCra.asterix = node.getValues("limc:asterix")[0] === "1";
         catalogThesCra.dot = node.getValues("limc:dot")[0] === "1";
 

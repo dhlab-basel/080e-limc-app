@@ -3,8 +3,16 @@ import { Scene } from "./scene";
 import { Dating } from "./dating";
 import { GraphNode } from "../apiresult/graph-node";
 import { Photo } from "./photo";
-import { Resource } from "../apiresult/resource";
 import { Museum } from "./museum";
+import { Epoch } from "./epoch";
+import { CatalogThesCraChapter } from "./catalog-thes-crachapter";
+import { CatalogThesCra } from "./catalog-thes-cra";
+import { CatalogLimc } from "./catalog-limc";
+import { Graph } from "../apiresult/graph";
+import { map } from "rxjs/operators";
+import { ErrorObservable } from "rxjs/observable/ErrorObservable";
+import { Observable } from "rxjs/Observable";
+import { GraphData } from "../apiresult/graph-data";
 
 
 /**
@@ -17,7 +25,7 @@ export class Monument {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public id: number;
     public discovery: string;
@@ -51,6 +59,104 @@ export class Monument {
 
 
     /**
+     * Gets an array of instances of Monument from a Graph instance.
+     * @param graph
+     * @returns {Monument[]}
+     */
+    public static fromGraph(graph: Graph): Monument[] {
+
+        // Save all instances
+        const resourcesById: any[] = [];
+
+        const monuments: Monument[] = [];
+
+        for (const key of Object.keys(graph.nodes)) {
+
+            const node: GraphNode = graph.nodes[key];
+
+            switch (node.resInfo.label) {
+                case "Monument":
+                    const monument = Monument.fromGraphNode(node);
+                    monument.resourceId = +key;
+                    monuments.push(monument);
+                    resourcesById[key] = monument;
+                    break;
+                case "Szene":
+                    const scene = Scene.fromGraphNode(node);
+                    scene.resourceId = +key;
+                    resourcesById[key] = scene;
+                    break;
+                case "Inventar":
+                    const inventory = Inventory.fromGraphNode(node);
+                    inventory.resourceId = +key;
+                    resourcesById[key] = inventory;
+                    break;
+                case "Museum":
+                    const museum = Museum.fromGraphNode(node);
+                    museum.resourceId = +key;
+                    resourcesById[key] = museum;
+                    break;
+                case "Epoche":
+                    const epoch = Epoch.fromGraphNode(node);
+                    epoch.resourceId = +key;
+                    resourcesById[key] = epoch;
+                    break;
+                case "Datierung":
+                    const dating = Dating.fromGraphNode(node);
+                    dating.resourceId = +key;
+                    resourcesById[key] = dating;
+                    break;
+                case "Catalog Thes CRA":
+                    const catalogThesCra = CatalogThesCra.fromGraphNode(node);
+                    catalogThesCra.resourceId = +key;
+                    resourcesById[key] = catalogThesCra;
+                    break;
+                case "Catalog Thes CRA Kapitel":
+                    const catalogThesCraChapter = CatalogThesCraChapter.fromGraphNode(node);
+                    catalogThesCraChapter.resourceId = +key;
+                    resourcesById[key] = catalogThesCraChapter;
+                    break;
+                case "Catalog LIMC":
+                    const catalogLimc = CatalogLimc.fromGraphNode(node);
+                    catalogLimc.resourceId = +key;
+                    resourcesById[key] = catalogLimc;
+                    break;
+                case "Foto":
+                    const photo = Photo.fromGraphNode(node);
+                    photo.resourceId = +key;
+                    resourcesById[key] = photo;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        // Make all connections
+        for (const key of Object.keys(graph.edges)) {
+
+            const split = key.split(";");
+
+            if (split.length !== 2) continue;
+
+            const obj_id_from = split[0];
+            const obj_id_to = split[1];
+
+            if (typeof resourcesById[obj_id_from] !== "undefined" && typeof resourcesById[obj_id_from].addConnection === "function") {
+                resourcesById[obj_id_from].addConnection(resourcesById[obj_id_to]);
+            }
+            if (typeof resourcesById[obj_id_to] !== "undefined" && typeof resourcesById[obj_id_to].addConnection === "function") {
+                resourcesById[obj_id_to].addConnection(resourcesById[obj_id_from]);
+            }
+
+        }
+
+        // Return it
+        return monuments;
+
+    }
+
+    /**
      * Gets an instance of Monument from a GraphNode instance.
      * @param node the graphnode
      * @returns {Monument}
@@ -58,7 +164,6 @@ export class Monument {
     public static fromGraphNode(node: GraphNode): Monument {
 
         const monument: Monument = new Monument();
-        monument.graphNode = node;
 
         monument.id = +node.getValues("limc:id")[0];
         monument.discovery = node.getValues("limc:discovery")[0]
@@ -99,7 +204,7 @@ export class Monument {
 
     /**
      * Gets all photos of a monument.
-     * @returns {Photo[]}
+     * @returns {Photo[]} the photos that are allowed for display
      */
     public getPhotos() {
 
@@ -119,16 +224,14 @@ export class Monument {
 
     /**
      * Gets a photo of a monument.
-     * @returns {Photo}
+     * @returns {Photo} the first photo that is allowed for display
      */
     public getPhoto(): Photo {
 
-        if (this.inventory[0].museum.hasPhotoRight) {
-            const photos: Photo[] = this.getPhotos();
-            if (photos.length > 0) return photos[0];
-        }
+        const photos: Photo[] = this.getPhotos();
+        if (photos.length > 0) return photos[0];
 
-        let p = new Photo();
+        const p: Photo = new Photo();
         p.url = "assets/img/default.jpg";
 
         return p;

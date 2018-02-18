@@ -8,7 +8,7 @@ export class Photo {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public url: string;
     public photoCredit: string;
@@ -28,7 +28,6 @@ export class Photo {
     public static fromGraphNode(node: GraphNode): Photo {
 
         const photo: Photo = new Photo();
-        photo.graphNode = node;
 
         photo.url = node.getValues("limc:monumentUrl")[0]; // TODO
         photo.photoCredit = node.getValues("limc:photoCredit")[0];
@@ -38,8 +37,6 @@ export class Photo {
         } else if (node.getValues("limc:hasPhotoRight")[0] === "0") {
             photo.hasPhotoRight = false;
         }
-
-        console.log(photo.hasPhotoRight);
 
         return photo;
 

@@ -1,14 +1,13 @@
 import { Any, JsonObject, JsonProperty } from "json2typescript";
 
-import { SalsahService } from "../service/salsah.service";
-import { GraphData } from "./graph-data";
-import { StringToNumberConverter } from "../converters/string-to-number-converter";
+import { StringArrayToNumberArrayConverter } from "../converters/string-array-to-number-array-converter";
+import { ResourceIdConverter } from "../converters/resource-id-converter";
 
 @JsonObject
 export class SearchSubject {
 
-    @JsonProperty("obj_id", String)
-    public objId: string = undefined;
+    @JsonProperty("obj_id", ResourceIdConverter)
+    public resourceId: number = undefined;
 
     @JsonProperty("preview_path", String)
     public previewPath: string = undefined;
@@ -22,22 +21,22 @@ export class SearchSubject {
     @JsonProperty("iconlabel", String)
     public iconLabel: string = undefined;
 
-    @JsonProperty("valuetype_id", [StringToNumberConverter])
-    public valueTypeId: string = undefined;
+    @JsonProperty("valuetype_id", StringArrayToNumberArrayConverter)
+    public valueTypeIds: number[] = undefined;
 
     @JsonProperty("valuelabel", [String])
-    public valueLabel: string = undefined;
+    public valueLabels: string[] = undefined;
 
     @JsonProperty("value", [Any])
-    public value: any = undefined;
+    public values: any = undefined;
 
 
     public isMonument() {
 
     }
 
-    public getGraph(salsahService: SalsahService) {
-/*
+/*    public getGraph(salsahService: SalsahService) {
+
         salsahService.getGraphDataById(this.obj_id)
             .subscribe(
             (graphData: GraphData) => {
@@ -46,7 +45,7 @@ export class SearchSubject {
             (error: any) => { console.log('error');/*this.error = <any>error* },
             () => { }
         );
-*/
-    }
+*
+    }*/
 
 }

@@ -1,8 +1,15 @@
+import { Observable } from "rxjs/Observable";
+import { map } from "rxjs/operators/map";
+
+import { SalsahService } from "../service/salsah.service";
+
 import { Photo } from "./photo";
 import { Dating } from "./dating";
 import { CatalogThesCra } from "./catalog-thes-cra";
 import { CatalogLimc } from "./catalog-limc";
 import { GraphNode } from "../apiresult/graph-node";
+import { Resource } from "../apiresult/resource";
+import { ResourceIncoming } from "../apiresult/resource-incoming";
 
 export class Scene {
 
@@ -11,7 +18,7 @@ export class Scene {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public id: number;
     public side: string;
@@ -42,8 +49,7 @@ export class Scene {
      */
     public static fromGraphNode(node: GraphNode): Scene {
 
-        let scene: Scene = new Scene();
-        scene.graphNode = node;
+        const scene: Scene = new Scene();
 
         scene.id = +node.getValues("limc:id")[0];
         scene.side = node.getValues("limc:side")[0];
@@ -51,7 +57,7 @@ export class Scene {
         scene.inscription = node.getValues("limc:inscription")[0];
         scene.bibliography = node.getValues("limc:bibliography")[0];
         scene.comment = node.getValues("limc:comment")[0];
-        scene.sequence = parseInt(node.getValues("limc:sequence")[0]);
+        scene.sequence = parseInt(node.getValues("limc:sequence")[0], 10);
         scene.scenename = node.getValues("limc:scenename");
         if (scene.scenename && scene.scenename.length > 0) scene.scenename.sort();
         scene.keyword = node.getValues("limc:keyword");

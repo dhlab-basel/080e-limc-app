@@ -8,7 +8,7 @@
             </div>
             <div class="col-8 col-md-6 search" *ngIf="showSearch">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Suchen" [(ngModel)]="searchString"
+                    <input class="form-control" type="text" placeholder="Suchen" [(ngModel)]="keyword"
                         (keyup.enter)="search()">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary cursor-pointer" (click)="search()">Suchen</button>

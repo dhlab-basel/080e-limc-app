@@ -8,7 +8,7 @@ export class Inventory {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public number: string;
     public specification: string;
@@ -28,8 +28,7 @@ export class Inventory {
      */
     public static fromGraphNode(node: GraphNode): Inventory {
 
-        let inventory: Inventory = new Inventory();
-        inventory.graphNode = node;
+        const inventory: Inventory = new Inventory();
 
         inventory.number = node.getValues("limc:number")[0];
         inventory.specification = node.getValues("limc:specification")[0];

@@ -5,6 +5,7 @@ import { SearchService } from "../../../model/service/search.service";
 
 import { Monument } from "../../../model/resources/monument";
 import { NgbProgressbarConfig } from "@ng-bootstrap/ng-bootstrap";
+import { LimcService } from "../../../model/service/limc.service";
 
 @Component({
     selector: 'app-home',
@@ -40,22 +41,16 @@ export class HomeComponent implements OnInit {
      * Constructor.
      * @param router
      * @param route
-     * @param config
-     * @param searchService
+     * @param limcService
      */
-    constructor(private router: Router, private route: ActivatedRoute, public config: NgbProgressbarConfig, public searchService: SearchService) {
-
-        // customize default values of progress bars used by this component tree
-        config.animated = true;
-
-
-    }
+    constructor(private router: Router, private route: ActivatedRoute, public limcService: LimcService) {}
 
     /**
      * NgOnInit.
      */
     ngOnInit() {
 
+        /*
         if (this.searchService.monuments.length > 0) return;
 
         // Search again if necessary
@@ -74,7 +69,7 @@ export class HomeComponent implements OnInit {
                         break;
                 }
             }
-        );
+        );*/
 
     }
 

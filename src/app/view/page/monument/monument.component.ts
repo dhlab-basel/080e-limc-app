@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs/Subscription";
+
+import { Observable } from "rxjs/Observable";
+import { combineLatest } from "rxjs/observable/combineLatest";
 
 import { SearchService } from "../../../model/service/search.service";
 import { LimcService } from "../../../model/service/limc.service";
@@ -54,15 +56,32 @@ export class MonumentComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
 
-        // Get the document data
-        this.activatedRoute.params.subscribe(params => {
-            if (params["id"]) {
-                const resourceId: number = parseInt(params["id"], 10);
-                this.getMonument(resourceId);
-            } else {
-                this.router.navigate(["page"]);
+        // Get the necessary data
+        const observables: Observable<any>[] = [];
+        observables[0] = this.activatedRoute.params;
+        observables[1] = this.activatedRoute.queryParams;
+
+        combineLatest(observables).subscribe(
+            (result: [any[], any[]]) => {
+
+                const params: any[] = result[0];
+                const queryParams: any[] = result[1];
+
+                const resourceId: number = params["resourceId"] ? parseInt(params["resourceId"], 10) : 0;
+                const monument: Monument = queryParams["monument"] ? queryParams["monument"] : null;
+
+                // Check whether monument or resource id is given
+                if (monument instanceof Monument) {
+                    this.monument = monument;
+                    this.getMonument(resourceId);
+                    return;
+                } else if (resourceId > 0) {
+                    this.getMonument(resourceId);
+                } else {
+                    this.router.navigate(["page"]);
+                }
             }
-        })
+        );
 
         // Subscribe to changes in the search value
         /*
@@ -71,12 +90,12 @@ export class MonumentComponent implements OnInit, OnDestroy {
          document.body.scrollTop = 0;
          });
 
-        this.subscriptions[0] = this.searchService.searchFinished.subscribe(
-            (success: boolean) => {
-                if (this.searchService.monuments[0])
-                    this.monument = this.searchService.monuments[0];
-            }
-        );*/
+         this.subscriptions[0] = this.searchService.searchFinished.subscribe(
+         (success: boolean) => {
+         if (this.searchService.monuments[0])
+         this.monument = this.searchService.monuments[0];
+         }
+         );*/
 
     }
 
@@ -104,20 +123,20 @@ export class MonumentComponent implements OnInit, OnDestroy {
         );
 
 
-/*
-        // Get the monument from the list of the search if possible
-        this.monument = this.searchService.monuments.find((monument: Monument) => {
-            return monument.id === id;
-        });
-
-        // Get the monument from the server if necessary
-        if (this.monument instanceof Monument) return;
-
-        // No data is available, so we have to search
-        this.searchService.search(id + "", 100, 0);
-
-
         /*
+         // Get the monument from the list of the search if possible
+         this.monument = this.searchService.monuments.find((monument: Monument) => {
+         return monument.id === id;
+         });
+
+         // Get the monument from the server if necessary
+         if (this.monument instanceof Monument) return;
+
+         // No data is available, so we have to search
+         this.searchService.search(id + "", 100, 0);
+
+
+         /*
          // Get detailed information now
          this.salsahService.getResourceById(this.monument.getSalsahId()).subscribe(
          (resource: Resource) => {
@@ -141,11 +160,11 @@ export class MonumentComponent implements OnInit, OnDestroy {
      */
     openGallery(activeIndex: number) {
         /*
-        let imageUrls: string[] = this.monument.getPhotos().map((photo: Photo): string => {
-            return photo.url;
-        });
-        this.gallery.openWithImages(imageUrls, activeIndex);
-        */
+         let imageUrls: string[] = this.monument.getPhotos().map((photo: Photo): string => {
+         return photo.url;
+         });
+         this.gallery.openWithImages(imageUrls, activeIndex);
+         */
     }
 
 }

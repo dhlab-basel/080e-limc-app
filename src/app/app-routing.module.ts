@@ -13,7 +13,7 @@ const routes: Routes = [
             [
                 { path: "", component: HomeComponent },
                 { path: ":search", component: HomeComponent },
-                { path: "monument/:id", component: MonumentComponent },
+                { path: "monument/:resourceId", component: MonumentComponent },
                 { path: "**", redirectTo: "" }
             ]
     },

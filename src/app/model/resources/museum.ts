@@ -7,7 +7,7 @@ export class Museum {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public country: string;
     public city: string;
@@ -41,8 +41,7 @@ export class Museum {
      */
     public static fromGraphNode(node: GraphNode): Museum {
 
-        let museum: Museum = new Museum();
-        museum.graphNode = node;
+        const museum: Museum = new Museum();
 
         museum.country = node.getValues("limc:country")[0];
         museum.city = node.getValues("limc:city")[0];

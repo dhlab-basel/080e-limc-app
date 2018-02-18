@@ -4,6 +4,7 @@ import { SearchService } from "../../model/service/search.service";
 
 import { ActivatedRoute, Router } from "@angular/router";
 import { LimcService } from "../../model/service/limc.service";
+import { Monument } from "../../model/resources/monument";
 
 @Component({
     selector: "app-header",
@@ -28,13 +29,9 @@ export class HeaderComponent implements OnInit {
 
     /**
      * The search string
+     * @type {string}
      */
-    searchString: string = "";
-
-    /**
-     * The amount of entries to load per search
-     */
-    searchLimit: number = 12;
+    keyword: string = "";
 
 
     /////////////
@@ -42,18 +39,34 @@ export class HeaderComponent implements OnInit {
     /////////////
 
 
-    constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService, public limcService: LimcService) {
+    constructor(private router: Router, private route: ActivatedRoute, public limcService: LimcService) {
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.keyword = "Zeus";
+        this.search();
+
+/*
+        this.limcService.findMonumentsByKeyword("Attika").subscribe(
+            (monuments: Monument[]) => {
+                console.log(monuments);
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );*/
+
+    }
 
     openHome() {
-        this.router.navigate(["page", this.searchString]);
+        //this.router.navigate(["page", this.searchString]);
     }
 
     search() {
+        this.limcService.searchMonuments(this.keyword);
+
         //this.searchService.search(this.searchString, this.searchLimit, 0);
-        this.router.navigate(["page", this.searchString]);
+        //this.router.navigate(["page", this.searchString]);
     }
 
 }

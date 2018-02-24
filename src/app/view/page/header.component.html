@@ -7,8 +7,18 @@
                 <span class="cursor-pointer" (click)="openHome()"><span class="hidden-sm-down-plus">Digital</span> LIMC</span>
             </div>
             <div class="d-none d-md-block col-md-2 language">
-                <button class="btn btn-link" (click)="changeLanguage('de')">DE</button>|
-                <button class="btn btn-link" (click)="changeLanguage('en')">EN</button>
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-secondary" ngbDropdownToggle>
+                        <span translate>Language</span>
+                    </button>
+                    <div ngbDropdownMenu>
+                        <button class="dropdown-item" (click)="changeLanguage('de')">Deutsch <span *ngIf="translateService.currentLang === 'de'">&#10003;</span></button>
+                        <button class="dropdown-item" (click)="changeLanguage('en')">English <span *ngIf="translateService.currentLang === 'en'">&#10003;</span></button>
+                        <button class="dropdown-item" (click)="changeLanguage('fr')">Français <span *ngIf="translateService.currentLang === 'fr'">&#10003;</span></button>
+                        <button class="dropdown-item" (click)="changeLanguage('it')">Italiano <span *ngIf="translateService.currentLang === 'it'">&#10003;</span></button>
+                        <button class="dropdown-item" (click)="changeLanguage('gr')">Eλληνικά <span *ngIf="translateService.currentLang === 'gr'">&#10003;</span></button>
+                    </div>
+                </div>
             </div>
             <div class="col-8 col-md-6 search" *ngIf="showSearch">
                 <div class="input-group">

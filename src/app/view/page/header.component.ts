@@ -94,7 +94,7 @@ export class HeaderComponent implements OnInit {
         this.localStorageService.write("lang", languageString);
 
         // Perform new search
-        this.search(true);
+        // this.search(true);
 
     }
 

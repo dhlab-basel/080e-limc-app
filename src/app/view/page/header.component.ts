@@ -41,7 +41,14 @@ export class HeaderComponent implements OnInit {
     /////////////
 
 
-    constructor(private router: Router, private translateService: TranslateService, private localStorageService: LocalStorageService, public limcService: LimcService) {
+    /**
+     * Constructor.
+     * @param router
+     * @param translateService
+     * @param localStorageService
+     * @param limcService
+     */
+    constructor(private router: Router, public translateService: TranslateService, private localStorageService: LocalStorageService, public limcService: LimcService) {
     }
 
     /**

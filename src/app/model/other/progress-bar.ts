@@ -1,4 +1,4 @@
-import { timer } from "rxjs/observable/timer";
+import { timer } from "rxjs/index";
 
 export class ProgressBar {
 

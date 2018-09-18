@@ -1,27 +1,18 @@
 import { Injectable } from "@angular/core";
 
-import { Observable } from "rxjs/Observable";
 import { expand, map } from "rxjs/operators";
+import { EMPTY, Observable, Subscription, throwError } from "rxjs/index";
 
 import { SalsahService } from "./salsah.service";
 
 import { Monument } from "../resources/monument";
 import { Resource } from "../apiresult/resource";
 import { GraphData } from "../apiresult/graph-data";
-import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 import { GoogleService } from "./google.service";
 import { Museum } from "../resources/museum";
 import { ProgressBar } from "../other/progress-bar";
-import { timer } from "rxjs/observable/timer";
-import { TimerObservable } from "rxjs/observable/TimerObservable";
-import { of } from "rxjs/observable/of";
-import { interval } from "rxjs/observable/interval";
 import { Search } from "../apiresult/search";
 import { LimcSearch } from "../other/limc-search";
-import { Scene } from "../resources/scene";
-import { ResourceIncoming } from "../apiresult/resource-incoming";
-import { empty } from "rxjs/observable/empty";
-import { Subscription } from "rxjs/Subscription";
 
 @Injectable()
 /**
@@ -99,7 +90,7 @@ export class LimcService {
 
                 if (monuments.length !== 1) {
                     this.progressBar.reset();
-                    throw new ErrorObservable("More or less than 1 monument found.");
+                    return throwError("More or less than 1 monument found.");
                 }
 
                 // Get the museum coordinates
@@ -260,7 +251,7 @@ export class LimcService {
             expand((resource: any): Observable<number> => {
 
                 if (resource instanceof Resource === false || resource.incoming.length === 0) {
-                    return empty();
+                    return EMPTY;
                 }
 
                 for (const incoming of resource.incoming) {

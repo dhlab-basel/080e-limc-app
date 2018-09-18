@@ -1,4 +1,4 @@
-import { Inventory } from "./inventory";
+§import { Inventory } from "./inventory";
 import { Scene } from "./scene";
 import { Dating } from "./dating";
 import { GraphNode } from "../apiresult/graph-node";
@@ -9,10 +9,6 @@ import { CatalogThesCraChapter } from "./catalog-thes-crachapter";
 import { CatalogThesCra } from "./catalog-thes-cra";
 import { CatalogLimc } from "./catalog-limc";
 import { Graph } from "../apiresult/graph";
-import { map } from "rxjs/operators";
-import { ErrorObservable } from "rxjs/observable/ErrorObservable";
-import { Observable } from "rxjs/Observable";
-import { GraphData } from "../apiresult/graph-data";
 
 
 /**

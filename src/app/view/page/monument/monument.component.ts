@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 
-import { Observable } from "rxjs/Observable";
-import { combineLatest } from "rxjs/observable/combineLatest";
 
-import { SearchService } from "../../../model/service/search.service";
 import { LimcService } from "../../../model/service/limc.service";
 
 import { Monument } from "../../../model/resources/monument";

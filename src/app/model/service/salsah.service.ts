@@ -1,9 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 
-import { Observable } from "rxjs/Observable";
 import { catchError, map } from "rxjs/operators";
-import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript"
 
@@ -11,6 +9,7 @@ import { Search } from "../apiresult/search";
 import { Resource } from "../apiresult/resource";
 import { GraphData } from "../apiresult/graph-data";
 import { TranslateService } from "@ngx-translate/core";
+import { Observable, throwError } from "rxjs/index";
 
 @Injectable()
 /**
@@ -69,7 +68,7 @@ export class SalsahService {
             }),
             catchError((error: any) => {
                 console.error(error);
-                return ErrorObservable.create(error);
+                return throwError(error);
             })
         );
 
@@ -91,7 +90,7 @@ export class SalsahService {
             }),
             catchError((error: any) => {
                 console.error(error);
-                return ErrorObservable.create(error);
+                return throwError(error);
             })
         );
 
@@ -115,7 +114,7 @@ export class SalsahService {
             }),
             catchError((error: any) => {
                 console.error(error);
-                return ErrorObservable.create(error);
+                return throwError(error);
             })
         );
 

@@ -1,13 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 
-import { Observable } from "rxjs/Observable";
 import { catchError, map } from "rxjs/operators";
-import { ErrorObservable } from "rxjs/observable/ErrorObservable";
-
-import { Monument } from "../resources/monument";
-import { Resource } from "../apiresult/resource";
-import { GraphData } from "../apiresult/graph-data";
+import { Observable, throwError } from "rxjs/index";
 
 @Injectable()
 /**
@@ -61,7 +56,7 @@ export class GoogleService {
 
             }),
             catchError((error: any) => {
-                return ErrorObservable.create(error);
+                return throwError(error);
             })
         )
 

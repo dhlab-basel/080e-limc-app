@@ -1,22 +1,25 @@
-import { JsonObject, JsonProperty } from "json2typescript"
+import { Any, JsonObject, JsonProperty } from "json2typescript"
+
+import { StringToNumberConverter } from "../converters/string-to-number-converter";
+import { StringToBooleanConverter } from "../converters/string-to-boolean-converter";
 
 @JsonObject
 export class ResourceProperty {
 
-    @JsonProperty("pid", String)
-    public pid: string = undefined;
+    @JsonProperty("pid", StringToNumberConverter)
+    public pId: number = undefined;
 
     @JsonProperty("regular_property", Number)
-    public regular_property: number = undefined;
+    public regularProperty: number = undefined;
 
-    @JsonProperty("valuetype_id", String)
-    public valuetype_id: string = undefined;
+    @JsonProperty("valuetype_id", StringToNumberConverter)
+    public valueTypeId: number = undefined;
 
     @JsonProperty("guielement",  String)
-    public guielement: string = undefined;
+    public guiElement: string = undefined;
 
-    @JsonProperty("is_annotation", String)
-    public is_annotation: string = undefined;
+    @JsonProperty("is_annotation", StringToBooleanConverter)
+    public isAnnotation: string = undefined;
 
     @JsonProperty("label", String)
     public label: string = undefined;
@@ -27,18 +30,13 @@ export class ResourceProperty {
     @JsonProperty("occurrence", String)
     public occurrence: string = undefined;
 
-    @JsonProperty("values", [undefined], true)
+    @JsonProperty("values", [Any], true)
     public values: any[] = [];
 
     @JsonProperty("value_ids", [String], true)
-    public value_ids: string[] = [];
+    public valueIds: string[] = [];
 
     @JsonProperty("comments", [String], true)
     public comments: string[] = [];
-
-    public value_rights: number[];
-    public value_iconsrcs: string[];
-    public value_restype: string[];
-    public value_firstprops: string[];
 
 }

@@ -29,4 +29,46 @@ export class Search {
     @JsonProperty("userdata", User, true)
     public user: User = undefined;
 
+    /**
+     * Checks whether the search has more results to look for.
+     * @returns {boolean}
+     */
+    hasMoreResults(): boolean {
+
+        if (this.paging === undefined || this.paging === null) {
+            return false;
+        }
+
+        let currentPage: number = 0;
+
+        for (const p of this.paging) {
+            if (p.current) break;
+            currentPage++;
+        }
+
+        return currentPage < this.paging.length;
+
+    }
+
+    /**
+     * Gets the next start index.
+     * @returns {number}
+     */
+    getNextStartIndex(): number {
+
+        if (this.paging === undefined || this.paging === null || this.paging.length <= 1) {
+            return -1;
+        }
+
+        let currentPage: number = 0;
+
+        for (const p of this.paging) {
+            if (p.current) break;
+            currentPage++;
+        }
+
+        return currentPage < this.paging.length ? this.paging[currentPage + 1].start_at : -1;
+
+    }
+
 }

@@ -1,5 +1,4 @@
 import { GraphNode } from "../apiresult/graph-node";
-import { Dating } from "./dating";
 
 export class Epoch {
 
@@ -8,7 +7,7 @@ export class Epoch {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public name: string;
     public period: [string, string];
@@ -27,12 +26,11 @@ export class Epoch {
      */
     public static fromGraphNode(node: GraphNode): Epoch {
 
-        let epoch: Epoch = new Epoch();
-        epoch.graphNode = node;
+        const epoch: Epoch = new Epoch();
 
         epoch.name = node.getValues("limc:name")[0];
         epoch.period = Epoch.getPeriodFromString(node.getValues("limc:period")[0]);
-        epoch.sequence = parseInt(node.getValues("limc:sequence")[0]);
+        epoch.sequence = parseInt(node.getValues("limc:sequence")[0], 10);
 
         return epoch;
 

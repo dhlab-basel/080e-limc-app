@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 import { Observable } from "rxjs/Observable";
+import { catchError, map } from "rxjs/operators";
+import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript"
 
 import { Search } from "../apiresult/search";
 import { Resource } from "../apiresult/resource";
 import { GraphData } from "../apiresult/graph-data";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 /**
@@ -17,19 +18,83 @@ import { GraphData } from "../apiresult/graph-data";
  */
 export class SalsahService {
 
+    ////////////////
+    // PROPERTIES //
+    ////////////////
+
+
+    private static readonly apiUrl: string = "http://www.salsah.org/api";
+
     /**
      * JsonConvert instance
      * @type {JsonConvert}
      */
     jsonConvert: JsonConvert = new JsonConvert();
 
+
+    //////////////////
+    // CONSTRUCTORS //
+    //////////////////
+
+
     /**
      * Constructor.
      * @param http
+     * @param translate
      */
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private translate: TranslateService) {
         this.jsonConvert.operationMode = OperationMode.ENABLE;
         this.jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL;
+    }
+
+
+    //////////////////
+    // DATA METHODS //
+    //////////////////
+
+
+    /**
+     * Gets a resource by its numeric id.
+     * @param resourceId
+     * @returns {Observable<Resource>}
+     */
+    getResource(resourceId: number): Observable<Resource> {
+
+        return this.http.get(SalsahService.apiUrl + "/resources/" + resourceId + "?lang=" + this.translate.currentLang, {
+            headers: {},
+            observe: "response"
+        }).pipe(
+            map((response: HttpResponse<any>) => {
+                return this.jsonConvert.deserializeObject(response.body, Resource);
+            }),
+            catchError((error: any) => {
+                console.error(error);
+                return ErrorObservable.create(error);
+            })
+        );
+
+    }
+
+    /**
+     * Gets graph data by a resource id.
+     * @param resourceId
+     * @returns {Observable<R>}
+     */
+    public getGraphData(resourceId: number): Observable<GraphData> {
+
+        return this.http.get(SalsahService.apiUrl + "/graphdata/" + resourceId + "?full=1" + "&lang=" + this.translate.currentLang, {
+            headers: {},
+            observe: "response"
+        }).pipe(
+            map((response: HttpResponse<any>) => {
+                return this.jsonConvert.deserializeObject(response.body, GraphData);
+            }),
+            catchError((error: any) => {
+                console.error(error);
+                return ErrorObservable.create(error);
+            })
+        );
+
     }
 
     /**
@@ -39,60 +104,20 @@ export class SalsahService {
      * @param startIndex
      * @returns {Observable<R>}
      */
-    public searchString(searchString: string, nRows: number, startIndex: number): Observable<Search> {
+    public getSearch(searchString: string, nRows: number, startIndex: number): Observable<Search> {
 
-        return this.http.get("http://www.salsah.org/api/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex)
-            .map((response: Response) => {
-                return this.jsonConvert.deserializeObject(response, Search);
-            })
-            .catch((error: any) => {
+        return this.http.get(SalsahService.apiUrl + "/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex + "&lang=" + this.translate.currentLang, {
+            headers: {},
+            observe: "response"
+        }).pipe(
+            map((response: HttpResponse<any>) => {
+                return this.jsonConvert.deserializeObject(response.body, Search);
+            }),
+            catchError((error: any) => {
                 console.error(error);
-                return Observable.throw("");
-            });
-
-    }
-
-    /**
-     * Gets a resource by its id.
-     * @param id
-     * @returns {Observable<R>}
-     */
-    public getResourceById(id: string): Observable<Resource> {
-
-        return this.http
-            .get("http://www.salsah.org/api/resources/" + id)
-            .map((response: Response) => {
-                try {
-                    return this.jsonConvert.deserializeObject(response, Resource);
-                } catch (e) {
-                    console.log(e);
-                    return null;
-                }
+                return ErrorObservable.create(error);
             })
-            .catch((error: any) => {
-                console.error(error);
-                return Observable.throw("");
-            });
-
-
-    }
-
-    /**
-     * Gets graph data by a resource id.
-     * @param id
-     * @returns {Observable<R>}
-     */
-    public getGraphDataById(id: string): Observable<GraphData> {
-
-        return this.http
-            .get("http://salsah.org/api/graphdata/" + id + "?full=1")
-            .map((response: Response) => {
-                return this.jsonConvert.deserializeObject(response, GraphData);
-            })
-            .catch((error: any) => {
-                console.error(error);
-                return Observable.throw("");
-            });
+        );
 
     }
 

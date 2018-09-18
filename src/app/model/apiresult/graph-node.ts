@@ -3,17 +3,16 @@ import { JsonObject, JsonProperty } from "json2typescript";
 import { GraphNodeResourceInfo } from "./graph-node-resource-info";
 import { GraphNodeProperty } from "./graph-node-property";
 
-
 @JsonObject
 export class GraphNode {
 
-    public obj_id: string = "";
+    public resourceId: number;
 
     @JsonProperty("properties", [GraphNodeProperty])
     public properties: GraphNodeProperty[] = undefined;
 
     @JsonProperty("resinfo", GraphNodeResourceInfo)
-    public resinfo: GraphNodeResourceInfo = undefined;
+    public resInfo: GraphNodeResourceInfo = undefined;
 
     /**
      * Gets the values by a property.

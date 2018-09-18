@@ -1,9 +1,10 @@
-import { JsonObject, JsonProperty } from "json2typescript";
+import { Any, JsonObject, JsonProperty } from "json2typescript";
 
 import { User } from "./user";
 import { ResourceInfo } from "./resource-info";
 import { ResourceData } from "./resource-data";
 import { ResourceProperty } from "./resource-property";
+import { ResourceIncoming } from "./resource-incoming";
 
 
 @JsonObject
@@ -16,9 +17,9 @@ export class Resource {
     public resdata: ResourceData = undefined;
 
     @JsonProperty("props", [ResourceProperty])
-    public props: any = undefined;
+    public props: any[] = undefined;
 
-    @JsonProperty("incoming", [undefined])
+    @JsonProperty("incoming", [ResourceIncoming])
     public incoming: any[] = undefined;
 
     @JsonProperty("access", String)

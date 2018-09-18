@@ -1,16 +1,24 @@
-import { NgModule }             from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { HomeComponent } from "./view/home/home.component";
-import { DetailsComponent } from "./view/details/details.component";
+import { HomeComponent } from "./view/page/home/home.component";
+import { MonumentComponent } from "./view/page/monument/monument.component";
+import { WelcomeComponent } from "./view/welcome/welcome.component";
+import { PageComponent } from "./view/page/page.component";
 
 
 const routes: Routes = [
-    { path: '', redirectTo: 'search', pathMatch: 'full' },
-    { path: 'search', component: HomeComponent },
-    { path: 'search/:search', component: HomeComponent },
-    { path: 'monument/:id', component: DetailsComponent },
-    { path: '**', redirectTo: 'search' }
+    { path: "", component: WelcomeComponent },
+    { path: "page", component: PageComponent, children:
+            [
+                { path: "search", component: HomeComponent },
+                { path: "search/:search", component: HomeComponent },
+                { path: "monument/:resourceId", component: MonumentComponent },
+                { path: "**", redirectTo: "search" }
+            ]
+    },
+    { path: "monument/:resourceId", redirectTo: "page/monument/:resourceId" },
+    { path: "**", redirectTo: "page" }
 ];
 
 @NgModule({

@@ -9,9 +9,6 @@ export class User {
     @JsonProperty("language_id", String)
     public language_id: string = undefined;
 
-    //@JsonProperty("PHPSESSION", Boolean)
-    //public phpsession: boolean = undefined;
-
     @JsonProperty("user_id", String, true)
     public id: string = undefined;
 

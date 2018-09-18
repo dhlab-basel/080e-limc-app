@@ -7,7 +7,7 @@ export class Museum {
     ////////////////
 
 
-    private graphNode: GraphNode;
+    public resourceId: number;
 
     public country: string;
     public city: string;
@@ -25,6 +25,9 @@ export class Museum {
     public comment: string;
     public hasPhotoRight: boolean;
 
+    public latitude: number;
+    public longitude: number;
+
 
     /////////////
     // METHODS //
@@ -38,8 +41,7 @@ export class Museum {
      */
     public static fromGraphNode(node: GraphNode): Museum {
 
-        let museum: Museum = new Museum();
-        museum.graphNode = node;
+        const museum: Museum = new Museum();
 
         museum.country = node.getValues("limc:country")[0];
         museum.city = node.getValues("limc:city")[0];
@@ -59,6 +61,14 @@ export class Museum {
 
         return museum;
 
+    }
+
+    /**
+     * Gets the address as one line string.
+     * @returns {string}
+     */
+    public getAddress() {
+        return this.city + "," + this.country;
     }
 
 }

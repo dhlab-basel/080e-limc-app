@@ -1,0 +1,46 @@
+<div class="container" *ngIf="limcService.search.monuments.length > 0">
+
+    <div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="searchMore()">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-3" *ngFor="let monument of limcService.search.monuments">
+
+            <div class="card" (click)="openMonument(monument)">
+                <h4 class="card-header text-ellipsis">{{ monument.object ? monument.object : "?????" }}</h4>
+                <div class="card-img-top">
+                    <div class="card-img-top-limc" [ngStyle]="{'background-image': 'url(' + monument.getPhoto().url + ')'}"></div>
+                </div>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <div class="title"><span translate>Object</span></div>
+                        <div class="line"><strong><span translate>ID</span>:</strong> {{ monument.id }}</div>
+                        <div class="line"><strong><span translate>Origin</span>:</strong> {{ monument.origin }}</div>
+                        <div class="line"><strong><span translate>Category</span>:</strong> {{ monument.category }}</div>
+                        <div class="line"><strong><span translate>Material</span>:</strong> {{ monument.material }}</div>
+                        <div class="line">
+                            <strong><span translate>Discovery</span>:</strong> {{ monument.discovery }}{{ monument.discoveryDetail }}
+                        </div>
+                        <div class="line"><strong><span translate>Dating</span>:</strong> {{ monument.dating[0]?.period }}</div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="title"><span translate>Museum</span></div>
+                        <div class="line"><strong><span translate>City</span>:</strong> {{ monument.inventory[0].museum?.city }}</div>
+                        <div class="line"><strong><span translate>Name</span>:</strong> {{ monument.inventory[0].museum?.name }}</div>
+                        <div class="line"><strong><span translate>Inventory</span>:</strong> {{ monument.inventory[0].number }}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="container" *ngIf="limcService.search.monuments.length === 0">
+    <div class="loading">
+        <ng-container *ngIf="limcService.progressBar.isActive">
+            <span translate>Loading data</span>...
+        </ng-container>
+        <ng-container *ngIf="limcService.progressBar.isActive === false">
+            <span translate>No monuments found</span>.
+        </ng-container>
+    </div>
+</div>

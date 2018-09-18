@@ -1,0 +1,33 @@
+@import "~variables.scss";
+
+.card {
+    margin-top: 2rem;
+
+    .link {
+        margin: 1rem 0 2rem 0;
+        padding: 0.5rem;
+        border: $border-light;
+        text-align: center;
+
+        &.cursor-pointer:hover {
+            border: $border-dark;
+        }
+
+        .img {
+
+            img {
+                width: 50%;
+            }
+        }
+
+        .title {
+            margin-top: 1rem;
+        }
+    }
+
+}
+
+footer {
+    margin: 2rem auto;
+    font-size: $font-size-80;
+}

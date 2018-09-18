@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable }     from "@angular/core";
 
 import { SalsahService } from "./salsah.service";
 
@@ -16,22 +16,6 @@ export class SearchService {
     // PROPERTIES //
     ////////////////
 
-
-    /**
-     * Event that fires when a search starts
-     * @type {EventEmitter<boolean>}
-     */
-    searchStarted: EventEmitter<void> = new EventEmitter<void>();
-
-    /**
-     * Event that fires when we can announce progress
-     */
-    searchProgress: EventEmitter<number> = new EventEmitter<number>();
-
-    /**
-     * Event that fires when a search finishes
-     */
-    searchFinished: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
      * The current search result
@@ -57,10 +41,9 @@ export class SearchService {
     /////////////
     // METHODS //
     /////////////
+/*
 
-
-    constructor(private salsahService: SalsahService) {
-    }
+    constructor(private salsahService: SalsahService) {}
 
 
     reset() {
@@ -70,8 +53,6 @@ export class SearchService {
     }
 
     search(searchString: string, searchLimit: number, startIndex: number) {
-
-        this.searchStarted.emit();
 
         // Reset last search if necessary
         if (startIndex === 0) {
@@ -84,33 +65,30 @@ export class SearchService {
         this.salsahService.searchString(searchString, searchLimit, startIndex).subscribe(
             (search: Search) => {
 
+                console.log(search);
+
                 // Save the resulting data
                 this.lastSearch = search;
 
                 if (this.lastSearch.subjects === undefined) return;
 
-                let i: number = 0;
-                //console.log(searchLimit);
-
-                for (let subject of this.lastSearch.subjects) {
-                    i++;
-                    //console.log(i);
+                for (const subject of this.lastSearch.subjects) {
 
                     this.salsahService.getGraphDataById(subject.obj_id)
                         .subscribe(
                             (graphData: GraphData) => {
-                                console.log(graphData);
-                                let monuments: Monument[] = graphData.getMonuments();
+                                const monuments: Monument[] = graphData.getMonuments();
                                 this.monuments = this.monuments.concat(monuments);
-                                this.searchFinished.emit(monuments.length > 0);
                             },
                             (error: any) => {
+                                console.error(error);
                             }
                         );
 
                 }
             },
             (error: any) => {
+                console.error(error);
             }
         );
 
@@ -118,6 +96,6 @@ export class SearchService {
 
     searchMore(searchLimit: number) {
         this.search(this.lastSearchString, searchLimit, this.nextSearchStartIndex);
-    }
+    }*/
 
 }

@@ -21,7 +21,7 @@ export class GraphNode {
      * @returns {string[]}
      */
     public getValues(propertyKey: string): string[] {
-        return typeof this.properties[propertyKey] !== "undefined" ? this.properties[propertyKey].getValues() : [];
+        return this.properties !== undefined && typeof this.properties[propertyKey] !== "undefined" ? this.properties[propertyKey].getValues() : [];
     }
 
 }

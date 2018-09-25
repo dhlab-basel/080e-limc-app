@@ -24,6 +24,7 @@ import { FooterComponent } from "./view/page/footer.component";
 import { PhotoModalComponent } from "./view/page/monument/modals/photo-modal.component";
 import { WelcomeComponent } from "./view/welcome/welcome.component";
 import { PageComponent } from "./view/page/page.component";
+import { ExtendedSearchComponent } from './view/page/extended-search/extended-search.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -39,7 +40,8 @@ export function createTranslateLoader(http: HttpClient) {
         FooterComponent,
         PhotoModalComponent,
         WelcomeComponent,
-        PageComponent
+        PageComponent,
+        ExtendedSearchComponent
     ],
     imports: [
         BrowserModule,

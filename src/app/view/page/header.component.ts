@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
-import { SearchService } from "../../model/service/search.service";
-
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { LimcService } from "../../model/service/limc.service";
-import { Monument } from "../../model/resources/monument";
 import { TranslateService } from "@ngx-translate/core";
+
+import { LimcService } from "../../model/service/limc.service";
 import { LocalStorageService } from "../../model/service/local-storage.service";
 
 @Component({
@@ -57,8 +55,8 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
 
         const keyword: string = (
-            this.router.url.startsWith("/page/search") ?
-            this.router.url.replace("/page/search", "").replace("/", "") :
+            this.router.url.startsWith("/page/home") ?
+            this.router.url.replace("/page/home", "").replace("/", "") :
             ""
         );
 
@@ -70,10 +68,10 @@ export class HeaderComponent implements OnInit {
     }
 
     /**
-     * Opens the search page.
+     * Opens the home page.
      */
     openHome() {
-        this.router.navigate(["page", "search", this.keyword]);
+        this.router.navigate(["page", "home", this.keyword]);
     }
 
     /**
@@ -85,7 +83,7 @@ export class HeaderComponent implements OnInit {
         this.limcService.searchMonuments(this.keyword, 0);
 
         if (navigate) {
-            this.router.navigate(["page", "search", this.keyword]);
+            this.router.navigate(["page", "home", this.keyword]);
         }
 
     }

@@ -77,7 +77,7 @@ export class SalsahService {
     /**
      * Gets graph data by a resource id.
      * @param resourceId
-     * @returns {Observable<R>}
+     * @returns {Observable<GraphData>}
      */
     public getGraphData(resourceId: number): Observable<GraphData> {
 
@@ -101,11 +101,35 @@ export class SalsahService {
      * @param searchString
      * @param nRows
      * @param startIndex
-     * @returns {Observable<R>}
+     * @returns {Observable<Search>}
      */
     public getSearch(searchString: string, nRows: number, startIndex: number): Observable<Search> {
 
         return this.http.get(SalsahService.apiUrl + "/search/" + searchString + "?searchtype=fulltext&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex + "&lang=" + this.translate.currentLang, {
+            headers: {},
+            observe: "response"
+        }).pipe(
+            map((response: HttpResponse<any>) => {
+                return this.jsonConvert.deserializeObject(response.body, Search);
+            }),
+            catchError((error: any) => {
+                console.error(error);
+                return throwError(error);
+            })
+        );
+
+    }
+
+    /**
+     * Makes an extended search.
+     * @param {string} searchParams
+     * @param {number} nRows
+     * @param {number} startIndex
+     * @returns {Observable<Search>}
+     */
+    public getExtendedSearch(searchParams: string, nRows: number, startIndex: number): Observable<Search> {
+
+        return this.http.get(SalsahService.apiUrl + "/search/?searchtype=extended&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex + "&lang=" + this.translate.currentLang + "&" + searchParams, {
             headers: {},
             observe: "response"
         }).pipe(

@@ -1,15 +1,8 @@
-import { Observable } from "rxjs/Observable";
-import { map } from "rxjs/operators/map";
-
-import { SalsahService } from "../service/salsah.service";
-
 import { Photo } from "./photo";
 import { Dating } from "./dating";
 import { CatalogThesCra } from "./catalog-thes-cra";
 import { CatalogLimc } from "./catalog-limc";
 import { GraphNode } from "../apiresult/graph-node";
-import { Resource } from "../apiresult/resource";
-import { ResourceIncoming } from "../apiresult/resource-incoming";
 
 export class Scene {
 

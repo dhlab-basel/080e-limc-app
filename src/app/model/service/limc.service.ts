@@ -77,7 +77,7 @@ export class LimcService {
      * @param resourceId
      * @returns {Observable<Monument>}
      */
-    getMonumentByResourceId(resourceId: number): Observable<Monument> {
+    getMonumentByResourceId(resourceId: number): Observable<Monument | any> {
 
         this.progressBar.setProgress(0);
 

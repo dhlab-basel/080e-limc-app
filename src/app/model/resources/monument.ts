@@ -1,4 +1,4 @@
-§import { Inventory } from "./inventory";
+import { Inventory } from "./inventory";
 import { Scene } from "./scene";
 import { Dating } from "./dating";
 import { GraphNode } from "../apiresult/graph-node";

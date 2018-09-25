@@ -22,7 +22,7 @@
             </div>
             <div class="col-8 col-md-6 search" *ngIf="showSearch">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Suchen" [(ngModel)]="keyword"
+                    <input class="form-control" type="text" placeholder="{{ 'Search' | translate }}" [(ngModel)]="keyword"
                         (keyup.enter)="search(true)">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary cursor-pointer" (click)="search(true)">
@@ -30,6 +30,7 @@
                         </button>
                     </div>
                 </div>
+                <a routerLink="page/search"><span translate>extended search</span></a>
             </div>
         </div>
     </div>

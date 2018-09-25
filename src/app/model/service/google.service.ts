@@ -39,15 +39,15 @@ export class GoogleService {
     /**
      * Gets the lat-long coordinates as an array from any address.
      * @param {string} place
-     * @returns {Observable<[number , number]>}
+     * @returns {Observable<number[]>}
      */
-    getLatLon(place: string): Observable<[number, number]> {
+    getLatLon(place: string): Observable<number[]> {
 
         return this.http.get(GoogleService.API_URL + "/geocode/json?key=" + GoogleService.API_KEY + "&address=" + place, {
             headers: {},
             observe: "response"
         }).pipe(
-            map((response: HttpResponse<any>) => {
+            map((response: HttpResponse<any>): number[] => {
 
                 const lat: number = response.body.results[0].geometry.location.lat;
                 const lon: number = response.body.results[0].geometry.location.lng;

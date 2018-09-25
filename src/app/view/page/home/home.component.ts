@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from "@angular/router";
 
-import { SearchService } from "../../../model/service/search.service";
+import { LimcService } from "../../../model/service/limc.service";
 
 import { Monument } from "../../../model/resources/monument";
-import { NgbProgressbarConfig } from "@ng-bootstrap/ng-bootstrap";
-import { LimcService } from "../../../model/service/limc.service";
 import { Search } from "../../../model/apiresult/search";
 import { LimcSearch } from "../../../model/other/limc-search";
 

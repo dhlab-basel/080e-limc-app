@@ -1,34 +1,30 @@
 <form>
     <div class="form-group">
         <label for="exampleInputEmail1"><span translate>City</span></label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+               placeholder="Enter email">
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
     <button type="submit" class="btn btn-outline-secondary">Suche</button>
 </form>
 
-<div class="card" (click)="openMonument(monument)" *ngIf="monument">
-    <h4 class="card-header text-ellipsis">{{ monument.object ? monument.object : "?????" }}</h4>
-    <div class="card-img-top">
-        <div class="card-img-top-limc" [ngStyle]="{'background-image': 'url(' + monument.getPhoto().url + ')'}"></div>
-    </div>
-    <div class="list-group list-group-flush">
-        <div class="list-group-item">
-            <div class="title"><span translate>Object</span></div>
-            <div class="line"><strong><span translate>ID</span>:</strong> {{ monument.id }}</div>
-            <div class="line"><strong><span translate>Origin</span>:</strong> {{ monument.origin }}</div>
-            <div class="line"><strong><span translate>Category</span>:</strong> {{ monument.category }}</div>
-            <div class="line"><strong><span translate>Material</span>:</strong> {{ monument.material }}</div>
-            <div class="line">
-                <strong><span translate>Discovery</span>:</strong> {{ monument.discovery }}{{ monument.discoveryDetail }}
+<div class="container">
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="input-group">
+            <select class="form-control">
+                <option *ngFor="let searchProperty of searchProperties" [ngValue]="searchProperty">{{
+                    searchProperty.name }}
+                </option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)="addProperty($event)">Add</button>
             </div>
-            <div class="line"><strong><span translate>Dating</span>:</strong> {{ monument.dating[0]?.period }}</div>
         </div>
-        <div class="list-group-item">
-            <div class="title"><span translate>Museum</span></div>
-            <div class="line"><strong><span translate>City</span>:</strong> {{ monument.inventory[0].museum?.city }}</div>
-            <div class="line"><strong><span translate>Name</span>:</strong> {{ monument.inventory[0].museum?.name }}</div>
-            <div class="line"><strong><span translate>Inventory</span>:</strong> {{ monument.inventory[0].number }}</div>
-        </div>
+
     </div>
+</div>
+
 </div>

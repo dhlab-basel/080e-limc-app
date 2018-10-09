@@ -1,4 +1,4 @@
-<form>
+<!--<form>
     <div class="form-group">
         <label for="exampleInputEmail1"><span translate>City</span></label>
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -6,13 +6,32 @@
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
     <button type="submit" class="btn btn-outline-secondary">Suche</button>
-</form>
+</form>-->
 
 <div class="container">
 
 <div class="row">
     <div class="col-12">
 
+        <form [formGroup]="formGroup">
+            <ng-container *ngFor="let control of formControls">
+                Bla: {{ control.name }}
+                <ng-container [ngSwitch]="control.type">
+                    <app-form-input *ngSwitchCase="'input'" [formControl]="control"></app-form-input>
+                    <app-form-select *ngSwitchCase="'select'" [formControl]="control" [options]="searchProperties"></app-form-select>
+                </ng-container>
+
+                {{ control.value | json }}
+
+                <button type="button" class="btn btn-secondary" (click)="removeControl(control)">Remove control</button>
+                <button type="button" class="btn btn-secondary" (click)="showControl(control)">Log control</button>
+
+            </ng-container>
+        </form>
+
+        <button type="button" class="btn btn-secondary" (click)="addControl()">Add control</button>
+
+        <!--
         <div class="input-group">
             <select class="form-control">
                 <option *ngFor="let searchProperty of searchProperties" [ngValue]="searchProperty">{{
@@ -22,7 +41,7 @@
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" (click)="addProperty($event)">Add</button>
             </div>
-        </div>
+        </div>-->
 
     </div>
 </div>

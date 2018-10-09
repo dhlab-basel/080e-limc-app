@@ -1,0 +1,4 @@
+<select class="form-control" [formControl]="formControl">
+    <option><span translate>Please select</span></option>
+    <option *ngFor="let option of options" [ngValue]="option.name">{{ option.value }}</option>
+</select>

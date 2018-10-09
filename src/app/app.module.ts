@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -25,6 +25,8 @@ import { PhotoModalComponent } from "./view/page/monument/modals/photo-modal.com
 import { WelcomeComponent } from "./view/welcome/welcome.component";
 import { PageComponent } from "./view/page/page.component";
 import { ExtendedSearchComponent } from './view/page/extended-search/extended-search.component';
+import { FormInputComponent } from './view/page/extended-search/form/form-input/form-input.component';
+import { FormSelectComponent } from './view/page/extended-search/form/form-select/form-select.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -41,14 +43,17 @@ export function createTranslateLoader(http: HttpClient) {
         PhotoModalComponent,
         WelcomeComponent,
         PageComponent,
-        ExtendedSearchComponent
+        ExtendedSearchComponent,
+        FormInputComponent,
+        FormSelectComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         AgmCoreModule.forRoot({
             apiKey: "AIzaSyCmedK-uMWOPLLYSpegtc-Lz3QjjjGUrLY"
         }),

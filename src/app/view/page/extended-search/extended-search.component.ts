@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LimcService } from "../../../model/service/limc.service";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { LimcFormControl } from "../../../model/other/limc-form-control";
 
 @Component({
     selector: 'app-extended-search',
@@ -23,13 +25,20 @@ export class ExtendedSearchComponent implements OnInit {
     ////////////////
 
 
+    test: string = "hu";
+
+
+    formGroup: FormGroup;
+
+    formControls: LimcFormControl[] = [];
+
     /**
      * Search properties
-     * @type {Array}
+     * @type {any[]}
      */
-    searchProperties: { id: number, name: string }[] = [
-        { id: 1, name: "Name" },
-        { id: 2, name: "City" },
+    searchProperties: any[] = [
+        { name: 1, value: "Name" },
+        { name: 2, value: "City" },
     ];
 
 
@@ -39,10 +48,33 @@ export class ExtendedSearchComponent implements OnInit {
     // METHODS //
     /////////////
 
-    constructor(public limcService: LimcService) {
+    constructor(private formBuilder: FormBuilder, public limcService: LimcService) {
     }
 
     ngOnInit() {
+
+        this.formControls = [
+            new LimcFormControl("select", "test", {
+                disabled: false,
+                value: "Test"
+            }),
+            new LimcFormControl("input", "test", {
+                disabled: false,
+                value: "Test"
+            })
+        ];
+
+        const formGroup: any = {};
+        for (let formControl of this.formControls) {
+            formGroup["test"] = formControl;
+        }
+
+        this.formGroup = this.formBuilder.group(formGroup);
+
+        console.log(this.formGroup);
+
+        //console.log(this.form.controls.name.value.value)
+
     }
 
 
@@ -51,9 +83,27 @@ export class ExtendedSearchComponent implements OnInit {
     /////////////
 
 
-    addProperty(ev) {
-        console.log(ev);
+    addControl() {
+
+        const formControl: LimcFormControl = new LimcFormControl("input", "test", "lol");
+        this.formControls.push(formControl);
+        this.formGroup.addControl("test2", formControl);
     }
 
+    removeControl(formControl: LimcFormControl) {
+
+        this.formControls = this.formControls.filter(
+            (c: LimcFormControl): boolean => {
+                return c.name !== formControl.name
+            }
+        );
+        this.formGroup.removeControl("test2");
+
+    }
+
+    showControl(c) {
+        console.log(this.formGroup);
+        console.log(c);
+    }
 
 }

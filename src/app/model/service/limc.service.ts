@@ -178,6 +178,51 @@ export class LimcService {
 
     }
 
+
+    searchMonumentsByProperties(data: { property: number, value: number }[], startIndex: number, amount?: number) {
+
+        let searchParams
+
+        for (let d of data) {
+
+        }
+
+        const properties: number[] = [];
+        const values: string[] = [];
+
+        const s: Subscription = this.salsahService.getExtendedSearch(searchParams, amount, startIndex).subscribe(
+            (search: Search) => {
+
+                this.progressBar.setProgress(50);
+
+                this.search.result = search;
+
+                // Loop through the results and do an appropriate action
+                for (const subject of search.subjects) {
+
+                    if (subject.iconLabel === "Monument") {
+                        this.addMonumentByResourceId(subject.resourceId);
+                    } else {
+                        this.addMonumentsByResourceId(subject.resourceId);
+                    }
+
+                }
+
+                this.progressBar.setProgress(100);
+
+            },
+            (error: any) => {
+                this.progressBar.reset();
+                console.error(error);
+            }
+        );
+
+        this.subscriptions.push(s);
+
+        searchParams = "property_id%5B%5D=333&compop%5B%5D=LIKE&searchval%5B%5D=Base%25&";
+
+    }
+
     /**
      * Adds one monument to the array by its resource id.
      * This method makes sure the whole graph data is retreived, excluding the Google maps data.

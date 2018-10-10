@@ -1,49 +1,68 @@
-<!--<form>
-    <div class="form-group">
-        <label for="exampleInputEmail1"><span translate>City</span></label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-               placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <button type="submit" class="btn btn-outline-secondary">Suche</button>
-</form>-->
-
 <div class="container">
 
-<div class="row">
-    <div class="col-12">
+    <div class="row">
+        <div class="col-12">
 
-        <form [formGroup]="formGroup">
-            <ng-container *ngFor="let control of formControls">
-                Bla: {{ control.name }}
-                <ng-container [ngSwitch]="control.type">
-                    <app-form-input *ngSwitchCase="'input'" [formControl]="control"></app-form-input>
-                    <app-form-select *ngSwitchCase="'select'" [formControl]="control" [options]="searchProperties"></app-form-select>
-                </ng-container>
+            <form [formGroup]="formArray">
 
-                {{ control.value | json }}
+                <div class="row">
+                    <div class="col-12 mb-2">
+                        <span translate>Please build your extended search.</span>
+                    </div>
+                </div>
 
-                <button type="button" class="btn btn-secondary" (click)="removeControl(control)">Remove control</button>
-                <button type="button" class="btn btn-secondary" (click)="showControl(control)">Log control</button>
+                <div class="row mb-2 text-bold">
+                    <div class="col-4 col-sm-4">
+                        <span translate>Property</span>
+                    </div>
+                    <div class="col-4 col-sm-6">
+                        <span translate>Value</span>
+                    </div>
+                    <div class="col-4 col-sm-2">
+                        <span translate></span>
 
-            </ng-container>
-        </form>
+                    </div>
+                </div>
 
-        <button type="button" class="btn btn-secondary" (click)="addControl()">Add control</button>
+                <div class="row form-group" *ngFor="let formGroup of formArray?.controls">
+                    <div class="col-4">
+                        <app-form-select [formControl]="formGroup.controls.select"
+                                         [options]="searchProperties"></app-form-select>
+                    </div>
+                    <div class="col-4 col-sm-6">
+                        <app-form-input [formControl]="formGroup.controls.input"></app-form-input>
+                    </div>
+                    <div class="col-4 col-sm-2">
+                        <button type="button" class="btn btn-outline-danger" (click)="removeGroup(formGroup.controls)">
+                            <span translate>-</span>
+                        </button>
+                    </div>
 
-        <!--
-        <div class="input-group">
-            <select class="form-control">
-                <option *ngFor="let searchProperty of searchProperties" [ngValue]="searchProperty">{{
-                    searchProperty.name }}
-                </option>
-            </select>
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" (click)="addProperty($event)">Add</button>
-            </div>
-        </div>-->
+                </div>
 
+                <div class="row form-group">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-outline-success" (click)="addGroup()">
+                            <span translate>+</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-block btn-outline-secondary" (click)="search()">
+                            <span translate>Extended search</span>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
     </div>
-</div>
 
 </div>
+
+<div class="divider"></div>
+
+<app-home></app-home>

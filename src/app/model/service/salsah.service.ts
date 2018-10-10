@@ -127,7 +127,7 @@ export class SalsahService {
      * @param {number} startIndex
      * @returns {Observable<Search>}
      */
-    public getExtendedSearch(searchParams: string, nRows: number, startIndex: number): Observable<Search> {
+    public getExtendedSearch(searchParams: string[], nRows: number, startIndex: number): Observable<Search> {
 
         return this.http.get(SalsahService.apiUrl + "/search/?searchtype=extended&filter_by_project=LIMC&show_nrows=" + nRows + "&start_at=" + startIndex + "&lang=" + this.translate.currentLang + "&" + searchParams, {
             headers: {},

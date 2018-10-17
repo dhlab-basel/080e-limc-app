@@ -117,10 +117,12 @@
         </div>
 
         <!-- Inventory / Museum -->
-        <ng-container *ngIf="monument.inventory[0] as inventory">
-            <ng-container *ngIf="monument.inventory[0].museum as museum">
+        <ng-container *ngIf="monument.inventory">
 
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+
+            <ng-container *ngFor="let inventory of monument.inventory">
+            <ng-container *ngIf="inventory.museum as museum">
 
                     <div class="card mb-3" *ngIf="museum.latitude">
                         <h4 class="card-header text-ellipsis"><span translate>Location</span></h4>
@@ -161,9 +163,11 @@
                         </div>
                     </div>
 
-                </div>
 
             </ng-container>
+        </ng-container>
+            </div>
+
         </ng-container>
 
     </div>

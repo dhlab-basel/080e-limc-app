@@ -17,6 +17,15 @@ import { LimcSearch } from "../../../model/other/limc-search";
  */
 export class HomeComponent implements OnInit {
 
+    ///////////////
+    // CONSTANTS //
+    ///////////////
+
+    /**
+     * The amount of entries to load per search
+     */
+    readonly searchLimit: number = 12;
+
     ////////////////
     // PROPERTIES //
     ////////////////
@@ -25,11 +34,6 @@ export class HomeComponent implements OnInit {
      * The search string
      */
     searchString: string = "London";
-
-    /**
-     * The amount of entries to load per search
-     */
-    searchLimit: number = 12;
 
 
     /////////////
@@ -50,37 +54,6 @@ export class HomeComponent implements OnInit {
      */
     ngOnInit() {
         this.limcService.search.selectedMonument = null;
-
-        /*
-        if (this.searchService.monuments.length > 0) return;
-
-        // Search again if necessary
-        this.route.url.subscribe(
-            (segment: UrlSegment[]) => {
-                switch (segment.length) {
-                    case 1:
-                        this.search();
-                        break;
-                    case 2:
-                        if (this.searchString === this.searchService.lastSearchString) return;
-                        this.searchString = segment[1].path;
-                        this.search();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        );*/
-
-    }
-
-    /**
-     * Opens a given monument.
-     * @param monument
-     */
-    openMonument(monument: Monument) {
-        this.limcService.search.selectedMonument = monument;
-        this.router.navigate(["page", "monument", monument.resourceId]);
     }
 
     /**
@@ -94,6 +67,10 @@ export class HomeComponent implements OnInit {
      * Searches for more monuments.
      */
     searchMore() {
+
+        this.limcService.searchMonuments(this.limcService.search.keyword, this.limcService.search.monuments.length);
+
+        /*
 
         const search: LimcSearch = this.limcService.search;
 
@@ -111,6 +88,8 @@ export class HomeComponent implements OnInit {
 
         console.log("search more");
         //this.searchService.searchMore(this.searchLimit);
+        */
+
     }
 
 }

@@ -5,7 +5,7 @@ import { GraphNode } from "../apiresult/graph-node";
 import { Photo } from "./photo";
 import { Museum } from "./museum";
 import { Epoch } from "./epoch";
-import { CatalogThesCraChapter } from "./catalog-thes-crachapter";
+import { CatalogThesCraChapter } from "./catalog-thes-cra-chapter";
 import { CatalogThesCra } from "./catalog-thes-cra";
 import { CatalogLimc } from "./catalog-limc";
 import { Graph } from "../apiresult/graph";

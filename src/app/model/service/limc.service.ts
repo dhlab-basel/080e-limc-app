@@ -178,17 +178,36 @@ export class LimcService {
 
     }
 
+    /**
+     * Searches monuments by given data.
+     * @param data
+     * @param startIndex
+     * @param amount
+     */
+    searchMonumentsByProperties(data: { resourceTypeId: number, propertyId: number, value: number|string }[], startIndex: number, amount?: number) {
 
-    searchMonumentsByProperties(data: { property: number, value: number }[], startIndex: number, amount?: number) {
+        this.progressBar.setProgress(0);
 
-        let searchParams
+        this.search.keyword = "";
 
-        for (let d of data) {
-
+        // Reset the search if necessary
+        if (startIndex === 0) {
+            this.search.monuments = []
+            for (const sub of this.subscriptions) sub.unsubscribe();
         }
 
-        const properties: number[] = [];
-        const values: string[] = [];
+        if (amount === undefined) amount = 10;
+
+        let searchParams: string = data.map(
+            (p: any) => {
+                console.log(p);
+                if (typeof p.value === "string" && p.value.indexOf("%") >= 0) {
+                    return "filter_by_restype=" + p.resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=LIKE&searchval[]=" + p.value + ""
+                } else {
+                    return "filter_by_restype=" + p.resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=MATCH&searchval[]=" + p.value + ""
+                }
+            }
+        ).join("&");
 
         const s: Subscription = this.salsahService.getExtendedSearch(searchParams, amount, startIndex).subscribe(
             (search: Search) => {

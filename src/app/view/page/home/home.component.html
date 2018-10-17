@@ -1,4 +1,6 @@
-<div class="container" *ngIf="limcService.search.monuments.length > 0">
+<app-monument-list [monuments]="limcService.search.monuments" (loadMore)="searchMore()"></app-monument-list>
+
+<!--<div class="container" *ngIf="limcService.search.monuments.length > 0">
 
     <div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="searchMore()">
         <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-3" *ngFor="let monument of limcService.search.monuments">
@@ -43,4 +45,4 @@
             <span translate>No monuments found</span>.
         </ng-container>
     </div>
-</div>
+</div>-->

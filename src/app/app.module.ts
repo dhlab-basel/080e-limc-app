@@ -24,9 +24,11 @@ import { FooterComponent } from "./view/page/footer.component";
 import { PhotoModalComponent } from "./view/page/monument/modals/photo-modal.component";
 import { WelcomeComponent } from "./view/welcome/welcome.component";
 import { PageComponent } from "./view/page/page.component";
-import { ExtendedSearchComponent } from './view/page/extended-search/extended-search.component';
-import { FormInputComponent } from './view/page/extended-search/form/form-input/form-input.component';
-import { FormSelectComponent } from './view/page/extended-search/form/form-select/form-select.component';
+import { ExtendedSearchComponent } from "./view/page/extended-search/extended-search.component";
+import { FormInputComponent } from "./view/page/extended-search/form/form-input/form-input.component";
+import { FormSelectComponent } from "./view/page/extended-search/form/form-select/form-select.component";
+import { MonumentListComponent } from "./view/components/monument-list/monument-list.component";
+import { MonumentListElementComponent } from "./view/components/monument-list-element/monument-list-element.component";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -45,7 +47,9 @@ export function createTranslateLoader(http: HttpClient) {
         PageComponent,
         ExtendedSearchComponent,
         FormInputComponent,
-        FormSelectComponent
+        FormSelectComponent,
+        MonumentListComponent,
+        MonumentListElementComponent
     ],
     imports: [
         BrowserModule,

@@ -1,1 +1,13 @@
-<input type="text" class="form-control" [formControl]="formControl" />
+<ng-container *ngIf="options?.length > 50">
+    <input type="text" class="form-control" [formControl]="formControl" (keydown.enter)="formControl.valid ? enterPressed.emit() : null" required
+           minlength="1" [ngbTypeahead]="typeaheadSearch" [inputFormatter]="typeaheadFormatter" [resultFormatter]="typeaheadFormatter" [editable]="false" />
+</ng-container>
+
+<ng-container *ngIf="options?.length <= 50 && options?.length > 0">
+    <app-form-select [formControl]="formControl" [options]="options" [formatter]="selectValueFormatter"></app-form-select>
+</ng-container>
+
+<ng-container *ngIf="!options || options?.length === 0">
+    <input type="text" class="form-control" [formControl]="formControl" (keydown.enter)="formControl.valid ? enterPressed.emit() : null" required
+           minlength="1"/>
+</ng-container>

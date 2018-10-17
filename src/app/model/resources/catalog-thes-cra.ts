@@ -1,4 +1,4 @@
-import { CatalogThesCraChapter } from "./catalog-thes-crachapter";
+import { CatalogThesCraChapter } from "./catalog-thes-cra-chapter";
 import { GraphNode } from "../apiresult/graph-node";
 
 export class CatalogThesCra {

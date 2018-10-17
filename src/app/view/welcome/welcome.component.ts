@@ -30,7 +30,7 @@ export class WelcomeComponent implements OnInit {
      * Open the page page.
      */
     openHome() {
-        this.router.navigate(["page", "search", "Basel"]);
+        this.router.navigate(["page", "home", "Basel"]);
     }
 
 }

@@ -1,11 +1,14 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { LimcFormControl } from "../../../../../model/other/limc-form-control";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from "@angular/core";
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Observable } from "rxjs";
+import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { NodeData } from "../../../../../model/apiresult/node-data";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
-    selector: 'app-form-input',
-    templateUrl: './form-input.component.html',
-    styleUrls: ['./form-input.component.css'],
+    selector: "app-form-input",
+    templateUrl: "./form-input.component.html",
+    styleUrls: ["./form-input.component.css"],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         multi: true,
@@ -26,7 +29,17 @@ export class FormInputComponent implements OnInit, ControlValueAccessor {
     /**
      * Form control input
      */
-    @Input() formControl: LimcFormControl;
+    @Input() formControl: FormControl;
+
+    /**
+     * Options in case of typeahead
+     */
+    @Input() options: NodeData[] = [];
+
+    /**
+     * Output event
+     */
+    @Output() enterPressed: EventEmitter<void> = new EventEmitter<void>();
 
 
     /////////////
@@ -34,8 +47,30 @@ export class FormInputComponent implements OnInit, ControlValueAccessor {
     /////////////
 
 
-    constructor() {}
+    constructor(private translateService: TranslateService) {}
     ngOnInit() {}
+
+    typeaheadFormatter = (node: NodeData) => node instanceof NodeData ? node.getLabel(this.translateService) : "";
+
+    typeaheadSearch = (text$: Observable<string>) =>
+        text$.pipe(
+            debounceTime(200),
+            distinctUntilChanged(),
+            map(term => term === '' ? []
+                : this.options.filter(
+                    (node: NodeData) => {
+                        const label = node.getLabel(this.translateService);
+                        return label !== "" && label.toLowerCase().startsWith(term);
+                    }).slice(0, 10))
+        );
+
+    /**
+     * Value formatter
+     * @param option
+     */
+    selectValueFormatter = (option: NodeData) => {
+        return option.getLabel(this.translateService);
+    };
 
 
     ////////////////
@@ -62,7 +97,7 @@ export class FormInputComponent implements OnInit, ControlValueAccessor {
     }
 
     /**
-     * Registers a callback function that should be called when the control's value changes in the UI.
+     * Registers a callback function that should be called when the control"s value changes in the UI.
      * @param fn
      */
     registerOnChange(fn: any): void {

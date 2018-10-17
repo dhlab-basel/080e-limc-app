@@ -10,7 +10,7 @@ import { Museum } from "../resources/museum";
 import { Epoch } from "../resources/epoch";
 import { Dating } from "../resources/dating";
 import { CatalogThesCra } from "../resources/catalog-thes-cra";
-import { CatalogThesCraChapter } from "../resources/catalog-thes-crachapter";
+import { CatalogThesCraChapter } from "../resources/catalog-thes-cra-chapter";
 import { CatalogLimc } from "../resources/catalog-limc";
 import { Photo } from "../resources/photo";
 

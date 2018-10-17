@@ -1,5 +1,5 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { LimcFormControl } from "../../../../../model/other/limc-form-control";
 
 @Component({
@@ -25,9 +25,23 @@ export class FormSelectComponent implements OnInit {
     /**
      * Form control input
      */
-    @Input() formControl: LimcFormControl;
+    @Input() formControl: FormControl;
 
+    /**
+     * All options
+     */
     @Input() options: any[] = [];
+
+    /**
+     * A formatter function for the label
+     */
+    @Input() formatter: (option: any) => string = (option: any) => option.label;
+
+    /**
+     * Fired on change
+     */
+    @Output() onValueChanged: EventEmitter<any> = new EventEmitter<any>();
+
 
     /////////////
     // METHODS //
@@ -57,7 +71,7 @@ export class FormSelectComponent implements OnInit {
      * Writes a new item to the element.
      * @param value the value
      */
-    writeValue(value: number): void {
+    writeValue(value: any): void {
         this.onChange(value);
     }
 

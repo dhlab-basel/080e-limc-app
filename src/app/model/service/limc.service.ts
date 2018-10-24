@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { expand, map } from "rxjs/operators";
-import { EMPTY, Observable, Subscription, throwError } from "rxjs/index";
+import { EMPTY, interval, Observable, Subscription, throwError } from "rxjs/index";
 
 import { SalsahService } from "./salsah.service";
 
@@ -13,6 +13,8 @@ import { Museum } from "../resources/museum";
 import { ProgressBar } from "../other/progress-bar";
 import { Search } from "../apiresult/search";
 import { LimcSearch } from "../other/limc-search";
+import { LimcExtendedSearch } from "../other/limc-extended-search";
+import { start } from "repl";
 
 @Injectable()
 /**
@@ -45,14 +47,26 @@ export class LimcService {
     progressBar: ProgressBar = new ProgressBar();
 
     /**
-     * the search result
+     * The search result
      */
     search: LimcSearch = new LimcSearch();
 
     /**
+     * The search result
+     */
+    extendedSearch: LimcExtendedSearch = new LimcExtendedSearch();
+
+    /**
      * List of all subscriptions
      */
-    private subscriptions: Subscription[] = [];
+    subscriptions: Subscription[] = [];
+
+    /**
+     * Amount of active subscriptions
+     */
+    get runningSubscriptions(): number {
+        return this.subscriptions.filter(s => s.closed === false).length;
+    }
 
 
     //////////////////
@@ -141,11 +155,14 @@ export class LimcService {
 
         // Reset the search if necessary
         if (startIndex === 0) {
-            this.search.monuments = []
-            for (const sub of this.subscriptions) sub.unsubscribe();
+            this.search.monuments = [];
+            for (let i = 0; i < this.subscriptions.length; i++) {
+                this.subscriptions[i].unsubscribe();
+                this.subscriptions.splice(i--, 1);
+            }
         }
 
-        if (amount === undefined) amount = 10;
+        if (amount === undefined) amount = 12;
 
         const s: Subscription = this.salsahService.getSearch(keyword, amount, startIndex).subscribe(
             (search: Search) => {
@@ -158,9 +175,9 @@ export class LimcService {
                 for (const subject of search.subjects) {
 
                     if (subject.iconLabel === "Monument") {
-                        this.addMonumentByResourceId(subject.resourceId);
+                        this.addMonumentByResourceId(this.search.monuments, subject.resourceId);
                     } else {
-                        this.addMonumentsByResourceId(subject.resourceId);
+                        this.addMonumentsByResourceId(this.search.monuments, subject.resourceId);
                     }
 
                 }
@@ -184,27 +201,92 @@ export class LimcService {
      * @param startIndex
      * @param amount
      */
-    searchMonumentsByProperties(data: { resourceTypeId: number, propertyId: number, value: number|string }[], startIndex: number, amount?: number) {
+    searchMonumentsByProperties(data: { resourceTypeId: number, propertyId: number, value: number|string }[], amount: number, reset?: boolean) {
 
         this.progressBar.setProgress(0);
 
-        this.search.keyword = "";
-
         // Reset the search if necessary
-        if (startIndex === 0) {
-            this.search.monuments = []
+        if (reset) {
+            this.extendedSearch.reset();
             for (const sub of this.subscriptions) sub.unsubscribe();
         }
 
-        if (amount === undefined) amount = 10;
+        // Set the current index
+        const startIndex: number = this.extendedSearch.monuments.length;
+
+        // Now break up the search data into resources
+        const resourceTypeIds: number[] = Array.from(new Set(data.map(d => d.resourceTypeId)));
+        if (resourceTypeIds.length === 0) return;
+
+        // Set a timer
+        const resultWatcher: Observable<number> = interval(100);
+        const s: Subscription = resultWatcher.subscribe(
+            (number: number) => {
+
+                // If there are running subscriptions, do NOT continue to make requests
+                if (this.runningSubscriptions > 0) return;
+
+                // Check for condition that should end the watcher and stop continuing requests
+                if (this.extendedSearch.monuments.length >= startIndex + amount) {
+                    console.log("enough!");
+                    s.unsubscribe();
+                    return;
+                } else {
+                    console.log("NOT ENOUGH")
+                }
+
+                if (this.extendedSearch.results.length > 0 && this.extendedSearch.results.filter(s => s.hasMoreResults()).length === 0) {
+                    s.unsubscribe();
+                    return;
+                }
+
+                console.log("1");
+
+                // Otherwise make new requests
+                let i = 0;
+                for (let resourceTypeId of resourceTypeIds) {
+
+                    // Now restrict the data to this resource type id
+                    let restrictedData: { resourceTypeId: number, propertyId: number, value: number|string }[] = data.filter(d => d.resourceTypeId === resourceTypeId);
+
+                    // Perform a search for all properties of this resource tpye id
+                    if (this.extendedSearch.results[i] instanceof Search) {
+                        const tempStartIndex: number = this.extendedSearch.results[i].getNextStartIndex();
+                        if (tempStartIndex === -1) continue;
+                        console.log(this.extendedSearch.results[i]);
+                        console.log("START INDEX = " + tempStartIndex);
+                        this.searchMonumentsByResourceProperties(i, resourceTypeId, restrictedData, tempStartIndex, amount);
+                    } else {
+                        this.searchMonumentsByResourceProperties(i, resourceTypeId, restrictedData, 0, amount);
+                    }
+
+                    i++;
+
+                }
+
+            }
+        );
+
+    }
+
+    /**
+     * Searches monuments by given data.
+     * @param index
+     * @param resourceTypeId
+     * @param data
+     * @param startIndex
+     * @param amount
+     */
+    searchMonumentsByResourceProperties(index: number, resourceTypeId: number, data: { propertyId: number, value: number|string }[], startIndex: number, amount?: number) {
+
+        if (startIndex === 0) this.extendedSearch.resultingMonuments[index] = [];
 
         let searchParams: string = data.map(
             (p: any) => {
-                console.log(p);
                 if (typeof p.value === "string" && p.value.indexOf("%") >= 0) {
-                    return "filter_by_restype=" + p.resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=LIKE&searchval[]=" + p.value + ""
+                    return "filter_by_restype=" + resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=LIKE&searchval[]=" + p.value + ""
                 } else {
-                    return "filter_by_restype=" + p.resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=MATCH&searchval[]=" + p.value + ""
+                    return "filter_by_restype=" + resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=MATCH&searchval[]=" + p.value + ""
                 }
             }
         ).join("&");
@@ -212,17 +294,15 @@ export class LimcService {
         const s: Subscription = this.salsahService.getExtendedSearch(searchParams, amount, startIndex).subscribe(
             (search: Search) => {
 
-                this.progressBar.setProgress(50);
-
-                this.search.result = search;
+                this.extendedSearch.results[index] = search;
 
                 // Loop through the results and do an appropriate action
                 for (const subject of search.subjects) {
 
                     if (subject.iconLabel === "Monument") {
-                        this.addMonumentByResourceId(subject.resourceId);
+                        this.addMonumentByResourceId(this.extendedSearch.resultingMonuments[index], subject.resourceId);
                     } else {
-                        this.addMonumentsByResourceId(subject.resourceId);
+                        this.addMonumentsByResourceId(this.extendedSearch.resultingMonuments[index], subject.resourceId);
                     }
 
                 }
@@ -238,16 +318,15 @@ export class LimcService {
 
         this.subscriptions.push(s);
 
-        searchParams = "property_id%5B%5D=333&compop%5B%5D=LIKE&searchval%5B%5D=Base%25&";
-
     }
 
     /**
      * Adds one monument to the array by its resource id.
      * This method makes sure the whole graph data is retreived, excluding the Google maps data.
-     * @param {number} resourceId
+     * @param monuments
+     * @param resourceId
      */
-    private addMonumentByResourceId(resourceId: number) {
+    private addMonumentByResourceId(monuments: Monument[], resourceId: number) {
 
         const s: Subscription = this.salsahService.getGraphData(resourceId).subscribe(
             (graphData: GraphData) => {
@@ -261,9 +340,9 @@ export class LimcService {
                 }
 
                 // Add the monument
-                const monumentResourceIds: number[] = this.search.monuments.map(m => m.resourceId);
+                const monumentResourceIds: number[] = monuments.map(m => m.resourceId);
                 if (monumentResourceIds.indexOf(resourceId) === -1) {
-                    this.search.monuments.push(newMonuments[0]);
+                    monuments.push(newMonuments[0]);
                 }
 
             },
@@ -279,14 +358,15 @@ export class LimcService {
 
     /**
      * Adds all monuments that are linked to a given resource id.
-     * @param {number} resourceId
+     * @param monuments
+     * @param resourceId
      */
-    private addMonumentsByResourceId(resourceId: number) {
+    private addMonumentsByResourceId(monuments: Monument[], resourceId: number) {
 
         const s: Subscription = this.findMonumentResourceId(resourceId).subscribe(
             (monumentResourceId: number) => {
                 if (monumentResourceId !== null) {
-                    this.addMonumentByResourceId(monumentResourceId);
+                    this.addMonumentByResourceId(monuments, monumentResourceId);
                 }
             },
             (error: any) => {

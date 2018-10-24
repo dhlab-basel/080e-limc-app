@@ -7,6 +7,7 @@ import { User } from "./user";
 import { Resource } from "./resource";
 import { SalsahService } from "../service/salsah.service";
 import { Monument } from "../resources/monument";
+import { StringToNumberConverter } from "../converters/string-to-number-converter";
 
 @JsonObject
 export class Search {
@@ -17,8 +18,8 @@ export class Search {
     @JsonProperty("status", Number)
     public status: number = undefined;
 
-    @JsonProperty("nhits", String)
-    public nhits: string = undefined;
+    @JsonProperty("nhits", StringToNumberConverter)
+    public nhits: number = undefined;
 
     @JsonProperty("paging", [SearchPaging])
     public paging: SearchPaging[] = undefined;
@@ -67,7 +68,7 @@ export class Search {
             currentPage++;
         }
 
-        return currentPage < this.paging.length ? this.paging[currentPage + 1].start_at : -1;
+        return currentPage < this.paging.length - 1 ? this.paging[currentPage + 1].start_at : -1;
 
     }
 

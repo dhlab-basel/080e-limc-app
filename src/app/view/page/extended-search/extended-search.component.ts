@@ -3,8 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 
 import { LimcService } from "../../../model/service/limc.service";
 
-import { SelectionData } from "../../../model/apiresult/selection-data";
-import { LimcSearchProperty } from "../../../model/other/limc-search-property";
+import { LimcExtendedSearchProperty } from "../../../model/other/limc-extended-search-property";
 import { SalsahService } from "../../../model/service/salsah.service";
 import { NodeData } from "../../../model/apiresult/node-data";
 
@@ -41,7 +40,7 @@ export class ExtendedSearchComponent implements OnInit {
     /**
      * Search properties
      */
-    searchProperties: LimcSearchProperty[] = [];
+    searchProperties: LimcExtendedSearchProperty[] = [];
 
     /**
      * Determines the status of the form
@@ -81,36 +80,20 @@ export class ExtendedSearchComponent implements OnInit {
         // Set up the properties
         this.searchProperties = [
 
-            LimcSearchProperty.create(70, 619, "Monument ID"),
-            LimcSearchProperty.create(70, 378, "Monument Artist").withSelectionId(47),
-            LimcSearchProperty.create(70, 379, "Monument Category").withSelectionId(48),
-            LimcSearchProperty.create(70, 327, "Monument Discovery").withSelectionId(42),
-            LimcSearchProperty.create(70, 356, "Monument Name").withSelectionId(65),
-            LimcSearchProperty.create(70, 375, "Monument Object").withSelectionId(44),
-            LimcSearchProperty.create(70, 380, "Monument Technique").withSelectionId(49),
-            LimcSearchProperty.create(82, 362, "Inventory Number"),
-            LimcSearchProperty.create(83, 334, "Museum Name"),
-            LimcSearchProperty.create(83, 333, "Museum City"),
-            LimcSearchProperty.create(84, 363, "LIMC Article"),
-            LimcSearchProperty.create(84, 365, "LIMC Number"),
-            LimcSearchProperty.create(86, 370, "ThesCRA Chapter"),
-            LimcSearchProperty.create(86, 350, "ThesCRA Number"),
-
-/*
-
-            { resourceTypeId: 70, propertyId: "limc:city", propertyName: "Monument City" },
-            { resourceTypeId: 70, propertyId: "limc:category", propertyName: "Monument Category" },
-            { resourceTypeId: 70, propertyId: "limc:discovery", propertyName: "Monument Discovery" },
-            { resourceTypeId: 70, propertyId: "limc:name", propertyName: "Monument Name" },
-            { resourceTypeId: 70, propertyId: "limc:object", propertyName: "Monument Object" },
-            { resourceTypeId: 70, propertyId: "limc:technique", propertyName: "Monument Technique" },
-            { resourceTypeId: 70, propertyId: 362, propertyName: "Inventory Number" },
-            { resourceTypeId: 83, propertyId: 334, propertyName: "Museum Name" },
-            { resourceTypeId: 83, propertyId: 333, propertyName: "Museum City" },
-            { resourceTypeId: 84, propertyId: 363, propertyName: "LIMC Article" },
-            { resourceTypeId: 84, propertyId: 365, propertyName: "LIMC Number" },
-            { resourceTypeId: 86, propertyId: 370, propertyName: "ThesCRA Chapter" },
-            { resourceTypeId: 86, propertyId: 350, propertyName: "ThesCRA Number " }*/
+            LimcExtendedSearchProperty.create(70, 619, "Monument ID"),
+            LimcExtendedSearchProperty.create(70, 378, "Monument Artist").withSelectionId(47),
+            LimcExtendedSearchProperty.create(70, 379, "Monument Category").withSelectionId(48),
+            LimcExtendedSearchProperty.create(70, 327, "Monument Discovery").withSelectionId(42),
+            LimcExtendedSearchProperty.create(70, 356, "Monument Name").withSelectionId(65),
+            LimcExtendedSearchProperty.create(70, 375, "Monument Object").withSelectionId(44),
+            LimcExtendedSearchProperty.create(70, 380, "Monument Technique").withSelectionId(49),
+            LimcExtendedSearchProperty.create(82, 362, "Inventory Number"),
+            LimcExtendedSearchProperty.create(83, 334, "Museum Name"),
+            LimcExtendedSearchProperty.create(83, 333, "Museum City"),
+            LimcExtendedSearchProperty.create(84, 363, "LIMC Article"),
+            LimcExtendedSearchProperty.create(84, 365, "LIMC Number"),
+            LimcExtendedSearchProperty.create(86, 370, "ThesCRA Chapter"),
+            LimcExtendedSearchProperty.create(86, 350, "ThesCRA Number"),
 
         ];
 
@@ -130,7 +113,7 @@ export class ExtendedSearchComponent implements OnInit {
      * Property formatter
      * @param option
      */
-    propertyFormatter = (option: LimcSearchProperty) => {
+    propertyFormatter = (option: LimcExtendedSearchProperty) => {
         return option.propertyName;
     };
 
@@ -156,11 +139,7 @@ export class ExtendedSearchComponent implements OnInit {
 
         }
 
-        if (reset) {
-            this.limcService.searchMonumentsByProperties(data, 0, this.searchLimit);
-        } else {
-            this.limcService.searchMonumentsByProperties(data, this.limcService.search.monuments.length, this.searchLimit);
-        }
+        this.limcService.searchMonumentsByProperties(data, this.searchLimit, reset);
 
     }
 
@@ -169,7 +148,7 @@ export class ExtendedSearchComponent implements OnInit {
      * @param formGroup
      * @param searchProperty
      */
-    onPropertySelected(formGroup: FormGroup, searchProperty: LimcSearchProperty) {
+    onPropertySelected(formGroup: FormGroup, searchProperty: LimcExtendedSearchProperty) {
 
         if (searchProperty.selectionId > 0) {
             if (searchProperty.selectionNodes.length === 0) {

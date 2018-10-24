@@ -148,8 +148,7 @@ export class SalsahService {
 
     /**
      * Gets the selection nodes of a selection.
-     * @param vocabulary
-     * @param selection
+     * @param selectionId
      */
     getSelectionNodes(selectionId: number): Observable<Node> {
 

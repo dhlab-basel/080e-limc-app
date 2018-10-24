@@ -3,7 +3,7 @@ import { SalsahService } from "../service/salsah.service";
 import { NodeData } from "../apiresult/node-data";
 import { Node } from "../apiresult/node";
 
-export class LimcSearchProperty {
+export class LimcExtendedSearchProperty {
 
     ////////////////
     // PROPERTIES //
@@ -47,9 +47,9 @@ export class LimcSearchProperty {
      * @param propertyId
      * @param propertyName
      */
-    static create(resourceTypeId: number, propertyId: number, propertyName: string): LimcSearchProperty {
+    static create(resourceTypeId: number, propertyId: number, propertyName: string): LimcExtendedSearchProperty {
 
-        const property = new LimcSearchProperty();
+        const property = new LimcExtendedSearchProperty();
         property.resourceTypeId = resourceTypeId;
         property.propertyId = propertyId;
         property.propertyName = propertyName;
@@ -62,7 +62,7 @@ export class LimcSearchProperty {
      * Sets the selection id
      * @param selectionId
      */
-    withSelectionId(selectionId: number): LimcSearchProperty {
+    withSelectionId(selectionId: number): LimcExtendedSearchProperty {
         this.selectionId = selectionId;
         return this;
     }

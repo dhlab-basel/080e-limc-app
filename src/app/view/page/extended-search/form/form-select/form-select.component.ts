@@ -1,6 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { LimcFormControl } from "../../../../../model/other/limc-form-control";
 
 @Component({
     selector: 'app-form-select',

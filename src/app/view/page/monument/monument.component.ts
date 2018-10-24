@@ -74,9 +74,7 @@ export class MonumentComponent implements OnInit, OnDestroy {
     /**
      * NgOnDestroy.
      */
-    ngOnDestroy() {
-        // for (let subscription of this.subscriptions) subscription.unsubscribe();
-    }
+    ngOnDestroy() {}
 
     /**
      * Gets the monument.
@@ -93,36 +91,6 @@ export class MonumentComponent implements OnInit, OnDestroy {
                 this.router.navigate(["page"]);
             }
         );
-
-
-        /*
-         // Get the monument from the list of the search if possible
-         this.monument = this.searchService.monuments.find((monument: Monument) => {
-         return monument.id === id;
-         });
-
-         // Get the monument from the server if necessary
-         if (this.monument instanceof Monument) return;
-
-         // No data is available, so we have to search
-         this.searchService.search(id + "", 100, 0);
-
-
-         /*
-         // Get detailed information now
-         this.salsahService.getResourceById(this.monument.getSalsahId()).subscribe(
-         (resource: Resource) => {
-         console.log(resource);
-         if (resource.props["limc:bibliography"] && resource.props["limc:bibliography"].values && resource.props["limc:bibliography"].values.length > 0)
-         this.monument.bibliography = resource.props["limc:bibliography"].values[0];
-         if (resource.props["limc:description"] && resource.props["limc:description"].values && resource.props["limc:description"].values.length > 0)
-         this.monument.description = resource.props["limc:description"].values[0];
-         },
-         (error: Error) => {
-         console.log(error);
-         }
-         );*/
-
 
     }
 

@@ -1,5 +1,7 @@
 <div class="container" *ngIf="monuments.length > 0">
 
+    {{ monuments.length }}
+
     <div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
          (scrolled)="onScrolled()">
         <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mt-3"
@@ -11,7 +13,7 @@
 </div>
 
 
-<div class="container" *ngIf="limcService.search.monuments.length === 0">
+<div class="container" *ngIf="monuments.length === 0">
     <div class="loading">
         <ng-container *ngIf="limcService.progressBar.isActive">
             <span translate>Loading data</span>...

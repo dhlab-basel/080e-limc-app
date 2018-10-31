@@ -56,11 +56,11 @@ export class FormInputComponent implements OnInit, ControlValueAccessor {
         text$.pipe(
             debounceTime(200),
             distinctUntilChanged(),
-            map(term => term === '' ? []
+            map(term => term === "" ? []
                 : this.options.filter(
                     (node: NodeData) => {
                         const label = node.getLabel(this.translateService);
-                        return label !== "" && label.toLowerCase().startsWith(term);
+                        return label !== "" && label.toLowerCase().startsWith(term.toLowerCase());
                     }).slice(0, 10))
         );
 

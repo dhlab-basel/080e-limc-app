@@ -33,6 +33,11 @@ export class HeaderComponent implements OnInit {
      */
     keyword: string = "";
 
+    /**
+     * Limit of results
+     */
+    readonly searchLimit = 3;
+
 
     /////////////
     // METHODS //
@@ -80,7 +85,7 @@ export class HeaderComponent implements OnInit {
      */
     search(navigate?: boolean) {
 
-        this.limcService.searchMonuments(this.keyword, 0);
+        this.limcService.searchMonuments(this.keyword, 0, this.searchLimit);
 
         if (navigate) {
             this.router.navigate(["page", "home", this.keyword]);

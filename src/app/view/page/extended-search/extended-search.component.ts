@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 
 import { LimcService } from "../../../model/service/limc.service";
@@ -8,9 +8,9 @@ import { SalsahService } from "../../../model/service/salsah.service";
 import { NodeData } from "../../../model/apiresult/node-data";
 
 @Component({
-    selector: 'app-extended-search',
-    templateUrl: './extended-search.component.html',
-    styleUrls: ['./extended-search.component.scss']
+    selector: "app-extended-search",
+    templateUrl: "./extended-search.component.html",
+    styleUrls: ["./extended-search.component.scss"]
 })
 /**
  * Extended search page.
@@ -24,7 +24,7 @@ export class ExtendedSearchComponent implements OnInit {
     /**
      * The amount of entries to load per search
      */
-    readonly searchLimit: number = 12;
+    readonly searchLimit: number = 3;
 
 
     ////////////////
@@ -35,7 +35,7 @@ export class ExtendedSearchComponent implements OnInit {
     /**
      * The form array
      */
-    formArray: FormArray|null;
+    formArray: FormArray | null;
 
     /**
      * Search properties
@@ -49,9 +49,11 @@ export class ExtendedSearchComponent implements OnInit {
 
         if (this.formArray instanceof FormArray === false) return false;
 
-        for (let formGroup of this.formArray.controls) {
+        for (const formGroup of this.formArray.controls) {
             if (formGroup.invalid) return false;
         }
+
+        if (this.formArray.length === 0) return false;
 
         return true;
 
@@ -99,7 +101,7 @@ export class ExtendedSearchComponent implements OnInit {
 
 
         // Add an initial form group
-        setTimeout(this.addGroup());
+        this.addGroup();
 
     }
 
@@ -118,14 +120,28 @@ export class ExtendedSearchComponent implements OnInit {
     };
 
     /**
+     * Gets the search properties that are allowed in the selection
+     * @return
+     */
+    getSearchProperties(): LimcExtendedSearchProperty[] {
+
+        if (this.formArray.length <= 1) return this.searchProperties;
+
+        const resourceTypeId: number = (<FormGroup> this.formArray.controls[0]).controls.select.value.resourceTypeId;
+
+        return this.searchProperties.filter(v => v.resourceTypeId === resourceTypeId);
+
+    }
+
+    /**
      * Performs the extended search and saves the data.
      * @param reset
      */
     search(reset?: boolean) {
 
         // Build the LIMC search query
-        let data: { resourceTypeId: number, propertyId: number, value: number | string }[] = [];
-        for (let formGroup of this.formArray.controls) {
+        const data: { resourceTypeId: number, propertyId: number, value: number | string }[] = [];
+        for (const formGroup of this.formArray.controls) {
 
             if (formGroup instanceof FormGroup === false) continue;
 
@@ -158,7 +174,7 @@ export class ExtendedSearchComponent implements OnInit {
         }
 
         // Reset the according field
-        formGroup.controls.input.setValue('');
+        formGroup.controls.input.setValue("");
 
     }
 

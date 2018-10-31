@@ -1,72 +1,75 @@
-<div class="container">
+<div class="search">
 
-    <div class="row">
-        <div class="col-12">
+    <div class="container">
 
-            <div class="row mb-3">
-                <div class="col-9">
-                    <span translate>Please build your extended search.</span>
+        <div class="row">
+            <div class="col-12">
 
+                <div class="row mb-3">
+                    <div class="col-9">
+                        <span translate>Please build your extended search</span>.
+                    </div>
+                    <div class="col-3 text-right">
+                        <button type="button" class="btn btn-outline-success" (click)="addGroup()" [disabled]="formValid === false && formArray.length > 0">
+                            <span translate>Add property</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="col-3 text-right">
-                    <button type="button" class="btn btn-outline-success" (click)="addGroup()">
-                        <span translate>Add property</span>
-                    </button>
-                </div>
-            </div>
 
-            <div class="row mb-2 text-bold">
-                <div class="col-4 col-sm-4 col-md-4">
-                    <span translate>Property</span>
-                </div>
-                <div class="col-5 col-sm-6 col-md-7">
-                    <span translate>Value</span>
-                </div>
-            </div>
-
-            <form *ngIf="formArray" [formGroup]="formArray">
-
-                <div class="row form-group" *ngFor="let formGroup of formArray?.controls; let i = index;">
-                    <div class="col-4 col-md-4">
-                        <app-form-select [formControl]="formGroup.controls.select"
-                                         [options]="searchProperties" (onValueChanged)="onPropertySelected(formGroup, $event)" [formatter]="propertyFormatter"></app-form-select>
+                <div class="row mb-2 text-bold">
+                    <div class="col-4 col-sm-4 col-md-4">
+                        <span translate>Property</span>
                     </div>
                     <div class="col-5 col-sm-6 col-md-7">
-                        <app-form-input [formControl]="formGroup.controls.input"
-                                        (enterPressed)="formValid ? search(true) : null" [options]="formGroup.controls.select.value?.selectionNodes"></app-form-input>
-                    </div>
-                    <div class="col-3 col-sm-2 col-md-1 text-right">
-                        <button type="button" class="btn btn-outline-danger" (click)="removeGroup(i)">
-                            <span translate>-</span>
-                        </button>
-                    </div>
-
-                </div>
-
-                <div class="row form-group">
-                    <div class="col-12">
-
+                        <span translate>Value</span>
                     </div>
                 </div>
 
-                <div class="row form-group">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-block btn-outline-secondary" (click)="search(true)"
+                <form *ngIf="formArray" [formGroup]="formArray">
+
+                    <div class="row form-group" *ngFor="let formGroup of formArray?.controls; let i = index;">
+                        <div class="col-4 col-md-4">
+                            <app-form-select [formControl]="formGroup.controls.select" [options]="getSearchProperties()"
+                                (onValueChanged)="onPropertySelected(formGroup, $event)"
+                                [formatter]="propertyFormatter"></app-form-select>
+                        </div>
+                        <div class="col-5 col-sm-6 col-md-7">
+                            <app-form-input [formControl]="formGroup.controls.input"
+                                (enterPressed)="formValid ? search(true) : null"
+                                [options]="formGroup.controls.select.value?.selectionNodes"></app-form-input>
+                        </div>
+                        <div class="col-3 col-sm-2 col-md-1 text-right">
+                            <button type="button" class="btn btn-outline-danger" (click)="removeGroup(i)">
+                                <span translate>-</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-12">
+
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-outline-secondary" (click)="search(true)"
                                 [disabled]="formValid === false">
-                            <span translate>Extended search</span>
-                        </button>
+                                <span translate>extended search</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-            </form>
+                </form>
 
+            </div>
         </div>
+
     </div>
 
+    <div class="divider"></div>
+
 </div>
-
-{{ limcService.runningSubscriptions }}
-
-<div class="divider"></div>
 
 <app-monument-list [monuments]="limcService.extendedSearch.monuments" (loadMore)="search()"></app-monument-list>

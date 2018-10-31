@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { expand, map } from "rxjs/operators";
-import { EMPTY, interval, Observable, Subscription, throwError } from "rxjs/index";
+import { EMPTY, forkJoin, interval, Observable, Subscription, throwError } from "rxjs/index";
 
 import { SalsahService } from "./salsah.service";
 
@@ -147,7 +147,7 @@ export class LimcService {
      * @param startIndex
      * @param amount
      */
-    searchMonuments(keyword: string, startIndex: number, amount?: number) {
+    searchMonuments(keyword: string, startIndex: number, amount: number) {
 
         this.progressBar.setProgress(0);
 
@@ -162,8 +162,6 @@ export class LimcService {
             }
         }
 
-        if (amount === undefined) amount = 12;
-
         const s: Subscription = this.salsahService.getSearch(keyword, amount, startIndex).subscribe(
             (search: Search) => {
 
@@ -172,13 +170,19 @@ export class LimcService {
                 this.search.result = search;
 
                 // Loop through the results and do an appropriate action
+                const resourceIds: number[] = [];
                 for (const subject of search.subjects) {
+
+                    if (resourceIds.indexOf(subject.resourceId) >= 0) continue;
 
                     if (subject.iconLabel === "Monument") {
                         this.addMonumentByResourceId(this.search.monuments, subject.resourceId);
                     } else {
                         this.addMonumentsByResourceId(this.search.monuments, subject.resourceId);
                     }
+
+                    // Remember the traversed resource ids so we do not make duplicate requests
+                    resourceIds.push(subject.resourceId);
 
                 }
 
@@ -198,10 +202,12 @@ export class LimcService {
     /**
      * Searches monuments by given data.
      * @param data
-     * @param startIndex
      * @param amount
+     * @param reset
      */
     searchMonumentsByProperties(data: { resourceTypeId: number, propertyId: number, value: number|string }[], amount: number, reset?: boolean) {
+
+        if (data.length === 0) return;
 
         this.progressBar.setProgress(0);
 
@@ -213,6 +219,11 @@ export class LimcService {
 
         // Set the current index
         const startIndex: number = this.extendedSearch.monuments.length;
+
+        // Search for the monuments of the given resource type id
+        this.searchMonumentsByResourceProperties(0, data[0].resourceTypeId, data, startIndex, amount);
+
+        /*
 
         // Now break up the search data into resources
         const resourceTypeIds: number[] = Array.from(new Set(data.map(d => d.resourceTypeId)));
@@ -244,10 +255,10 @@ export class LimcService {
 
                 // Otherwise make new requests
                 let i = 0;
-                for (let resourceTypeId of resourceTypeIds) {
+                for (const resourceTypeId of resourceTypeIds) {
 
                     // Now restrict the data to this resource type id
-                    let restrictedData: { resourceTypeId: number, propertyId: number, value: number|string }[] = data.filter(d => d.resourceTypeId === resourceTypeId);
+                    const restrictedData: { resourceTypeId: number, propertyId: number, value: number|string }[] = data.filter(d => d.resourceTypeId === resourceTypeId);
 
                     // Perform a search for all properties of this resource tpye id
                     if (this.extendedSearch.results[i] instanceof Search) {
@@ -267,6 +278,8 @@ export class LimcService {
             }
         );
 
+        */
+
     }
 
     /**
@@ -281,7 +294,7 @@ export class LimcService {
 
         if (startIndex === 0) this.extendedSearch.resultingMonuments[index] = [];
 
-        let searchParams: string = data.map(
+        const searchParams: string = data.map(
             (p: any) => {
                 if (typeof p.value === "string" && p.value.indexOf("%") >= 0) {
                     return "filter_by_restype=" + resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=LIKE&searchval[]=" + p.value + ""
@@ -364,15 +377,16 @@ export class LimcService {
     private addMonumentsByResourceId(monuments: Monument[], resourceId: number) {
 
         const s: Subscription = this.findMonumentResourceId(resourceId).subscribe(
-            (monumentResourceId: number) => {
-                if (monumentResourceId !== null) {
+            (monumentResourceIds: number[]) => {
+                if (monumentResourceIds === null) return;
+                for (const monumentResourceId of monumentResourceIds) {
                     this.addMonumentByResourceId(monuments, monumentResourceId);
                 }
             },
             (error: any) => {
                 console.error(error);
             }
-        )
+        );
 
         this.subscriptions.push(s);
 
@@ -387,23 +401,37 @@ export class LimcService {
      * - The map method returns a resource id or null (in case a non-Monument resource was found)
      * - The expand method breaks the recursion when returning empty(), otherwise it continues
      * @param resourceId
-     * @returns {Observable<number>}
+     * @returns
      */
-    private findMonumentResourceId(resourceId: number): Observable<number> {
+    private findMonumentResourceId(resourceId: number): Observable<number[]> {
 
         return this.salsahService.getResource(resourceId).pipe(
-            expand((resource: any): Observable<number> => {
+            expand((resource: any): Observable<number[]> => {
 
                 if (resource instanceof Resource === false || resource.incoming.length === 0) {
                     return EMPTY;
                 }
 
+                // Go through all incoming resource ids and recursively search for monuments
+                const observables: Observable<number[]>[] = [];
                 for (const incoming of resource.incoming) {
-                    return this.findMonumentResourceId(incoming.extResId.id);
+                    observables.push(this.findMonumentResourceId(incoming.extResId.id));
                 }
 
+                // Make sure we return a flat number array (not array of arrays)
+                return forkJoin(observables).pipe(
+                    map(
+                    (array: any): number[] => {
+                        let newArray: number[] = [];
+                        for (const n of array) {
+                            newArray = newArray.concat(n);
+                        }
+                        return newArray;
+                    })
+                );
+
             }),
-            map((resource: any): number => {
+            map((resource: any): number[] => {
 
                 if (resource instanceof Resource === false) {
                     return resource;

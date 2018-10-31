@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { LimcService } from "../../../model/service/limc.service";
 
-import { Monument } from "../../../model/resources/monument";
-import { Search } from "../../../model/apiresult/search";
-import { LimcSearch } from "../../../model/other/limc-search";
-
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
+    selector: "app-home",
+    templateUrl: "./home.component.html",
+    styleUrls: ["./home.component.scss"],
 })
 /**
  * The page gui.
@@ -21,14 +17,17 @@ export class HomeComponent implements OnInit {
     // CONSTANTS //
     ///////////////
 
+    
     /**
      * The amount of entries to load per search
      */
-    readonly searchLimit: number = 12;
+    readonly searchLimit: number = 3;
+
 
     ////////////////
     // PROPERTIES //
     ////////////////
+
 
     /**
      * The search string
@@ -68,7 +67,7 @@ export class HomeComponent implements OnInit {
      */
     searchMore() {
 
-        this.limcService.searchMonuments(this.limcService.search.keyword, this.limcService.search.monuments.length);
+        this.limcService.searchMonuments(this.limcService.search.keyword, this.limcService.search.monuments.length, this.searchLimit);
 
         /*
 

@@ -9,16 +9,15 @@
             <div class="title"><span translate>Object</span></div>
             <div class="line"><strong><span translate>ID</span>:</strong> {{ monument.id }}</div>
             <div class="line"><strong><span translate>Origin</span>:</strong> {{ monument.origin }}</div>
-            <div class="line"><strong><span translate>Category</span>:</strong> {{ monument.category }}
+            <div class="line"><strong><span translate>Category</span>:</strong> {{ monument.category.join(", ") }}
             </div>
             <div class="line"><strong><span translate>Material</span>:</strong> {{ monument.material }}
             </div>
             <div class="line">
-                <strong><span translate>Discovery</span>:</strong> {{ monument.discovery }} ({{
-                monument.discoveryDetail }})
+                <strong><span translate>Discovery</span>:</strong> {{ monument.discovery }}
+                <ng-container *ngIf="monument.discoveryDetail?.length > 0">({{ monument.discoveryDetail.join(", ") }})</ng-container>
             </div>
-            <div class="line"><strong><span translate>Dating</span>:</strong> {{ monument.dating[0]?.period
-                }}
+            <div class="line"><strong><span translate>Dating</span>:</strong> {{ monument.dating[0]?.period | date }}
             </div>
         </div>
         <div class="list-group-item">

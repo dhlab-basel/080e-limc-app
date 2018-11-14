@@ -33,26 +33,26 @@
                     <div class="list-group-item">
                         <div class="title"><span translate>Object</span></div>
                         <div class="line"><strong><span translate>ID</span>:</strong> {{ monument.id }}</div>
-                        <div class="line"><strong><span translate>Type</span>:</strong> {{ monument.object }}</div>
-                        <div class="line"><strong><span translate>Origin</span>:</strong> {{ monument.origin }}</div>
-                        <div class="line"><strong><span translate>Category</span>:</strong> {{ monument.category }}
+                        <div class="line" *ngIf="monument.object"><strong><span translate>Type</span>:</strong> {{ monument.object }}</div>
+                        <div class="line" *ngIf="monument.artist?.length > 0"><strong><span translate>Artist</span>:</strong> {{ monument.artist }}</div>
+                        <div class="line" *ngIf="monument.origin"><strong><span translate>Origin</span>:</strong> {{ monument.origin }}</div>
+                        <div class="line" *ngIf="monument.category?.length > 0"><strong><span translate>Category</span>:</strong> {{ monument.category }}
                         </div>
                         <div class="line" *ngIf="monument.material as material">
                             <strong><span translate>Material</span>:</strong> {{ material }}
                         </div>
-                        <div class="line">
-                            <strong><span translate>Discovery</span>:</strong>
-                            {{ monument.discovery }}
-                            {{ monument.discoveryDetail.length > 0 ? " (" + monument.discoveryDetail.join(", ") + ")" : "" }}
+                        <div class="line" *ngIf="monument.discovery">
+                            <strong><span translate>Discovery</span>:</strong> {{ monument.discovery }}
+                            <ng-container *ngIf="monument.discoveryDetail.length > 0">({{ monument.discoveryDetail.join(", ") }})</ng-container>
                         </div>
                         <div class="line" *ngIf="monument.dating[0]?.period as period"><strong><span
-                            translate>Dating</span>:</strong> {{ period }}
+                            translate>Dating</span>:</strong> {{ period | date }}
                         </div>
                     </div>
                     <div class="list-group list-group-flush" *ngIf="monument.description">
                         <div class="list-group-item">
                             <div class="title"><span translate>Description</span></div>
-                            <div class="line">{{ monument.description }}</div>
+                            <div class="line" [innerHtml]="monument.description | linky"></div>
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@
                         <div class="list-group-item">
                             <div class="title"><span translate>Keywords</span></div>
                             <div class="line">
-                                {{ monument.keyword.join(", ") }}
+                                {{ monument.keyword }}
                             </div>
                         </div>
                     </div>
@@ -173,8 +173,9 @@
     </div>
 
     <!-- Scene -->
-    <div class="main-title"><span translate>Scene</span><span *ngIf="monument?.scene.length > 1">n</span></div>
-    <div class="row" *ngFor="let scene of monument?.scene">
+    <div class="row" *ngFor="let scene of monument?.scene; let i = index">
+
+        <div class="col-12 main-title"><span translate>Scene</span><span class="ml-1" *ngIf="monument?.scene.length > 1">{{ i+1 }}</span></div>
 
         <!-- Scene Data -->
         <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -190,7 +191,7 @@
                 <div class="list-group list-group-flush" *ngIf="scene.description">
                     <div class="list-group-item">
                         <div class="title"><span translate>Description</span></div>
-                        <div class="line">{{ scene.description }}</div>
+                        <div class="line" [innerHtml]="scene.description | linky"></div>
                     </div>
                 </div>
                 <div class="list-group list-group-flush" *ngIf="scene.inscription">

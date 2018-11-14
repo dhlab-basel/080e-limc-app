@@ -2,7 +2,10 @@
 
     <div class="info">
         {{ monuments.length }} <span translate>monuments found</span>.
-        <button class="btn btn-sm btn-outline-secondary ml-2 mb-1" (click)="onScrolled()" [disabled]="limcService.progressBar.isActive"><span translate>Search more</span></button>
+        <!--<button class="btn btn-sm btn-outline-secondary ml-2 mb-1" (click)="onScrolled()" [disabled]="limcService.progressBar.isActive">
+            <span translate [class]="limcService.runningSubscriptions > 0 ? 'mr-2' : ''">Search more</span>
+            <app-spinner [size]="'0.875rem'" *ngIf="limcService.runningSubscriptions > 0"></app-spinner>
+        </button>-->
     </div>
 
     <div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
@@ -14,17 +17,21 @@
     </div>
 
     <div class="info">
-        <button class="btn btn-outline-secondary ml-2 mb-1" (click)="onScrolled()" [disabled]="limcService.progressBar.isActive"><span translate>Search more</span></button>
+        <button class="btn btn-outline-secondary ml-2 mb-1" (click)="onScrolled()" [disabled]="limcService.progressBar.isActive">
+            <span translate [class]="limcService.runningSubscriptions > 0 ? 'mr-2' : ''">Search more</span>
+            <app-spinner [size]="'0.875rem'" *ngIf="limcService.runningSubscriptions > 0"></app-spinner>
+        </button>
     </div>
 
 </div>
 
 <div class="container" *ngIf="monuments.length === 0">
     <div class="loading">
-        <ng-container *ngIf="limcService.progressBar.isActive">
+        <ng-container *ngIf="limcService.runningSubscriptions > 0">
+            <div class="spinner"><app-spinner [size]="'2rem'"></app-spinner></div>
             <span translate>Loading data</span>...
         </ng-container>
-        <ng-container *ngIf="limcService.progressBar.isActive === false">
+        <ng-container *ngIf="limcService.runningSubscriptions === 0">
             <span translate>No monuments found</span>.
         </ng-container>
     </div>

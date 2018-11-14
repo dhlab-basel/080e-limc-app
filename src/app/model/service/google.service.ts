@@ -49,6 +49,8 @@ export class GoogleService {
         }).pipe(
             map((response: HttpResponse<any>): number[] => {
 
+                if (response.body.results[0] === undefined) throw new Error("No lat-lon found.");
+
                 const lat: number = response.body.results[0].geometry.location.lat;
                 const lon: number = response.body.results[0].geometry.location.lng;
 

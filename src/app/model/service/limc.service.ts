@@ -299,7 +299,7 @@ export class LimcService {
                 if (typeof p.value === "string" && p.value.indexOf("%") >= 0) {
                     return "filter_by_restype=" + resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=LIKE&searchval[]=" + p.value + ""
                 } else {
-                    return "filter_by_restype=" + resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=MATCH&searchval[]=" + p.value + ""
+                    return "filter_by_restype=" + resourceTypeId + "&property_id[]=" + p.propertyId + "&compop[]=EQ&searchval[]=" + p.value + ""
                 }
             }
         ).join("&");

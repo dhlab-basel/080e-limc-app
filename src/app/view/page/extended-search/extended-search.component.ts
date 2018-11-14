@@ -92,7 +92,7 @@ export class ExtendedSearchComponent implements OnInit {
             LimcExtendedSearchProperty.create(82, 362, "Inventory Number"),
             LimcExtendedSearchProperty.create(83, 334, "Museum Name"),
             LimcExtendedSearchProperty.create(83, 333, "Museum City"),
-            LimcExtendedSearchProperty.create(84, 363, "LIMC Article"),
+            LimcExtendedSearchProperty.create(84, 363, "LIMC Article").withSelectionId(37),
             LimcExtendedSearchProperty.create(84, 365, "LIMC Number"),
             LimcExtendedSearchProperty.create(86, 370, "ThesCRA Chapter"),
             LimcExtendedSearchProperty.create(86, 350, "ThesCRA Number"),

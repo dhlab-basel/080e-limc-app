@@ -8,6 +8,7 @@ import { AgmCoreModule } from "@agm/core";
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { LinkyModule } from "ngx-linky";
 
 import { AppRoutingModule } from "./app-routing.module";
 
@@ -29,6 +30,8 @@ import { FormInputComponent } from "./view/page/extended-search/form/form-input/
 import { FormSelectComponent } from "./view/page/extended-search/form/form-select/form-select.component";
 import { MonumentListComponent } from "./view/components/monument-list/monument-list.component";
 import { MonumentListElementComponent } from "./view/components/monument-list-element/monument-list-element.component";
+import { DatePipe } from './model/other/date.pipe';
+import { SpinnerComponent } from './view/components/spinner/spinner.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -49,7 +52,9 @@ export function createTranslateLoader(http: HttpClient) {
         FormInputComponent,
         FormSelectComponent,
         MonumentListComponent,
-        MonumentListElementComponent
+        MonumentListElementComponent,
+        DatePipe,
+        SpinnerComponent
     ],
     imports: [
         BrowserModule,
@@ -58,6 +63,7 @@ export function createTranslateLoader(http: HttpClient) {
         HttpClientModule,
         AppRoutingModule,
         NgbModule,
+        LinkyModule,
         AgmCoreModule.forRoot({
             apiKey: "AIzaSyCmedK-uMWOPLLYSpegtc-Lz3QjjjGUrLY"
         }),

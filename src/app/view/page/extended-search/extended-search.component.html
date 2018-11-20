@@ -6,22 +6,28 @@
             <div class="col-12">
 
                 <div class="row mb-3">
-                    <div class="col-9">
-                        <span translate>Please build your extended search</span>.
-                    </div>
-                    <div class="col-3 text-right">
-                        <button type="button" class="btn btn-outline-success" (click)="addGroup()" [disabled]="formValid === false && formArray.length > 0">
-                            <span translate>Add property</span>
-                        </button>
+                    <div class="col-12">
+                        <p>
+                            <span translate class="mr-1">ADVANCED_SEARCH.TEXT_BUILD_FORM</span>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <span translate>ADVANCED_SEARCH.HELP</span>
+                            </button>
+                        </p>
+                        <p>
+                            <span translate class="mr-1">ADVANCED_SEARCH.TEXT_HELP</span>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <span translate>ADVANCED_SEARCH.DOCUMENTATION</span>
+                            </button>
+                        </p>
                     </div>
                 </div>
 
                 <div class="row mb-2 text-bold">
                     <div class="col-4 col-sm-4 col-md-4">
-                        <span translate>Property</span>
+                        <span translate>ADVANCED_SEARCH.SEARCH_FIELD</span>
                     </div>
                     <div class="col-5 col-sm-6 col-md-7">
-                        <span translate>Value</span>
+                        <span translate>ADVANCED_SEARCH.SEARCH_TERM</span>
                     </div>
                 </div>
 
@@ -30,13 +36,13 @@
                     <div class="row form-group" *ngFor="let formGroup of formArray?.controls; let i = index;">
                         <div class="col-4 col-md-4">
                             <app-form-select [formControl]="formGroup.controls.select" [options]="getSearchProperties()"
-                                (onValueChanged)="onPropertySelected(formGroup, $event)"
-                                [formatter]="propertyFormatter"></app-form-select>
+                                             (onValueChanged)="onPropertySelected(formGroup, $event)"
+                                             [formatter]="propertyFormatter"></app-form-select>
                         </div>
                         <div class="col-5 col-sm-6 col-md-7">
                             <app-form-input [formControl]="formGroup.controls.input"
-                                (enterPressed)="formValid ? search(true) : null"
-                                [options]="formGroup.controls.select.value?.selectionNodes"></app-form-input>
+                                            (enterPressed)="formValid ? search(true) : null"
+                                            [options]="formGroup.controls.select.value?.selectionNodes"></app-form-input>
                         </div>
                         <div class="col-3 col-sm-2 col-md-1 text-right">
                             <button type="button" class="btn btn-outline-danger" (click)="removeGroup(i)">
@@ -53,10 +59,16 @@
                     </div>
 
                     <div class="row form-group">
-                        <div class="col-12">
+                        <div class="col-6">
                             <button type="button" class="btn btn-outline-secondary" (click)="search(true)"
-                                [disabled]="formValid === false">
-                                <span translate>extended search</span>
+                                    [disabled]="formValid === false">
+                                <span translate>GENERAL.ADVANCED_SEARCH</span>
+                            </button>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button type="button" class="btn btn-outline-success" (click)="addGroup()"
+                                    [disabled]="formValid === false && formArray.length > 0">
+                                <span translate>ADVANCED_SEARCH.ADD_SEARCH_FIELD</span>
                             </button>
                         </div>
                     </div>

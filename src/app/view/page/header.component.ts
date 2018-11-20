@@ -23,11 +23,6 @@ export class HeaderComponent implements OnInit {
 
 
     /**
-     * Determines whether the search is shown or not.
-     */
-    @Input() showSearch: boolean = true;
-
-    /**
      * The search string
      * @type {string}
      */

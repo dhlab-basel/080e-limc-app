@@ -6,7 +6,7 @@
             <ng-template ngFor let-photo [ngForOf]="monument.getPhotos()" let-i="index">
                 <ng-template ngbSlide>
                     <div class="slide cursor-pointer" (click)="openGallery(i)"
-                        [ngStyle]="{'background-image': 'url(\'' + photo.url + '\')'}"></div>
+                         [ngStyle]="{'background-image': 'url(\'' + photo.url + '\')'}"></div>
                 </ng-template>
             </ng-template>
         </ngb-carousel>
@@ -23,30 +23,40 @@
                 <h4 class="card-header text-ellipsis"><span translate>Data</span></h4>
                 <div class="card-img-top">
                     <div class="card-img-top-limc"
-                        [ngStyle]="{'background-image': 'url(' + monument.getPhoto().url + ')'}"></div>
+                         [ngStyle]="{'background-image': 'url(' + monument.getPhoto().url + ')'}"></div>
                 </div>
                 <div class="list-group list-group-flush">
                     <div class="list-group-item">
                         <div class="title"><span translate>Persistent identifier</span></div>
-                        <div class="line text-ellipsis"><a href="{{ 'http://ark.dasch.swiss/' + monument.handleId }}">{{ monument.handleId }}</a></div>
+                        <div class="line text-ellipsis"><a href="{{ 'http://ark.dasch.swiss/' + monument.handleId }}">{{
+                            monument.handleId }}</a></div>
                     </div>
                     <div class="list-group-item">
                         <div class="title"><span translate>Object</span></div>
                         <div class="line"><strong><span translate>ID</span>:</strong> {{ monument.id }}</div>
-                        <div class="line" *ngIf="monument.object"><strong><span translate>Type</span>:</strong> {{ monument.object }}</div>
-                        <div class="line" *ngIf="monument.artist?.length > 0"><strong><span translate>Artist</span>:</strong> {{ monument.artist }}</div>
-                        <div class="line" *ngIf="monument.origin"><strong><span translate>Origin</span>:</strong> {{ monument.origin }}</div>
-                        <div class="line" *ngIf="monument.category?.length > 0"><strong><span translate>Category</span>:</strong> {{ monument.category }}
+                        <div class="line" *ngIf="monument.object"><strong><span translate>Type</span>:</strong> {{
+                            monument.object }}
+                        </div>
+                        <div class="line" *ngIf="monument.artist?.length > 0"><strong><span
+                                translate>Artist</span>:</strong> {{ monument.artist }}
+                        </div>
+                        <div class="line" *ngIf="monument.origin"><strong><span translate>Origin</span>:</strong> {{
+                            monument.origin }}
+                        </div>
+                        <div class="line" *ngIf="monument.category?.length > 0"><strong><span translate>Category</span>:</strong>
+                            {{ monument.category }}
                         </div>
                         <div class="line" *ngIf="monument.material as material">
                             <strong><span translate>Material</span>:</strong> {{ material }}
                         </div>
                         <div class="line" *ngIf="monument.discovery">
                             <strong><span translate>Discovery</span>:</strong> {{ monument.discovery }}
-                            <ng-container *ngIf="monument.discoveryDetail.length > 0">({{ monument.discoveryDetail.join(", ") }})</ng-container>
+                            <ng-container *ngIf="monument.discoveryDetail.length > 0">({{
+                                monument.discoveryDetail.join(", ") }})
+                            </ng-container>
                         </div>
                         <div class="line" *ngIf="monument.dating[0]?.period as period"><strong><span
-                            translate>Dating</span>:</strong> {{ period | date }}
+                                translate>Dating</span>:</strong> {{ period | date }}
                         </div>
                     </div>
                     <div class="list-group list-group-flush" *ngIf="monument.description">
@@ -57,7 +67,7 @@
                     </div>
 
                     <div class="list-group list-group-flush"
-                        *ngIf="monument.inscription || monument.inscriptionUrl.length > 0">
+                         *ngIf="monument.inscription || monument.inscriptionUrl.length > 0">
                         <div class="list-group-item">
                             <div class="title"><span translate>Inscription</span></div>
                             <div class="line">{{ monument.inscription }}</div>
@@ -121,51 +131,48 @@
 
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
 
-            <ng-container *ngFor="let inventory of monument.inventory">
-            <ng-container *ngIf="inventory.museum as museum">
+                <ng-container *ngFor="let inventory of monument.inventory">
+                    <ng-container *ngIf="inventory.museum as museum">
 
-                    <div class="card mb-3" *ngIf="museum.latitude">
-                        <h4 class="card-header text-ellipsis"><span translate>Location</span></h4>
-                        <agm-map [latitude]="museum.latitude" [longitude]="museum.longitude">
-                            <agm-marker [latitude]="museum.latitude" [longitude]="museum.longitude"></agm-marker>
-                        </agm-map>
-                    </div>
+                        <div class="card mb-3" *ngIf="museum.latitude">
+                            <h4 class="card-header text-ellipsis"><span translate>Location</span></h4>
+                            <agm-map [latitude]="museum.latitude" [longitude]="museum.longitude">
+                                <agm-marker [latitude]="museum.latitude" [longitude]="museum.longitude"></agm-marker>
+                            </agm-map>
+                        </div>
 
-                    <div class="card">
-                        <h4 class="card-header text-ellipsis"><span translate>Museum</span></h4>
-                        <div class="list-group list-group-flush">
-                            <div class="list-group-item">
-                                <div class="title"><span translate>Address</span></div>
-                                <div class="line">{{ museum.name }}</div>
-                                <div class="line">{{ museum.city }}</div>
-                            </div>
-                            <div class="list-group-item">
-                                <div class="title"><span translate>Inventory</span></div>
-                                <div class="line">{{ inventory.number }}</div>
-                            </div>
-                            <div class="list-group-item">
-                                <div class="title"><span translate>Photo rights</span></div>
-                                <div class="line">{{ museum.hasPhotoRight ? "Vorhanden" : "Nicht vorhanden" }}
+                        <div class="card">
+                            <h4 class="card-header text-ellipsis"><span translate>Museum</span></h4>
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item">
+                                    <div class="title"><span translate>Address</span></div>
+                                    <div class="line">{{ museum.name }}</div>
+                                    <div class="line">{{ museum.city }}</div>
                                 </div>
-                                <div class="line" *ngIf="museum.photoCredit">Credit: {{ museum.photoCredit }}
+                                <div class="list-group-item">
+                                    <div class="title"><span translate>Inventory</span></div>
+                                    <div class="line">{{ inventory.number }}</div>
                                 </div>
-                            </div>
-                            <div class="list-group-item" *ngIf="museum.comment">
-                                <div class="title"><span translate>Comment</span></div>
-                                <div class="line">{{ museum.comment }}</div>
-                            </div>
-                            <div class="list-group-item" *ngIf="monument.museumUrl.length > 0">
-                                <div class="title"><span translate>Links</span></div>
-                                <div class="line text-ellipsis" *ngFor="let url of monument.museumUrl">
-                                    <a href="{{ url }}" target="_blank">{{ url }}</a>
+                                <div class="list-group-item">
+                                    <div class="title"><span translate>Photo rights</span></div>
+                                    <div class="line" *ngIf="museum.photoCredit">{{ museum.photoCredit }}</div>
+                                </div>
+                                <div class="list-group-item" *ngIf="museum.comment">
+                                    <div class="title"><span translate>Comment</span></div>
+                                    <div class="line">{{ museum.comment }}</div>
+                                </div>
+                                <div class="list-group-item" *ngIf="monument.museumUrl.length > 0">
+                                    <div class="title"><span translate>Links</span></div>
+                                    <div class="line text-ellipsis" *ngFor="let url of monument.museumUrl">
+                                        <a href="{{ url }}" target="_blank">{{ url }}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
-            </ng-container>
-        </ng-container>
+                    </ng-container>
+                </ng-container>
             </div>
 
         </ng-container>
@@ -175,7 +182,9 @@
     <!-- Scene -->
     <div class="row" *ngFor="let scene of monument?.scene; let i = index">
 
-        <div class="col-12 main-title"><span translate>Scene</span><span class="ml-1" *ngIf="monument?.scene.length > 1">{{ i+1 }}</span></div>
+        <div class="col-12 main-title"><span translate>Scene</span><span class="ml-1"
+                                                                         *ngIf="monument?.scene.length > 1">{{ i+1 }}</span>
+        </div>
 
         <!-- Scene Data -->
         <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -242,7 +251,7 @@
 
         <!-- Catalogs -->
         <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
-            *ngIf="scene.catalogLimc?.length > 0 || scene.catalogThesCRA?.length > 0">
+             *ngIf="scene.catalogLimc?.length > 0 || scene.catalogThesCRA?.length > 0">
 
             <!-- LIMC -->
             <div class="card mb-3" *ngIf="scene.catalogLimc.length > 0">
@@ -268,8 +277,10 @@
                         <div class="line">
                             {{ thesCRA.catalogThesCraChapter.name }}
                             {{ thesCRA.indexnumber }}
-                            {{ thesCRA.catalogThesCraChapter.volumenumber ? "(vol "+thesCRA.catalogThesCraChapter.volumenumber+")" : "" }}
-                            {{ thesCRA.catalogThesCraChapter.mainChapter ? "(ch "+thesCRA.catalogThesCraChapter.mainChapter+"" : "" }}
+                            {{ thesCRA.catalogThesCraChapter.volumenumber ? "(vol
+                            "+thesCRA.catalogThesCraChapter.volumenumber+")" : "" }}
+                            {{ thesCRA.catalogThesCraChapter.mainChapter ? "(ch
+                            "+thesCRA.catalogThesCraChapter.mainChapter+"" : "" }}
                             {{ thesCRA.asterix ? "(*)" : "( )" }}
                             {{ thesCRA.dot ? "(.)" : "( )" }}
                         </div>

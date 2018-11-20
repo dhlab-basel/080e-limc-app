@@ -218,7 +218,7 @@ export class LimcService {
         }
 
         // Set the current index
-        const startIndex: number = this.extendedSearch.monuments.length;
+        const startIndex: number = this.extendedSearch.results.length;
 
         // Search for the monuments of the given resource type id
         this.searchMonumentsByResourceProperties(0, data[0].resourceTypeId, data, startIndex, amount);

@@ -82,20 +82,21 @@ export class ExtendedSearchComponent implements OnInit {
         // Set up the properties
         this.searchProperties = [
 
-            LimcExtendedSearchProperty.create(70, 619, "Monument ID"),
-            LimcExtendedSearchProperty.create(70, 378, "Monument Artist").withSelectionId(47),
-            LimcExtendedSearchProperty.create(70, 379, "Monument Category").withSelectionId(48),
-            LimcExtendedSearchProperty.create(70, 327, "Monument Discovery").withSelectionId(42),
-            LimcExtendedSearchProperty.create(70, 356, "Monument Name").withSelectionId(65),
-            LimcExtendedSearchProperty.create(70, 375, "Monument Object").withSelectionId(44),
-            LimcExtendedSearchProperty.create(70, 380, "Monument Technique").withSelectionId(49),
-            LimcExtendedSearchProperty.create(82, 362, "Inventory Number"),
-            LimcExtendedSearchProperty.create(83, 334, "Museum Name"),
-            LimcExtendedSearchProperty.create(83, 333, "Museum City"),
-            LimcExtendedSearchProperty.create(84, 363, "LIMC Article").withSelectionId(37),
-            LimcExtendedSearchProperty.create(84, 365, "LIMC Number"),
-            LimcExtendedSearchProperty.create(86, 370, "ThesCRA Chapter"),
-            LimcExtendedSearchProperty.create(86, 350, "ThesCRA Number"),
+            LimcExtendedSearchProperty.create(70, 619, "ADVANCED_SEARCH.MONUMENT_ID"),
+            LimcExtendedSearchProperty.create(70, 378, "ADVANCED_SEARCH.MONUMENT_ARTIST").withSelectionId(47),
+            LimcExtendedSearchProperty.create(70, 379, "ADVANCED_SEARCH.MONUMENT_CATEGORY").withSelectionId(48),
+            LimcExtendedSearchProperty.create(70, 353, "ADVANCED_SEARCH.MONUMENT_DESCRIPTION"),
+            LimcExtendedSearchProperty.create(70, 327, "ADVANCED_SEARCH.MONUMENT_DISCOVERY").withSelectionId(42),
+            LimcExtendedSearchProperty.create(70, 356, "ADVANCED_SEARCH.MONUMENT_NAME").withSelectionId(65),
+            LimcExtendedSearchProperty.create(70, 375, "ADVANCED_SEARCH.MONUMENT_OBJECT").withSelectionId(44),
+            LimcExtendedSearchProperty.create(70, 380, "ADVANCED_SEARCH.MONUMENT_TECHNIQUE").withSelectionId(49),
+            LimcExtendedSearchProperty.create(82, 362, "ADVANCED_SEARCH.INVENTORY_NUMBER"),
+            LimcExtendedSearchProperty.create(83, 334, "ADVANCED_SEARCH.MUSEUM_NAME"),
+            LimcExtendedSearchProperty.create(83, 333, "ADVANCED_SEARCH.MUSEUM_CITY"),
+            LimcExtendedSearchProperty.create(84, 363, "ADVANCED_SEARCH.LIMC_ARTICLE").withSelectionId(37),
+            LimcExtendedSearchProperty.create(84, 365, "ADVANCED_SEARCH.LIMC_NUMBER"),
+            LimcExtendedSearchProperty.create(85, 369, "ADVANCED_SEARCH.THESCRA_CHAPTER").withSelectionId(86),
+            LimcExtendedSearchProperty.create(85, 368, "ADVANCED_SEARCH.THESCRA_NUMBER"),
 
         ];
 

@@ -5,7 +5,7 @@
 </ng-container>
 <ng-container *ngIf="options.length !== 1">
     <select class="form-control" [formControl]="formControl" required (change)="onValueChanged.emit(formControl.value)">
-        <option disabled selected><span translate>Please select</span></option>
+        <option disabled selected><span translate>ADVANCED_SEARCH.PLEASE_SELECT</span></option>
         <option *ngFor="let option of options" [ngValue]="option">{{ formatter(option) | translate }}</option>
     </select>
 </ng-container>

@@ -1,11 +1,10 @@
 <div class="container" *ngIf="monuments.length > 0">
 
-    <div class="info">
-        {{ monuments.length }} <span translate>monuments found</span>.
-        <!--<button class="btn btn-sm btn-outline-secondary ml-2 mb-1" (click)="onScrolled()" [disabled]="limcService.progressBar.isActive">
-            <span translate [class]="limcService.runningSubscriptions > 0 ? 'mr-2' : ''">Search more</span>
-            <app-spinner [size]="'0.875rem'" *ngIf="limcService.runningSubscriptions > 0"></app-spinner>
-        </button>-->
+    <div class="info" *ngIf="monuments.length === 1">
+        <span translate>SEARCH.1_MONUMENT_FOUND</span>.
+    </div>
+    <div class="info" *ngIf="monuments.length > 1">
+        <span translate [translateParams]="{ n: monuments.length }">SEARCH.N_MONUMENTS_FOUND</span>.
     </div>
 
     <div class="row" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
@@ -29,10 +28,10 @@
     <div class="loading">
         <ng-container *ngIf="limcService.runningSubscriptions > 0">
             <div class="spinner"><app-spinner [size]="'2rem'"></app-spinner></div>
-            <span translate>Loading data</span>...
+            <span translate>SEARCH.LOADING_DATA</span>...
         </ng-container>
         <ng-container *ngIf="limcService.runningSubscriptions === 0">
-            <span translate>No monuments found</span>.
+            <span translate>SEARCH.NO_MONUMENTS_FOUND</span>.
         </ng-container>
     </div>
 </div>

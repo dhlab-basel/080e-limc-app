@@ -1,1 +1,4 @@
-<app-monument-list [monuments]="limcService.search.monuments" (loadMore)="searchMore()"></app-monument-list>
+<app-monument-list [monuments]="limcService.search.monuments"
+                   (loadMore)="searchMore()"
+                   [hasMoreResults]="this.limcService.search.result?.hasMoreResults()">
+</app-monument-list>

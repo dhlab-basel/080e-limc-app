@@ -6,30 +6,30 @@
     </div>
     <div class="list-group list-group-flush">
         <div class="list-group-item">
-            <div class="title"><span translate>Object</span></div>
-            <div class="line"><strong><span translate>ID</span>:</strong> {{ monument.id }}</div>
-            <div class="line"><strong><span translate>Origin</span>:</strong> {{ monument.origin }}</div>
-            <div class="line"><strong><span translate>Category</span>:</strong> {{ monument.category.join(", ") }}
+            <div class="title"><span translate>MONUMENT.OBJECT</span></div>
+            <div class="line"><strong><span translate>GENERAL.ID</span>:</strong> {{ monument.id }}</div>
+            <div class="line"><strong><span translate>MONUMENT.ORIGIN</span>:</strong> {{ monument.origin }}</div>
+            <div class="line"><strong><span translate>MONUMENT.CATEGORY</span>:</strong> {{ monument.category.join(", ") }}
             </div>
-            <div class="line"><strong><span translate>Material</span>:</strong> {{ monument.material }}
+            <div class="line"><strong><span translate>MONUMENT.MATERIAL</span>:</strong> {{ monument.material }}
             </div>
             <div class="line">
-                <strong><span translate>Discovery</span>:</strong> {{ monument.discovery }}
+                <strong><span translate>MONUMENT.DISCOVERY</span>:</strong> {{ monument.discovery }}
                 <ng-container *ngIf="monument.discoveryDetail?.length > 0">({{ monument.discoveryDetail.join(", ") }})</ng-container>
             </div>
-            <div class="line"><strong><span translate>Dating</span>:</strong> {{ monument.dating[0]?.period | date }}
+            <div class="line"><strong><span translate>MONUMENT.DATING</span>:</strong> {{ monument.dating[0]?.period | date }}
             </div>
         </div>
         <div class="list-group-item">
-            <div class="title"><span translate>Museum</span></div>
-            <div class="line"><strong><span translate>City</span>:</strong> {{
-                monument.inventory[0].museum?.city }}
+            <div class="title"><span translate>MONUMENT.MUSEUM</span></div>
+            <div class="line"><strong><span translate>MONUMENT.CITY</span>:</strong>
+                {{ monument.inventory[0].museum?.city }}
             </div>
-            <div class="line"><strong><span translate>Name</span>:</strong> {{
-                monument.inventory[0].museum?.name }}
+            <div class="line"><strong><span translate>MONUMENT.NAME</span>:</strong>
+                {{ monument.inventory[0].museum?.name }}
             </div>
-            <div class="line"><strong><span translate>Inventory</span>:</strong> {{
-                monument.inventory[0].number }}
+            <div class="line"><strong><span translate>MONUMENT.INVENTORY</span>:</strong>
+                {{ monument.inventory[0].number }}
             </div>
         </div>
     </div>

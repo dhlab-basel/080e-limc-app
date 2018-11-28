@@ -16,7 +16,7 @@ export class ProgressBar {
     get percent(): number {
         if (this.limcService instanceof LimcService) {
             if (this.limcService.subscriptions.length > 0) {
-                console.log(this.limcService.subscriptions.length + " | " + 100 * ( this.limcService.subscriptions.length - this.limcService.runningSubscriptions ) / this.limcService.subscriptions.length);
+                // console.log(this.limcService.subscriptions.length + " | " + 100 * ( this.limcService.subscriptions.length - this.limcService.runningSubscriptions ) / this.limcService.subscriptions.length);
                 return 100 * ( this.limcService.subscriptions.length - this.limcService.runningSubscriptions ) / this.limcService.subscriptions.length;
             } else {
                 return 100;

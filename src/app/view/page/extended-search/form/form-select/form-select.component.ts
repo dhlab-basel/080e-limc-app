@@ -1,10 +1,10 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from "@angular/core";
 import { FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
-    selector: 'app-form-select',
-    templateUrl: './form-select.component.html',
-    styleUrls: ['./form-select.component.css'],
+    selector: "app-form-select",
+    templateUrl: "./form-select.component.html",
+    styleUrls: ["./form-select.component.css"],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         multi: true,
@@ -48,9 +48,7 @@ export class FormSelectComponent implements OnInit {
 
 
     constructor() {}
-    ngOnInit() {
-        console.log(this.formControl);
-    }
+    ngOnInit() {}
 
 
     ////////////////
@@ -77,7 +75,7 @@ export class FormSelectComponent implements OnInit {
     }
 
     /**
-     * Registers a callback function that should be called when the control's value changes in the UI.
+     * Registers a callback function that should be called when the control"s value changes in the UI.
      * @param fn
      */
     registerOnChange(fn: any): void {

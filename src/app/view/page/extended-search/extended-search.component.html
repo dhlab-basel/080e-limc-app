@@ -85,3 +85,19 @@
 </div>
 
 <app-monument-list [monuments]="limcService.extendedSearch.monuments" (loadMore)="search()"></app-monument-list>
+<ng-template #modal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Info</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div [innerHtml]="modalBody"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close()">
+            <span translate>GENERAL.CLOSE</span>
+        </button>
+    </div>
+</ng-template>

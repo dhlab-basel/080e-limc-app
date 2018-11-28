@@ -6,6 +6,7 @@ import { LimcService } from "../../../model/service/limc.service";
 import { LimcExtendedSearchProperty } from "../../../model/other/limc-extended-search-property";
 import { SalsahService } from "../../../model/service/salsah.service";
 import { NodeData } from "../../../model/apiresult/node-data";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: "app-extended-search",
@@ -33,9 +34,14 @@ export class ExtendedSearchComponent implements OnInit {
 
 
     /**
-     * The form array
+     * The modal
      */
-    formArray: FormArray | null;
+    @ViewChild("modal") modal: ElementRef;
+
+    /**
+     * Modal body html
+     */
+    modalBody: string = "";
 
     /**
      * Search properties
@@ -68,11 +74,11 @@ export class ExtendedSearchComponent implements OnInit {
     /**
      * Constructor.
      * @param formBuilder
+     * @param modalService
      * @param salsahService
      * @param limcService
      */
-    constructor(private formBuilder: FormBuilder, private salsahService: SalsahService, public limcService: LimcService) {
-    }
+    constructor(private formBuilder: FormBuilder, private modalService: NgbModal, private salsahService: SalsahService, public limcService: LimcService) {}
 
     /**
      * NgOnInit.
@@ -204,6 +210,69 @@ export class ExtendedSearchComponent implements OnInit {
      */
     removeGroup(index: number) {
         this.formArray.controls.splice(index, 1);
+
+    /**
+     * Opens the modal with the help text.
+     */
+    openHelpModal() {
+
+        this.modalBody = (
+            "In Advanced search you can put together complex searches by combining multiple Search fields. Just press the “Add search field” button to add another Search field. The Search fields are combined with logical “AND”.<br /><br />" +
+            "The wildcard symbol for any text parts (letters or words) is “%”.<br /><br />" +
+            "<strong>Example 1:</strong><br />" +
+            "Choose Search field “LIMC Article” and select “Achilleus” in Search term. Click “Add search field”.<br />" +
+            "Choose Search field “LIMC Number” and enter “%” in Search term.<br />" +
+            "This will show all items listed in the LIMC Article “Achilleus”.<br /><br />" +
+            "<strong>Example 2:</strong><br />" +
+            "Choose Search field “Mythological figure” and select “Acheloos” in Search term. Click “Add Search Field”.<br />" +
+            "Choose Search field “Mythological figure” and enter “Herakles” in Search term. This will show all items where Acheloos and Herakles appear together.<br /><br />" +
+            "<strong>Example 3:</strong><br />" +
+            "Choose Search field “ThesCRA chapter name” and enter “%Heroisierung%” in Search term. This will show all items listed in the ThesCRA chapter “Heroisierung”. Please always use wildcards.<br /><br />" +
+            "<strong>Example 4:</strong><br />" +
+            "Choose Search field “Museum Name” and enter “%Louvre%” in Search term. This will show all objects in the Musée du Louvre.<br /><br />" +
+            "<strong>Example 5:</strong><br />" +
+            "Choose Search field “Museum Name” and enter “British%” in Search term. This will show all objects in the British Museum, the British Library, ..."
+        );
+
+        this.openModal();
+
+    }
+
+    /**
+     * Opens the modal with the documentation text.
+     */
+    openDocumentationModal() {
+
+        this.modalBody = (
+            "Search Field Definitions:<br /><br />" +
+            "<table class='table table-responsive'>" +
+            "<tr><td class='text-bold'>ID</td><td>A unique internal number allocated to each object.</td></tr>" +
+            "<tr><td class='text-bold'>Artist</td><td>The name of the artist – painter or potter. Multiple attributions are possible. After entering the first letter a menu pops up that allows to select from.</td></tr>" +
+            "<tr><td class='text-bold'>Category</td><td>Category of the object, e.g. “sculpture”. After entering the first letter a menu pops up that allows to select from.</td></tr>" +
+            "<tr><td class='text-bold'>Description</td><td>Description of the object. Always use wildcards – e.g. %Hera% when searching in descriptions.</td></tr>" +
+            "<tr><td class='text-bold'>Place of discovery</td><td>The original find place of an object if known. After entering the first letter a menu pops up that allows to select from.</td></tr>" +
+            "<tr><td class='text-bold'>Mythological figure</td><td>Name of a mythological figure, e.g. “Medeia”. After entering the first letter a menu pops up that allows to select from.</td></tr>" +
+            "<tr><td class='text-bold'>Object</td><td>Object, e.g. “altar” or “alabastron”. After entering the first letter a menu pops up that allows to select from.</td></tr>" +
+            "<tr><td class='text-bold'>Technique</td><td>Technique, e.g. “red-figure”. Select directly from a menu.</td></tr>" +
+            "<tr><td class='text-bold'>Inventory number</td><td>Inventory / Collection / Catalogue number of objects within the museum / collection.</td></tr>" +
+            "<tr><td class='text-bold'>Museum name</td><td>Name of the museum or the collection.</td></tr>" +
+            "<tr><td class='text-bold'>Museum city</td><td>Location of the museum or the collection.</td></tr>" +
+            "<tr><td class='text-bold'>LIMC article</td><td>Name of LIMC article, e.g. “Achilleus”. After entering the first letter a menu pops up that allows to select from.</td></tr>" +
+            "<tr><td class='text-bold'>LIMC article number</td><td>Number of the object in a LIMC article in the printed books.</td></tr>" +
+            "<tr><td class='text-bold'>ThesCRA chapter name</td><td>Name of ThesCRA chapter, e.g. “%Opfer%”.</td></tr>" +
+            "<tr><td class='text-bold'>ThesCRA article Number</td><td>Number of the object in a ThesCRA chapter in the printed books.</td></tr>" +
+            "</table>"
+        );
+
+        this.openModal();
+
+    }
+
+    /**
+     * Opens the modal.
+     */
+    openModal() {
+        this.modalService.open(this.modal, { size: "lg" });
     }
 
 }

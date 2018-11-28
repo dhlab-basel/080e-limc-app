@@ -48,7 +48,9 @@ export class FormSelectComponent implements OnInit {
 
 
     constructor() {}
-    ngOnInit() {}
+    ngOnInit() {
+        console.log(this.formControl);
+    }
 
 
     ////////////////

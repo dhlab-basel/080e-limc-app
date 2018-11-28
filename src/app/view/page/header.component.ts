@@ -5,6 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 
 import { LimcService } from "../../model/service/limc.service";
 import { LocalStorageService } from "../../model/service/local-storage.service";
+import { ProgressBar } from "../../model/other/progress-bar";
 
 @Component({
     selector: "app-header",
@@ -21,12 +22,16 @@ export class HeaderComponent implements OnInit {
     // PROPERTIES //
     ////////////////
 
-
     /**
      * The search string
      * @type {string}
      */
     keyword: string = "";
+
+    /**
+     * Progress bar
+     */
+    progressBar: ProgressBar;
 
     /**
      * Limit of results
@@ -47,6 +52,7 @@ export class HeaderComponent implements OnInit {
      * @param limcService
      */
     constructor(private router: Router, public translateService: TranslateService, private localStorageService: LocalStorageService, public limcService: LimcService) {
+        this.progressBar = new ProgressBar(limcService);
     }
 
     /**

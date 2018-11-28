@@ -9,13 +9,13 @@
                     <div class="col-12">
                         <p>
                             <span translate class="mr-1">ADVANCED_SEARCH.TEXT_BUILD_FORM</span>
-                            <button class="btn btn-sm btn-outline-secondary">
+                            <button class="btn btn-sm btn-outline-secondary" (click)="openHelpModal();">
                                 <span translate>ADVANCED_SEARCH.HELP</span>
                             </button>
                         </p>
                         <p>
                             <span translate class="mr-1">ADVANCED_SEARCH.TEXT_HELP</span>
-                            <button class="btn btn-sm btn-outline-secondary">
+                            <button class="btn btn-sm btn-outline-secondary" (click)="openDocumentationModal()">
                                 <span translate>ADVANCED_SEARCH.DOCUMENTATION</span>
                             </button>
                         </p>
@@ -31,9 +31,9 @@
                     </div>
                 </div>
 
-                <form *ngIf="formArray" [formGroup]="formArray">
+                <form *ngIf="limcService.extendedSearch.formArray" [formGroup]="limcService.extendedSearch.formArray">
 
-                    <div class="row form-group" *ngFor="let formGroup of formArray?.controls; let i = index;">
+                    <div class="row form-group" *ngFor="let formGroup of limcService.extendedSearch.formArray?.controls; let i = index;">
                         <div class="col-4 col-md-4">
                             <app-form-select [formControl]="formGroup.controls.select" [options]="getSearchProperties()"
                                              (onValueChanged)="onPropertySelected(formGroup, $event)"
@@ -62,12 +62,12 @@
                         <div class="col-6">
                             <button type="button" class="btn btn-outline-secondary" (click)="search(true)"
                                     [disabled]="formValid === false">
-                                <span translate>GENERAL.ADVANCED_SEARCH</span>
+                                <span translate>GENERAL.SEARCH</span>
                             </button>
                         </div>
                         <div class="col-6 text-right">
                             <button type="button" class="btn btn-outline-success" (click)="addGroup()"
-                                    [disabled]="formValid === false && formArray.length > 0">
+                                    [disabled]="formValid === false && limcService.extendedSearch.formArray.length > 0">
                                 <span translate>ADVANCED_SEARCH.ADD_SEARCH_FIELD</span>
                             </button>
                         </div>
@@ -85,6 +85,7 @@
 </div>
 
 <app-monument-list [monuments]="limcService.extendedSearch.monuments" (loadMore)="search()"></app-monument-list>
+
 <ng-template #modal let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Info</h4>

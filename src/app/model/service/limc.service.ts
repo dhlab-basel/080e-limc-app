@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { expand, map } from "rxjs/operators";
-import { EMPTY, forkJoin, interval, Observable, Subscription, throwError } from "rxjs/index";
+import { EMPTY, forkJoin, Observable, Subscription, throwError } from "rxjs";
 
 import { SalsahService } from "./salsah.service";
 
@@ -10,11 +10,9 @@ import { Resource } from "../apiresult/resource";
 import { GraphData } from "../apiresult/graph-data";
 import { GoogleService } from "./google.service";
 import { Museum } from "../resources/museum";
-import { ProgressBar } from "../other/progress-bar";
 import { Search } from "../apiresult/search";
 import { LimcSearch } from "../other/limc-search";
 import { LimcExtendedSearch } from "../other/limc-extended-search";
-import { start } from "repl";
 
 @Injectable()
 /**
@@ -29,22 +27,16 @@ export class LimcService {
 
     /**
      * The types
-     * @type {{MONUMENT: string}}
      */
     private static readonly resTypes: any = {
         MONUMENT: "limc:monument"
-    }
+    };
 
 
     ////////////////
     // PROPERTIES //
     ////////////////
 
-
-    /**
-     * The progress bar
-     */
-    progressBar: ProgressBar = new ProgressBar();
 
     /**
      * The search result
@@ -93,17 +85,12 @@ export class LimcService {
      */
     getMonumentByResourceId(resourceId: number): Observable<Monument | any> {
 
-        this.progressBar.setProgress(0);
-
         return this.salsahService.getGraphData(resourceId).pipe(
             map((graphData: GraphData) => {
-
-                this.progressBar.setProgress(50);
 
                 const monuments: Monument[] = Monument.fromGraph(graphData.graph);
 
                 if (monuments.length !== 1) {
-                    this.progressBar.reset();
                     return throwError("More or less than 1 monument found.");
                 }
 
@@ -113,8 +100,6 @@ export class LimcService {
                         this.fetchMuseumCoords(inventory.museum);
                     }
                 }
-
-                this.progressBar.setProgress(100);
 
                 return monuments[0];
 
@@ -149,8 +134,6 @@ export class LimcService {
      */
     searchMonuments(keyword: string, startIndex: number, amount: number) {
 
-        this.progressBar.setProgress(0);
-
         this.search.keyword = keyword;
 
         // Reset the search if necessary
@@ -164,8 +147,6 @@ export class LimcService {
 
         const s: Subscription = this.salsahService.getSearch(keyword, amount, startIndex).subscribe(
             (search: Search) => {
-
-                this.progressBar.setProgress(50);
 
                 this.search.result = search;
 
@@ -186,11 +167,8 @@ export class LimcService {
 
                 }
 
-                this.progressBar.setProgress(100);
-
             },
             (error: any) => {
-                this.progressBar.reset();
                 console.error(error);
             }
         );
@@ -208,8 +186,6 @@ export class LimcService {
     searchMonumentsByProperties(data: { resourceTypeId: number, propertyId: number, value: number|string }[], amount: number, reset?: boolean) {
 
         if (data.length === 0) return;
-
-        this.progressBar.setProgress(0);
 
         // Reset the search if necessary
         if (reset) {
@@ -320,11 +296,8 @@ export class LimcService {
 
                 }
 
-                this.progressBar.setProgress(100);
-
             },
             (error: any) => {
-                this.progressBar.reset();
                 console.error(error);
             }
         );
@@ -344,8 +317,6 @@ export class LimcService {
         const s: Subscription = this.salsahService.getGraphData(resourceId).subscribe(
             (graphData: GraphData) => {
 
-                this.progressBar.percent++;
-
                 const newMonuments: Monument[] = Monument.fromGraph(graphData.graph);
 
                 if (newMonuments.length !== 1) {
@@ -360,7 +331,6 @@ export class LimcService {
 
             },
             (error: any) => {
-                this.progressBar.reset();
                 console.error(error);
             }
         );

@@ -17,7 +17,7 @@
     </div>
 
     <div class="info">
-        <button class="btn btn-outline-secondary ml-2 mb-1" (click)="onScrolled()" [disabled]="limcService.progressBar.isActive">
+        <button class="btn btn-outline-secondary ml-2 mb-1" (click)="onScrolled()" [disabled]="limcService.runningSubscriptions > 0">
             <span translate [class]="limcService.runningSubscriptions > 0 ? 'mr-2' : ''">Search more</span>
             <app-spinner [size]="'0.875rem'" *ngIf="limcService.runningSubscriptions > 0"></app-spinner>
         </button>

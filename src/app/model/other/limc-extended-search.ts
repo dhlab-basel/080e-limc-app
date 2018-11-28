@@ -1,5 +1,7 @@
 import { Monument } from "../resources/monument";
 import { Search } from "../apiresult/search";
+import { FormArray } from "@angular/forms";
+import { LimcExtendedSearchProperty } from "./limc-extended-search-property";
 
 export class LimcExtendedSearch {
 
@@ -36,6 +38,11 @@ export class LimcExtendedSearch {
      * The search result by each search
      */
     resultingMonuments: Monument[][] = [];
+
+    /**
+     * The form array
+     */
+    formArray: FormArray | null;
 
     /**
      * Constructor.

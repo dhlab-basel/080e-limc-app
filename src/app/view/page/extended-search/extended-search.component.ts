@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 
 import { LimcService } from "../../../model/service/limc.service";
@@ -21,6 +21,7 @@ export class ExtendedSearchComponent implements OnInit {
     ///////////////
     // CONSTANTS //
     ///////////////
+
 
     /**
      * The amount of entries to load per search
@@ -53,13 +54,13 @@ export class ExtendedSearchComponent implements OnInit {
      */
     get formValid(): boolean {
 
-        if (this.formArray instanceof FormArray === false) return false;
+        if (this.limcService.extendedSearch.formArray instanceof FormArray === false) return false;
 
-        for (const formGroup of this.formArray.controls) {
+        for (const formGroup of this.limcService.extendedSearch.formArray.controls) {
             if (formGroup.invalid) return false;
         }
 
-        if (this.formArray.length === 0) return false;
+        if (this.limcService.extendedSearch.formArray.length === 0) return false;
 
         return true;
 
@@ -101,14 +102,20 @@ export class ExtendedSearchComponent implements OnInit {
             LimcExtendedSearchProperty.create(83, 333, "ADVANCED_SEARCH.MUSEUM_CITY"),
             LimcExtendedSearchProperty.create(84, 363, "ADVANCED_SEARCH.LIMC_ARTICLE").withSelectionId(37),
             LimcExtendedSearchProperty.create(84, 365, "ADVANCED_SEARCH.LIMC_NUMBER"),
-            LimcExtendedSearchProperty.create(85, 369, "ADVANCED_SEARCH.THESCRA_CHAPTER").withSelectionId(86),
+            // LimcExtendedSearchProperty.create(84, 364, "ADVANCED_SEARCH.LIMC_VOLUME_NUMBER").withSelectionId(38),
+            // LimcExtendedSearchProperty.create(86, 370, "ADVANCED_SEARCH.THESCRA_MAIN_CHAPTER"),
+            LimcExtendedSearchProperty.create(86, 334, "ADVANCED_SEARCH.THESCRA_CHAPTER_NAME"),
             LimcExtendedSearchProperty.create(85, 368, "ADVANCED_SEARCH.THESCRA_NUMBER"),
-
+            // LimcExtendedSearchProperty.create(86, 371, "ADVANCED_SEARCH.THESCRA_CHAPTER_SHORTNAME"),
+            // LimcExtendedSearchProperty.create(86, 350, "ADVANCED_SEARCH.THESCRA_SEQUENCE_NUMBER"),
+            // LimcExtendedSearchProperty.create(86, 373, "ADVANCED_SEARCH.THESCRA_VOLUME_NUMBER")
         ];
 
 
         // Add an initial form group
-        this.addGroup();
+        if (this.limcService.extendedSearch.formArray instanceof FormArray === false) {
+            this.addGroup();
+        }
 
     }
 
@@ -132,9 +139,9 @@ export class ExtendedSearchComponent implements OnInit {
      */
     getSearchProperties(): LimcExtendedSearchProperty[] {
 
-        if (this.formArray.length <= 1) return this.searchProperties;
+        if (this.limcService.extendedSearch.formArray.length <= 1) return this.searchProperties;
 
-        const resourceTypeId: number = (<FormGroup> this.formArray.controls[0]).controls.select.value.resourceTypeId;
+        const resourceTypeId: number = (<FormGroup> this.limcService.extendedSearch.formArray.controls[0]).controls.select.value.resourceTypeId;
 
         return this.searchProperties.filter(v => v.resourceTypeId === resourceTypeId);
 
@@ -148,7 +155,7 @@ export class ExtendedSearchComponent implements OnInit {
 
         // Build the LIMC search query
         const data: { resourceTypeId: number, propertyId: number, value: number | string }[] = [];
-        for (const formGroup of this.formArray.controls) {
+        for (const formGroup of this.limcService.extendedSearch.formArray.controls) {
 
             if (formGroup instanceof FormGroup === false) continue;
 
@@ -196,10 +203,10 @@ export class ExtendedSearchComponent implements OnInit {
             input: undefined
         });
 
-        if (this.formArray instanceof FormArray) {
-            this.formArray.controls.push(formGroup);
+        if (this.limcService.extendedSearch.formArray instanceof FormArray) {
+            this.limcService.extendedSearch.formArray.controls.push(formGroup);
         } else {
-            this.formArray = this.formBuilder.array([formGroup]);
+            this.limcService.extendedSearch.formArray = this.formBuilder.array([formGroup]);
         }
 
     }
@@ -209,7 +216,8 @@ export class ExtendedSearchComponent implements OnInit {
      * @param index
      */
     removeGroup(index: number) {
-        this.formArray.controls.splice(index, 1);
+        this.limcService.extendedSearch.formArray.controls.splice(index, 1);
+    }
 
     /**
      * Opens the modal with the help text.

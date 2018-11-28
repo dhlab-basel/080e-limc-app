@@ -230,7 +230,7 @@ export class Monument {
         if (photos.length > 0) return photos[0];
 
         const p: Photo = new Photo();
-        p.url = "assets/img/default.jpg";
+        p.url = "assets/img/default_gray.jpg";
 
         return p;
 

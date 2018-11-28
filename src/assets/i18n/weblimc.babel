@@ -765,35 +765,6 @@
                 </children>
             </folder_node>
             <concept_node>
-                <name>Add property</name>
-                <definition_loaded>false</definition_loaded>
-                <description></description>
-                <comment></comment>
-                <default_text></default_text>
-                <translations>
-                    <translation>
-                        <language>de-DE</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>el-GR</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>en-US</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>fr-FR</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>it-IT</language>
-                        <approved>false</approved>
-                    </translation>
-                </translations>
-            </concept_node>
-            <concept_node>
                 <name>Address</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
@@ -1055,6 +1026,69 @@
                 </translations>
             </concept_node>
             <folder_node>
+                <name>FOOTER</name>
+                <children>
+                    <concept_node>
+                        <name>COPYRIGHT_INFO</name>
+                        <definition_loaded>false</definition_loaded>
+                        <description></description>
+                        <comment></comment>
+                        <default_text></default_text>
+                        <translations>
+                            <translation>
+                                <language>de-DE</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>en-US</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>fr-FR</language>
+                                <approved>false</approved>
+                            </translation>
+                            <translation>
+                                <language>it-IT</language>
+                                <approved>false</approved>
+                            </translation>
+                            <translation>
+                                <language>el-GR</language>
+                                <approved>false</approved>
+                            </translation>
+                        </translations>
+                    </concept_node>
+                    <concept_node>
+                        <name>PARTNERS_INFO</name>
+                        <definition_loaded>false</definition_loaded>
+                        <description></description>
+                        <comment></comment>
+                        <default_text></default_text>
+                        <translations>
+                            <translation>
+                                <language>de-DE</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>en-US</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>fr-FR</language>
+                                <approved>false</approved>
+                            </translation>
+                            <translation>
+                                <language>it-IT</language>
+                                <approved>false</approved>
+                            </translation>
+                            <translation>
+                                <language>el-GR</language>
+                                <approved>false</approved>
+                            </translation>
+                        </translations>
+                    </concept_node>
+                </children>
+            </folder_node>
+            <folder_node>
                 <name>GENERAL</name>
                 <children>
                     <concept_node>
@@ -1264,35 +1298,6 @@
             </concept_node>
             <concept_node>
                 <name>Keywords</name>
-                <definition_loaded>false</definition_loaded>
-                <description></description>
-                <comment></comment>
-                <default_text></default_text>
-                <translations>
-                    <translation>
-                        <language>de-DE</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>en-US</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>fr-FR</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>it-IT</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>el-GR</language>
-                        <approved>false</approved>
-                    </translation>
-                </translations>
-            </concept_node>
-            <concept_node>
-                <name>LIMC Basel and DHlab, Universität Basel</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -1727,35 +1732,6 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>Please build your extended search</name>
-                <definition_loaded>false</definition_loaded>
-                <description></description>
-                <comment></comment>
-                <default_text></default_text>
-                <translations>
-                    <translation>
-                        <language>de-DE</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>el-GR</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>en-US</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>fr-FR</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>it-IT</language>
-                        <approved>false</approved>
-                    </translation>
-                </translations>
-            </concept_node>
-            <concept_node>
                 <name>Property</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
@@ -1872,35 +1848,6 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>The digitization of the LIMC archive in Basel was enabled thanks to grants by</name>
-                <definition_loaded>false</definition_loaded>
-                <description></description>
-                <comment></comment>
-                <default_text></default_text>
-                <translations>
-                    <translation>
-                        <language>de-DE</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>en-US</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>fr-FR</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>it-IT</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>el-GR</language>
-                        <approved>false</approved>
-                    </translation>
-                </translations>
-            </concept_node>
-            <concept_node>
                 <name>Type</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
@@ -1931,35 +1878,6 @@
             </concept_node>
             <concept_node>
                 <name>Value</name>
-                <definition_loaded>false</definition_loaded>
-                <description></description>
-                <comment></comment>
-                <default_text></default_text>
-                <translations>
-                    <translation>
-                        <language>de-DE</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>el-GR</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>en-US</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>fr-FR</language>
-                        <approved>false</approved>
-                    </translation>
-                    <translation>
-                        <language>it-IT</language>
-                        <approved>false</approved>
-                    </translation>
-                </translations>
-            </concept_node>
-            <concept_node>
-                <name>extended search</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>

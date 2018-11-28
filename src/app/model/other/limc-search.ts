@@ -16,7 +16,7 @@ export class LimcSearch {
     /**
      * The search instance
      */
-    result: Search = null;
+    result: Search | null = null;
 
     /**
      * The last search string

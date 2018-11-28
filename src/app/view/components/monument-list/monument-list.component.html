@@ -16,8 +16,9 @@
     </div>
 
     <div class="info">
-        <button class="btn btn-outline-secondary ml-2 mb-1" (click)="onScrolled()" [disabled]="limcService.runningSubscriptions > 0">
-            <span translate [class]="limcService.runningSubscriptions > 0 ? 'mr-2' : ''">Search more</span>
+        <button class="btn btn-outline-secondary ml-2 mb-1" (click)="onScrolled()"
+                [disabled]="limcService.runningSubscriptions > 0 || hasMoreResults === false">
+            <span translate [class]="limcService.runningSubscriptions > 0 ? 'mr-2' : ''">GENERAL.SEARCH_MORE</span>
             <app-spinner [size]="'0.875rem'" *ngIf="limcService.runningSubscriptions > 0"></app-spinner>
         </button>
     </div>

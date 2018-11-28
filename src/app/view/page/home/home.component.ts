@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { LimcService } from "../../../model/service/limc.service";
+import { Search } from "../../../model/apiresult/search";
 
 @Component({
     selector: "app-home",
@@ -29,12 +30,6 @@ export class HomeComponent implements OnInit {
     ////////////////
 
 
-    /**
-     * The search string
-     */
-    searchString: string = "London";
-
-
     /////////////
     // METHODS //
     /////////////
@@ -56,38 +51,15 @@ export class HomeComponent implements OnInit {
     }
 
     /**
-     * Performs a basic search
-     */
-    search() {
-        //this.searchService.search(this.searchString, this.searchLimit, 0);
-    }
-
-    /**
      * Searches for more monuments.
      */
     searchMore() {
 
+        if (this.limcService.search.result !== null) {
+            if (this.limcService.search.result.hasMoreResults() === false) return;
+        }
+
         this.limcService.searchMonuments(this.limcService.search.keyword, this.limcService.search.monuments.length, this.searchLimit);
-
-        /*
-
-        const search: LimcSearch = this.limcService.search;
-
-        console.log(search);
-
-        if (search.result instanceof Search === false) return;
-
-        const nextStartIndex: number = search.result.getNextStartIndex();
-
-        console.log(nextStartIndex);
-
-        if (nextStartIndex < 0) return;
-
-        this.limcService.searchMonuments(search.keyword, nextStartIndex);
-
-        console.log("search more");
-        //this.searchService.searchMore(this.searchLimit);
-        */
 
     }
 

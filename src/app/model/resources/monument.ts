@@ -222,7 +222,7 @@ export class Monument {
 
     /**
      * Gets a photo of a monument.
-     * @returns {Photo} the first photo that is allowed for display
+     * @returns the first photo that is allowed for display
      */
     public getPhoto(): Photo {
 
@@ -230,7 +230,8 @@ export class Monument {
         if (photos.length > 0) return photos[0];
 
         const p: Photo = new Photo();
-        p.url = "assets/img/default.jpg";
+        p.url = "assets/img/default_gray.jpg";
+        p.thumbnailUrl = "assets/img/default_gray.jpg";
 
         return p;
 

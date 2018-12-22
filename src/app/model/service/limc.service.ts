@@ -129,20 +129,20 @@ export class LimcService {
     /**
      * Tries to find monuments by a string.
      * @param keyword
-     * @param startIndex
      * @param amount
+     * @param reset
      */
-    searchMonuments(keyword: string, startIndex: number, amount: number) {
+    searchMonuments(keyword: string, amount: number, reset?: boolean) {
 
         this.search.keyword = keyword;
 
         // Reset the search if necessary
-        if (startIndex === 0) {
-            this.search.monuments = [];
-            for (let i = 0; i < this.subscriptions.length; i++) {
-                this.subscriptions[i].unsubscribe();
-                this.subscriptions.splice(i--, 1);
-            }
+        let startIndex: number = 0;
+        if (reset || this.search.result instanceof Search === false) {
+            this.search.reset();
+            for (const sub of this.subscriptions) sub.unsubscribe();
+        } else {
+            startIndex = this.search.result.getNextStartIndex();
         }
 
         const s: Subscription = this.salsahService.getSearch(keyword, amount, startIndex).subscribe(
@@ -188,13 +188,13 @@ export class LimcService {
         if (data.length === 0) return;
 
         // Reset the search if necessary
-        if (reset) {
+        let startIndex: number = 0;
+        if (reset || this.extendedSearch.results[0] instanceof Search === false) {
             this.extendedSearch.reset();
             for (const sub of this.subscriptions) sub.unsubscribe();
+        } else {
+            startIndex = this.extendedSearch.results[0].getNextStartIndex();
         }
-
-        // Set the current index
-        const startIndex: number = this.extendedSearch.results.length;
 
         // Search for the monuments of the given resource type id
         this.searchMonumentsByResourceProperties(0, data[0].resourceTypeId, data, startIndex, amount);

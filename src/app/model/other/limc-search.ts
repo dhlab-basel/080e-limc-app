@@ -28,4 +28,14 @@ export class LimcSearch {
      */
     constructor() {}
 
+    /**
+     * Resets the search.
+     */
+    reset() {
+        this.selectedMonument = null;
+        this.result = null;
+        this.monuments = [];
+        this.selectedMonument = null;
+    }
+
 }

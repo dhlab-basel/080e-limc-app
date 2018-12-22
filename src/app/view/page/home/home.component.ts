@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
             if (this.limcService.search.result.hasMoreResults() === false) return;
         }
 
-        this.limcService.searchMonuments(this.limcService.search.keyword, this.limcService.search.monuments.length, this.searchLimit);
+        this.limcService.searchMonuments(this.limcService.search.keyword, this.searchLimit);
 
     }
 

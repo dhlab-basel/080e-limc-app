@@ -86,7 +86,7 @@ export class HeaderComponent implements OnInit {
      */
     search(navigate?: boolean) {
 
-        this.limcService.searchMonuments(this.keyword, 0, this.searchLimit);
+        this.limcService.searchMonuments(this.keyword, this.searchLimit, true);
 
         if (navigate) {
             this.router.navigate(["page", "home", this.keyword]);

@@ -9,6 +9,7 @@ import { CatalogThesCraChapter } from "./catalog-thes-cra-chapter";
 import { CatalogThesCra } from "./catalog-thes-cra";
 import { CatalogLimc } from "./catalog-limc";
 import { Graph } from "../apiresult/graph";
+import { SalsahService } from "../service/salsah.service";
 
 
 /**
@@ -201,18 +202,60 @@ export class Monument {
     }
 
     /**
-     * Gets all photos of a monument.
-     * @returns {Photo[]} the photos that are allowed for display
+     * Fetches the first (accessible) photo of a monument from the server.
+     * @param salsahService
      */
-    public getPhotos() {
+    public fetchFirstPhoto(salsahService: SalsahService) {
 
-        const museum: Museum = this.inventory && this.inventory[0] && this.inventory[0].museum ? this.inventory[0].museum : null;
+        // Get the photo objects
+        const photos: Photo[] = this.getPhotos();
+
+        // Fetch the data
+        for (const photo of photos) {
+            photo.fetchUrl(salsahService);
+            break;
+        }
+
+    }
+
+    /**
+     * Fetches all accessible photos of a monument from the server.
+     * @param salsahService
+     */
+    public fetchPhotos(salsahService: SalsahService) {
+
+        // Get the photo objects
+        const photos: Photo[] = this.getPhotos();
+
+        // Fetch the data
+        for (const photo of photos) {
+            photo.fetchUrl(salsahService);
+        }
+
+    }
+
+    /**
+     * Gets all photos of a monument.
+     * @returns the photos that are allowed for display
+     */
+    public getPhotos(): Photo[] {
+
+        if (this.inventory === null) return [];
+
+        const museums: Museum[] = this.inventory.map(i => i.museum);
+        const hasPhotoRights: boolean = museums.findIndex(m => m.hasPhotoRight === false) < 0;
 
         const photos: Photo[] = [];
 
         for (const scene of this.scene) {
             for (const photo of scene.photo) {
-                if (photo.shouldDisplay(museum)) photos.push(photo);
+
+                if (photo.newPhoto === false) continue;
+
+                if (photo.hasPhotoRight === true || (photo.hasPhotoRight === null && hasPhotoRights)) {
+                    photos.push(photo);
+                }
+
             }
         }
 

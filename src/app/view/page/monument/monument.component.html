@@ -1,4 +1,4 @@
-<div class="container" *ngIf="monument">
+<div class="container py-3" *ngIf="monument">
 
     <!-- Images -->
     <div class="carousel-container" *ngIf="monument.getPhotos().length > 0">
@@ -6,7 +6,7 @@
             <ng-template ngFor let-photo [ngForOf]="monument.getPhotos()" let-i="index">
                 <ng-template ngbSlide>
                     <div class="slide cursor-pointer" (click)="openGallery(i)"
-                        [ngStyle]="{'background-image': 'url(\'' + photo.url + '\')'}"></div>
+                        [ngStyle]="{'background-image': 'url(\'' + photo.thumbnailUrl + '\')'}"></div>
                 </ng-template>
             </ng-template>
         </ngb-carousel>
@@ -284,7 +284,7 @@
 
 </div>
 
-<div class="container" *ngIf="monument === null">
+<div class="container py-3" *ngIf="monument === null">
     <div class="loading">
         <span translate>Loading data</span>...
     </div>

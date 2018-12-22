@@ -356,6 +356,7 @@ export class LimcService {
                 const monumentResourceIds: number[] = monuments.map(m => m.resourceId);
                 if (monumentResourceIds.indexOf(resourceId) === -1) {
                     monuments.push(newMonuments[0]);
+                    newMonuments[0].fetchFirstPhoto(this.salsahService);
                 }
 
             },

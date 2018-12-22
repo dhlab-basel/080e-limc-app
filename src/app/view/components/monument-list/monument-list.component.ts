@@ -16,6 +16,11 @@ export class MonumentListComponent implements OnInit {
     @Input() monuments: Monument[] = [];
 
     /**
+     * Determines whether there are more results
+     */
+    @Input() hasMoreResults: boolean = true;
+
+    /**
      * Output event
      */
     @Output() loadMore: EventEmitter<void> = new EventEmitter<void>();
@@ -24,21 +29,20 @@ export class MonumentListComponent implements OnInit {
      * Constructor.
      * @param limcService
      */
-    constructor(public limcService: LimcService) {
-    }
+    constructor(public limcService: LimcService) {}
 
     /**
      * NgOnInit.
      */
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     /**
      * Called when the user reaches the bottom of the page.
      */
     onScrolled() {
-        this.loadMore.emit();
+        if (this.hasMoreResults) {
+            this.loadMore.emit();
+        }
     }
-
 
 }

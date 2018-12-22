@@ -47,7 +47,7 @@ export class Search {
             currentPage++;
         }
 
-        return currentPage < this.paging.length;
+        return currentPage < this.paging.length - 1;
 
     }
 

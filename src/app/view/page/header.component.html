@@ -1,15 +1,15 @@
 <header>
-    <ngb-progressbar *ngIf="limcService.progressBar.isActive" type="primary" [value]="limcService.progressBar.percent" [height]="'1px'"></ngb-progressbar>
-    <div class="spacer" *ngIf="limcService.progressBar.isActive === false"></div>
-    <div class="container">
+    <ngb-progressbar *ngIf="progressBar.active" type="primary" [value]="progressBar.percent" [height]="'1px'"></ngb-progressbar>
+    <div class="spacer" *ngIf="progressBar.active === false"></div>
+    <div class="container px-3">
         <div class="row">
-            <div class="col-4 col-md-4 title">
-                <span class="cursor-pointer" (click)="openHome()"><span class="hidden-sm-down-plus">Digital</span> LIMC</span>
+            <div class="col-7 title">
+                <span class="cursor-pointer" (click)="openHome()">Digital LIMC</span>
             </div>
-            <div class="d-none d-md-block col-md-2 language">
+            <div class="col-5 language text-right">
                 <div ngbDropdown class="d-inline-block">
-                    <button class="btn btn-outline-secondary" ngbDropdownToggle>
-                        <span translate>Language</span>
+                    <button class="btn btn-secondary" ngbDropdownToggle>
+                        <span translate>GENERAL.LANGUAGE</span>
                     </button>
                     <div ngbDropdownMenu>
                         <button class="dropdown-item" (click)="changeLanguage('de')">Deutsch <span *ngIf="translateService.currentLang === 'de'">&#10003;</span></button>
@@ -20,17 +20,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8 col-md-6 search" *ngIf="showSearch">
+        </div>
+        <div class="row search">
+            <div class="col-12">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="{{ 'Search' | translate }}" [(ngModel)]="keyword"
-                        (keyup.enter)="search(true)">
+                           (keyup.enter)="search(true)">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary cursor-pointer" (click)="search(true)">
-                            <span translate>Search</span>
+                            <span translate>GENERAL.SEARCH</span>
+                        </button>
+                    </div>
+                    <div class="input-group-append ml-3">
+                        <button class="btn btn-outline-secondary cursor-pointer" routerLink="page/search">
+                            <span translate>GENERAL.ADVANCED_SEARCH</span>
                         </button>
                     </div>
                 </div>
-                <a routerLink="page/search"><span translate>extended search</span></a>
             </div>
         </div>
     </div>

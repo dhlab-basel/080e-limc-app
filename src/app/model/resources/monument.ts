@@ -123,6 +123,7 @@ export class Monument {
                 case "Foto":
                     const photo = Photo.fromGraphNode(node);
                     photo.resourceId = +key;
+                    photo.setUrl();
                     resourcesById[key] = photo;
                     break;
                 default:
@@ -199,39 +200,6 @@ export class Monument {
         if (connection instanceof Dating) this.dating.push(connection);
         if (connection instanceof Scene) this.scene.push(connection);
         if (connection instanceof Inventory) this.inventory.push(connection);
-    }
-
-    /**
-     * Fetches the first (accessible) photo of a monument from the server.
-     * @param salsahService
-     */
-    public fetchFirstPhoto(salsahService: SalsahService) {
-
-        // Get the photo objects
-        const photos: Photo[] = this.getPhotos();
-
-        // Fetch the data
-        for (const photo of photos) {
-            photo.fetchUrl(salsahService);
-            break;
-        }
-
-    }
-
-    /**
-     * Fetches all accessible photos of a monument from the server.
-     * @param salsahService
-     */
-    public fetchPhotos(salsahService: SalsahService) {
-
-        // Get the photo objects
-        const photos: Photo[] = this.getPhotos();
-
-        // Fetch the data
-        for (const photo of photos) {
-            photo.fetchUrl(salsahService);
-        }
-
     }
 
     /**

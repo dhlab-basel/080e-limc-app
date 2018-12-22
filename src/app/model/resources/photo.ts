@@ -52,9 +52,8 @@ export class Photo {
 
     /**
      * Fetches the URL of the photo from the server.
-     * @param salsahService
      */
-    public fetchUrl(salsahService: SalsahService) {
+    public setUrl() {
 
         if (this.hasPhotoRight === false || this.url !== "" || this.newPhoto === false) return;
 

@@ -203,6 +203,19 @@ export class Monument {
     }
 
     /**
+     * Get all photo credits of all museums connected to this monument.
+     */
+    public getBasicPhotoCredits(): string[] {
+
+        if (this.inventory === null) return [];
+
+        const museums: Museum[] = this.inventory.map(i => i.museum);
+
+        return museums.map(m => m.photoCredit);
+
+    }
+
+    /**
      * Gets all photos of a monument.
      * @returns the photos that are allowed for display
      */

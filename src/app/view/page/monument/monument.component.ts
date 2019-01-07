@@ -99,12 +99,9 @@ export class MonumentComponent implements OnInit, OnDestroy {
      * @param activeIndex
      */
     openGallery(activeIndex: number) {
-
-        const imageUrls: string[] = this.monument.getPhotos().map((photo: Photo): string => {
-            return photo.url;
-        });
-        this.gallery.openWithImages(imageUrls, activeIndex);
-
+        const photos: Photo[] = this.monument.getPhotos();
+        const credits: string[] = this.monument.getBasicPhotoCredits();
+        this.gallery.openWithImages(photos, credits, activeIndex);
     }
 
 }

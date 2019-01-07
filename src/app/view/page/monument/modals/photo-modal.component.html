@@ -1,6 +1,6 @@
 <ng-template #modal let-c="close" let-d="dismiss">
     <div class="image">
-        <img src="{{ imageUrls[activeIndex] }}" alt="img"/>
+        <img src="{{ photos[activeIndex].url }}" alt="img"/>
         <div class="left cursor-pointer" (click)="previous()">
             <span class="carousel-control-prev-icon"></span>
         </div>
@@ -9,14 +9,20 @@
         </div>
     </div>
     <div class="row p-3">
-        <div class="col-4 text-left">
+        <div class="col-4 col-sm-2 text-left">
             <button type="button" class="btn btn-outline-secondary" (click)="previous()">
                 <i class="icon-arrow-left"></i></button>
         </div>
-        <div class="col-4 text-center pt-2">
-            <span translate [translateParams]="{ i: activeIndex + 1, n: imageUrls.length  }">MONUMENT.IMAGE_I_OF_N</span>
+        <div class="col-4 col-sm-8 text-center">
+            <div>
+                <span translate [translateParams]="{ i: activeIndex + 1, n: photos.length  }">MONUMENT.IMAGE_I_OF_N</span>
+            </div>
+            <div class="d-none d-sm-block">
+                <span translate>MONUMENT.PHOTO_RIGHTS</span>:
+                {{ photos[activeIndex].hasPhotoRight !== null ? photos[activeIndex].photoCredit : credits.join(", ") }}
+            </div>
         </div>
-        <div class="col-4 text-right">
+        <div class="col-4 col-sm-2 text-right">
             <button type="button" class="btn btn-outline-secondary" (click)="next()">
                 <i class="icon-arrow-right"></i></button>
         </div>

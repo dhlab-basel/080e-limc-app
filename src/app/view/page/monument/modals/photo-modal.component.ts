@@ -1,10 +1,11 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from "@angular/core";
 import { NgbModal, NgbModalRef, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
+import { Photo } from "../../../../model/resources/photo";
 
 @Component({
-    selector: 'app-photo-modal',
-    templateUrl: './photo-modal.component.html',
-    styleUrls: ['./photo-modal.component.scss']
+    selector: "app-photo-modal",
+    templateUrl: "./photo-modal.component.html",
+    styleUrls: ["./photo-modal.component.scss"]
 })
 /**
  * Gui for a general modal (alert).
@@ -32,9 +33,14 @@ export class PhotoModalComponent {
     private ngbModalRef: NgbModalRef;
 
     /**
-     * The image urls.
+     * The images.
      */
-    imageUrls: string[] = [];
+    photos: Photo[] = [];
+
+    /**
+     * The basic photo credits
+     */
+    credits: string[] = [];
 
     /**
      * Active image index in the imageUrls array
@@ -56,19 +62,18 @@ export class PhotoModalComponent {
     set activeIndex(value: number) {
 
         // Set index 0 if value is no number or if there is only one image
-        if (typeof value !== "number" || this.imageUrls.length <= 1) {
+        if (typeof value !== "number" || this.photos.length <= 1) {
             this._activeIndex = 0;
             return;
         }
 
         // Fix index value
-        if (value < 0) value = this.imageUrls.length - 1; // last index
-        else if (value >= this.imageUrls.length) value = 0; // first index
+        if (value < 0) value = this.photos.length - 1; // last index
+        else if (value >= this.photos.length) value = 0; // first index
 
         this._activeIndex = value;
 
     }
-
 
 
     /////////////
@@ -86,16 +91,18 @@ export class PhotoModalComponent {
 
     /**
      * Opens a modal with given data.
-     * @param imageUrls
+     * @param photos
+     * @param credits basic photo credits
      * @param activeIndex
      * @returns {NgbModalRef}
      */
-    openWithImages(imageUrls: string[], activeIndex: number): NgbModalRef {
+    openWithImages(photos: Photo[], credits: string[], activeIndex: number): NgbModalRef {
 
         // Make sure the modal is closed
         if (this.ngbModalRef instanceof NgbModalRef) this.ngbModalRef.close();
 
-        this.imageUrls = imageUrls;
+        this.photos = photos;
+        this.credits = credits;
         this.activeIndex = activeIndex;
 
         this.ngbModalRef = this.open({ size: "lg" });
@@ -109,7 +116,7 @@ export class PhotoModalComponent {
      * @returns {NgbModalRef}
      */
     open(options?: NgbModalOptions): NgbModalRef {
-        let ngbModalRef: NgbModalRef = this.modalService.open(this.modal, options);
+        const ngbModalRef: NgbModalRef = this.modalService.open(this.modal, options);
         this.changeDetectorRef.detectChanges();
         return ngbModalRef;
     }

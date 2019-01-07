@@ -1,31 +1,36 @@
-# Limcweb
+# LIMC
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.30.
+This repository holds the source code of the public website [weblimc.org](http://www.weblimc.org).
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## About
 
-## Code scaffolding
+The wealth of ancient myths and legends which we call `Classical Mythology` is one of the major elements of our cultural heritage. 
+A huge amount of documents and photographs were assembled in the course of the preparation of the `Lexicon Iconographicum Mythologiae Classicae` (`LIMC`; 1981-1999 and 2009) and the `Thesaurus Cultus et Rituum Antiquorum` (`ThesCRA`; 2004-2014). 
+The dataset provided by this project is regularly updated and enhanced with new documents.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+[weblimc.org](http://www.weblimc.org) gives access to the digital resources (ca. 50'000 ancient objects and photographs) provided by three components of the late foundation for the `LIMC`:
 
-## Build
+- **Digital LIMC**: the archives of the Foundation for the LIMC that have been transfered to the University of Basel.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+- **LIMC France**: digital ressources on Greek, Etruscan and Roman iconography and objects
 
-## Running unit tests
+- **LIMC Greece**: data on objects from recent excavations in Greece.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+For copyright reasons the access to the images in the web application is restricted to images from institutions which have given permission for diffusion on weblimc.org. 
+The copyright of the images remains with these institutions. 
+The re-use of the images provided in the web application for any purpose is illegal and only allowed with the permission of the respective copyright holder.
 
-## Running end-to-end tests
+Contact: limcbasel@unibas.ch and limc-france@mae.u-paris10.fr 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+## Development
 
-## Deploying to GitHub Pages
+This project is an Angular project generated with [@angular/cli](https://github.com/angular/angular-cli). 
+Please refer to the Angular CLI ReadMe for installation and development instruction.
 
-Run `ng github-pages:deploy` to deploy to GitHub Pages.
+You may find our live website at [weblimc.org](http://www.weblimc.org).
 
-## Further help
+## Imprint
 
-To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This web application has been developed from 2014 to 2019 by Andreas Aeschlimann, University of Basel.
+
+Contact: a.aeschlimann@unibas.ch

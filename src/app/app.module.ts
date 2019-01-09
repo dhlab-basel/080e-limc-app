@@ -32,6 +32,7 @@ import { MonumentListComponent } from "./view/components/monument-list/monument-
 import { MonumentListElementComponent } from "./view/components/monument-list-element/monument-list-element.component";
 import { DatePipe } from './model/other/date.pipe';
 import { SpinnerComponent } from './view/components/spinner/spinner.component';
+import { UrlPipe } from "./model/other/url.pipe";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -54,6 +55,7 @@ export function createTranslateLoader(http: HttpClient) {
         MonumentListComponent,
         MonumentListElementComponent,
         DatePipe,
+        UrlPipe,
         SpinnerComponent
     ],
     imports: [

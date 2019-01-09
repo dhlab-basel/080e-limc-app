@@ -111,7 +111,7 @@
                         <div class="list-group-item">
                             <div class="title"><span translate>MONUMENT.LINKS</span></div>
                             <div class="line text-ellipsis" *ngFor="let url of monument?.monumentUrl">
-                                <a href="{{ url }}" target="_blank">{{ url }}</a>
+                                <a href="{{ url | url }}" target="_blank">{{ url | url }}</a>
                             </div>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
                                 <div class="list-group-item" *ngIf="monument.museumUrl.length > 0">
                                     <div class="title"><span translate>MONUMENT.LINKS</span></div>
                                     <div class="line text-ellipsis" *ngFor="let url of monument.museumUrl">
-                                        <a href="{{ url }}" target="_blank">{{ url }}</a>
+                                        <a href="{{ url | url }}" target="_blank">{{ url | url }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +236,7 @@
                     <div class="list-group-item">
                         <div class="title"><span translate>MONUMENT.LINKS</span></div>
                         <div class="line text-ellipsis" *ngFor="let url of scene.url">
-                            <a href="{{ url }}" target="_blank">{{ url }}</a>
+                            <a href="{{ url | url }}" target="_blank">{{ url | url }}</a>
                         </div>
                     </div>
                 </div>

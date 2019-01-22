@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { LimcService } from "../../../model/service/limc.service";
-import { Search } from "../../../model/apiresult/search";
 
 @Component({
     selector: "app-home",

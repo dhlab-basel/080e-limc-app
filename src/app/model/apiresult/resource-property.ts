@@ -1,8 +1,6 @@
 import { Any, JsonObject, JsonProperty } from "json2typescript"
 
 import { StringToNumberConverter } from "../converters/string-to-number-converter";
-import { StringToBooleanConverter } from "../converters/string-to-boolean-converter";
-import { NumberToBooleanConverter } from "../converters/number-to-boolean-converter";
 import { AnyToBooleanConverter } from "../converters/any-to-boolean-converter";
 
 @JsonObject

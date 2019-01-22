@@ -10,7 +10,6 @@ import { Resource } from "../apiresult/resource";
 import { GraphData } from "../apiresult/graph-data";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, throwError } from "rxjs/index";
-import { NodeData } from "../apiresult/node-data";
 import { Node } from "../apiresult/node";
 
 @Injectable()

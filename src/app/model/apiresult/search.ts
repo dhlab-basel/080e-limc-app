@@ -4,9 +4,6 @@ import { SearchSubject } from "./search-subject";
 import { SearchPaging } from "./search-paging";
 import { SearchThumbMax } from "./search-thumb-max";
 import { User } from "./user";
-import { Resource } from "./resource";
-import { SalsahService } from "../service/salsah.service";
-import { Monument } from "../resources/monument";
 import { StringToNumberConverter } from "../converters/string-to-number-converter";
 
 @JsonObject

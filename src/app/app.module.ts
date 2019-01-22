@@ -30,8 +30,8 @@ import { FormInputComponent } from "./view/page/extended-search/form/form-input/
 import { FormSelectComponent } from "./view/page/extended-search/form/form-select/form-select.component";
 import { MonumentListComponent } from "./view/components/monument-list/monument-list.component";
 import { MonumentListElementComponent } from "./view/components/monument-list-element/monument-list-element.component";
-import { DatePipe } from './model/other/date.pipe';
-import { SpinnerComponent } from './view/components/spinner/spinner.component';
+import { DatePipe } from "./model/other/date.pipe";
+import { SpinnerComponent } from "./view/components/spinner/spinner.component";
 
 
 export function createTranslateLoader(http: HttpClient) {

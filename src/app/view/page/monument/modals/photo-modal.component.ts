@@ -1,5 +1,5 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { NgbModal, NgbModalRef, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
+import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
+import { NgbModal, NgbModalOptions, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-photo-modal',

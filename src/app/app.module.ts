@@ -30,8 +30,14 @@ import { FormInputComponent } from "./view/page/extended-search/form/form-input/
 import { FormSelectComponent } from "./view/page/extended-search/form/form-select/form-select.component";
 import { MonumentListComponent } from "./view/components/monument-list/monument-list.component";
 import { MonumentListElementComponent } from "./view/components/monument-list-element/monument-list-element.component";
+<<<<<<< HEAD
 import { DatePipe } from "./model/other/date.pipe";
 import { SpinnerComponent } from "./view/components/spinner/spinner.component";
+=======
+import { DatePipe } from './model/other/date.pipe';
+import { SpinnerComponent } from './view/components/spinner/spinner.component';
+import { UrlPipe } from "./model/other/url.pipe";
+>>>>>>> 430ce84efb28ae79dc3ad4fa374cf85998b247e0
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -54,6 +60,7 @@ export function createTranslateLoader(http: HttpClient) {
         MonumentListComponent,
         MonumentListElementComponent,
         DatePipe,
+        UrlPipe,
         SpinnerComponent
     ],
     imports: [

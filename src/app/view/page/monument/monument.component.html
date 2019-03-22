@@ -6,7 +6,7 @@
             <ng-template ngFor let-photo [ngForOf]="monument.getPhotos()" let-i="index">
                 <ng-template ngbSlide>
                     <div class="slide cursor-pointer" (click)="openGallery(i)"
-                         [ngStyle]="{'background-image': 'url(\'' + photo.url + '\')'}"></div>
+                         [ngStyle]="{'background-image': 'url(\'' + photo.thumbnailUrl + '\')'}"></div>
                 </ng-template>
             </ng-template>
         </ngb-carousel>
@@ -23,7 +23,7 @@
                 <h4 class="card-header text-ellipsis"><span translate>MONUMENT.DATA</span></h4>
                 <div class="card-img-top">
                     <div class="card-img-top-limc"
-                         [ngStyle]="{'background-image': 'url(' + monument.getPhoto().url + ')'}"></div>
+                         [ngStyle]="{'background-image': 'url(' + monument.getPhoto().thumbnailUrl + ')'}"></div>
                 </div>
                 <div class="list-group list-group-flush">
                     <div class="list-group-item">
@@ -111,7 +111,7 @@
                         <div class="list-group-item">
                             <div class="title"><span translate>MONUMENT.LINKS</span></div>
                             <div class="line text-ellipsis" *ngFor="let url of monument?.monumentUrl">
-                                <a href="{{ url }}" target="_blank">{{ url }}</a>
+                                <a href="{{ url | url }}" target="_blank">{{ url | url }}</a>
                             </div>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
                                 <div class="list-group-item" *ngIf="monument.museumUrl.length > 0">
                                     <div class="title"><span translate>MONUMENT.LINKS</span></div>
                                     <div class="line text-ellipsis" *ngFor="let url of monument.museumUrl">
-                                        <a href="{{ url }}" target="_blank">{{ url }}</a>
+                                        <a href="{{ url | url }}" target="_blank">{{ url | url }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +236,7 @@
                     <div class="list-group-item">
                         <div class="title"><span translate>MONUMENT.LINKS</span></div>
                         <div class="line text-ellipsis" *ngFor="let url of scene.url">
-                            <a href="{{ url }}" target="_blank">{{ url }}</a>
+                            <a href="{{ url | url }}" target="_blank">{{ url | url }}</a>
                         </div>
                     </div>
                 </div>
@@ -278,10 +278,8 @@
                         <div class="line">
                             {{ thesCRA.catalogThesCraChapter.name }}
                             {{ thesCRA.indexnumber }}
-                            {{ thesCRA.catalogThesCraChapter.volumenumber ? "(vol
-                            "+thesCRA.catalogThesCraChapter.volumenumber+")" : "" }}
-                            {{ thesCRA.catalogThesCraChapter.mainChapter ? "(ch
-                            "+thesCRA.catalogThesCraChapter.mainChapter+"" : "" }}
+                            {{ thesCRA.catalogThesCraChapter.volumenumber ? "(vol "+thesCRA.catalogThesCraChapter.volumenumber+")" : "" }}
+                            {{ thesCRA.catalogThesCraChapter.mainChapter ? "(ch "+thesCRA.catalogThesCraChapter.mainChapter+"" : "" }}
                             {{ thesCRA.asterix ? "(*)" : "( )" }}
                             {{ thesCRA.dot ? "(.)" : "( )" }}
                         </div>

@@ -9,6 +9,7 @@ import { CatalogThesCraChapter } from "./catalog-thes-cra-chapter";
 import { CatalogThesCra } from "./catalog-thes-cra";
 import { CatalogLimc } from "./catalog-limc";
 import { Graph } from "../apiresult/graph";
+import { SalsahService } from "../service/salsah.service";
 
 
 /**
@@ -122,6 +123,7 @@ export class Monument {
                 case "Foto":
                     const photo = Photo.fromGraphNode(node);
                     photo.resourceId = +key;
+                    photo.setUrl();
                     resourcesById[key] = photo;
                     break;
                 default:
@@ -201,18 +203,40 @@ export class Monument {
     }
 
     /**
-     * Gets all photos of a monument.
-     * @returns {Photo[]} the photos that are allowed for display
+     * Get all photo credits of all museums connected to this monument.
      */
-    public getPhotos() {
+    public getBasicPhotoCredits(): string[] {
 
-        const museum: Museum = this.inventory && this.inventory[0] && this.inventory[0].museum ? this.inventory[0].museum : null;
+        if (this.inventory === null) return [];
+
+        const museums: Museum[] = this.inventory.map(i => i.museum);
+
+        return museums.map(m => m.photoCredit);
+
+    }
+
+    /**
+     * Gets all photos of a monument.
+     * @returns the photos that are allowed for display
+     */
+    public getPhotos(): Photo[] {
+
+        if (this.inventory === null) return [];
+
+        const museums: Museum[] = this.inventory.map(i => i.museum);
+        const hasPhotoRights: boolean = museums.findIndex(m => m.hasPhotoRight === false) < 0;
 
         const photos: Photo[] = [];
 
         for (const scene of this.scene) {
             for (const photo of scene.photo) {
-                if (photo.shouldDisplay(museum)) photos.push(photo);
+
+                if (photo.newPhoto === false) continue;
+
+                if (photo.hasPhotoRight === true || (photo.hasPhotoRight === null && hasPhotoRights)) {
+                    photos.push(photo);
+                }
+
             }
         }
 
@@ -222,7 +246,7 @@ export class Monument {
 
     /**
      * Gets a photo of a monument.
-     * @returns {Photo} the first photo that is allowed for display
+     * @returns the first photo that is allowed for display
      */
     public getPhoto(): Photo {
 
@@ -231,6 +255,7 @@ export class Monument {
 
         const p: Photo = new Photo();
         p.url = "assets/img/default_gray.jpg";
+        p.thumbnailUrl = "assets/img/default_gray.jpg";
 
         return p;
 

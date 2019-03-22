@@ -22,6 +22,7 @@
               ]
             },
             "assets": [
+              "src/.htaccess",
               "src/assets",
               "src/favicon.ico"
             ],
@@ -78,6 +79,7 @@
               "src/styles.scss"
             ],
             "assets": [
+              "src/.htaccess",
               "src/assets",
               "src/favicon.ico"
             ]

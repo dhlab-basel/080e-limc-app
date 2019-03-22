@@ -88,7 +88,6 @@ export class ExtendedSearchComponent implements OnInit {
 
         // Set up the properties
         this.searchProperties = [
-
             LimcExtendedSearchProperty.create(70, 619, "ADVANCED_SEARCH.MONUMENT_ID"),
             LimcExtendedSearchProperty.create(70, 378, "ADVANCED_SEARCH.MONUMENT_ARTIST").withSelectionId(47),
             LimcExtendedSearchProperty.create(70, 379, "ADVANCED_SEARCH.MONUMENT_CATEGORY").withSelectionId(48),
@@ -110,7 +109,6 @@ export class ExtendedSearchComponent implements OnInit {
             // LimcExtendedSearchProperty.create(86, 350, "ADVANCED_SEARCH.THESCRA_SEQUENCE_NUMBER"),
             // LimcExtendedSearchProperty.create(86, 373, "ADVANCED_SEARCH.THESCRA_VOLUME_NUMBER")
         ];
-
 
         // Add an initial form group
         if (this.limcService.extendedSearch.formArray instanceof FormArray === false) {

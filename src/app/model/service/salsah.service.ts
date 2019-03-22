@@ -149,7 +149,7 @@ export class SalsahService {
      * Gets the selection nodes of a selection.
      * @param selectionId
      */
-    getSelectionNodes(selectionId: number): Observable<Node> {
+    getSelectionNodes(selectionId: number): Observable<Node | any> {
 
         const headers = new HttpHeaders();
 

@@ -57,8 +57,8 @@ export class Photo {
 
         if (this.hasPhotoRight === false || this.url !== "" || this.newPhoto === false) return;
 
-        this.url = "http://www.salsah.org/core/sendlocdata.php?res=" + this.resourceId + "&qtype=full&reduce=1";
-        this.thumbnailUrl = "http://www.salsah.org/core/sendlocdata.php?res=" + this.resourceId + "&qtype=thumbnail";
+        this.url = "https://www.salsah.org/core/sendlocdata.php?res=" + this.resourceId + "&qtype=full&reduce=1";
+        this.thumbnailUrl = "https://www.salsah.org/core/sendlocdata.php?res=" + this.resourceId + "&qtype=thumbnail";
 
         /*
         salsahService.getResource(this.resourceId).subscribe(

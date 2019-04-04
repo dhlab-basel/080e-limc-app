@@ -23,7 +23,7 @@ export class SalsahService {
     ////////////////
 
 
-    private static readonly apiUrl: string = "http://www.salsah.org/api";
+    private static readonly apiUrl: string = "https://www.salsah.org/api";
 
     /**
      * JsonConvert instance
@@ -153,7 +153,7 @@ export class SalsahService {
 
         const headers = new HttpHeaders();
 
-        return this.http.get("http://www.salsah.org/api/selections/" + selectionId + "/?lang=all", {
+        return this.http.get("https://www.salsah.org/api/selections/" + selectionId + "/?lang=all", {
             headers: headers,
             observe: "response"
         }).pipe(

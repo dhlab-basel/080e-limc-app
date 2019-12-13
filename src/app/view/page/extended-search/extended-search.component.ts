@@ -37,7 +37,7 @@ export class ExtendedSearchComponent implements OnInit {
     /**
      * The modal
      */
-    @ViewChild("modal", { static: true }) modal: ElementRef;
+    @ViewChild("modal", { static: false }) modal: ElementRef;
 
     /**
      * Modal body html

@@ -25,7 +25,7 @@ export class PhotoModalComponent {
     /**
      * The modal.
      */
-    @ViewChild("modal", { static: true }) modal: any;
+    @ViewChild("modal", { static: false }) modal: any;
 
     /**
      * Reference of current modal.

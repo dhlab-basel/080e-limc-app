@@ -26,7 +26,7 @@ export class MonumentComponent implements OnInit, OnDestroy {
     /**
      * The gallery modal element
      */
-    @ViewChild("gallery", { static: true }) gallery: PhotoModalComponent;
+    @ViewChild("gallery", { static: false }) gallery: PhotoModalComponent;
 
     /**
      * The current monument.

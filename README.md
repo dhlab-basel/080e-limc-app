@@ -32,5 +32,6 @@ You may find our live website at [weblimc.org](http://www.weblimc.org).
 ## Imprint
 
 This web application has been developed from 2014 to 2019 by Andreas Aeschlimann, University of Basel.
+It is maintained by Rita Gautschi, Data and Service Center for the Humanities, University of Basel.
 
-Contact: a.aeschlimann@unibas.ch
+Contact: rita.gautschi@dasch.swiss

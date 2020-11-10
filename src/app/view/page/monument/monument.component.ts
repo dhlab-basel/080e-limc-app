@@ -13,6 +13,7 @@ import { Photo } from "../../../model/resources/photo";
     templateUrl: "./monument.component.html",
     styleUrls: ["./monument.component.scss"]
 })
+
 /**
  * Detail page for a monument.
  */

@@ -20,7 +20,7 @@ For copyright reasons the access to the images in the web application is restric
 The copyright of the images remains with these institutions. 
 The re-use of the images provided in the web application for any purpose is illegal and only allowed with the permission of the respective copyright holder.
 
-Contact: limcbasel@unibas.ch and limc-france@mae.u-paris10.fr 
+Contact: limcbasel@unibas.ch and UMR7041limc-france@cnrs.fr 
 
 ## Development
 
@@ -32,6 +32,6 @@ You may find our live website at [weblimc.org](http://www.weblimc.org).
 ## Imprint
 
 This web application has been developed from 2014 to 2019 by Andreas Aeschlimann, University of Basel.
-It is maintained by Rita Gautschi, Data and Service Center for the Humanities, University of Basel.
+It is maintained by Rita Gautschy, Data and Service Center for the Humanities, University of Basel.
 
-Contact: rita.gautschi@dasch.swiss
+Contact: rita.gautschy@dasch.swiss

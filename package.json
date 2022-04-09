@@ -28,7 +28,7 @@
     "autolinker": "^3.11.1",
     "core-js": "^3.2.1",
     "json2typescript": "^1.2.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ngx-infinite-scroll": "^8.0.0",
     "ngx-linky": "^2.2.0",
     "rxjs": "^6.5.3",
